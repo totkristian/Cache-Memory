@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ModelsAndProps.Historical
 {
-    public class Historical
+    public class HistoricalProperty
     {
         private Codes codes;
         private float historicalValue;
@@ -17,12 +17,12 @@ namespace ModelsAndProps.Historical
         public DateTime Time { get => time; set => time = value; }
 
 
-        public Historical()
+        public HistoricalProperty ()
         {
 
         }
 
-        public Historical(Codes codes, float value)
+        public HistoricalProperty(Codes codes, float value)
         {
             this.codes = codes;
             this.historicalValue = value;
