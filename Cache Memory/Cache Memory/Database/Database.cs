@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ModelsAndProps;
-
+using ModelsAndProps.Historical;
 
 namespace Cache_Memory.Database
 {
@@ -15,6 +15,6 @@ namespace Cache_Memory.Database
         {
 
         }
-        
+        DbSet<ListDescription> ListDescriptions { get; set; }
     }
 }
