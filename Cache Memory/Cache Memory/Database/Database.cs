@@ -11,7 +11,7 @@ namespace Cache_Memory.Database
 {
     public class Database : DbContext
     {
-        public Database() :base("")
+        public Database() :base("ResConn")
         {
 
         }
