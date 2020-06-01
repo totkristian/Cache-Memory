@@ -61,6 +61,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ModelsAndProps\ModelsAndProps.csproj">
+      <Project>{6d4f6e0b-682f-4150-9a4c-86ee6cfd2e11}</Project>
+      <Name>ModelsAndProps</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
