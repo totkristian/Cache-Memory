@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace HistoricalComponent
 {
-    class Historical
+    public class Historical
     {
-        static void Main(string[] args)
-        {
-        }
     }
 }
