@@ -36,7 +36,6 @@ namespace LoggerComponent
                 file.Close();
                 return log;
             }
-
             using (StreamReader sr = new StreamReader("log.txt"))
             {
                 if (sr == null)
