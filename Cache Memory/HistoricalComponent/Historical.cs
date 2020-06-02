@@ -4,6 +4,8 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cache_Memory;
+using Cache_Memory.Database;
 
 namespace HistoricalComponent
 {
@@ -11,6 +13,7 @@ namespace HistoricalComponent
     {
         private static Historical instance;
         private static object syncLock = new object();
+        private Database database = new Database();
 
         public Historical()
         {
