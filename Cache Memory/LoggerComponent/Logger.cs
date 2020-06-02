@@ -30,6 +30,13 @@ namespace LoggerComponent
         public static List<string> ReadLog()
         {
             List<string> log = new List<string>();
+            if (!File.Exists("log.txt"))
+            {
+                var file = File.Create("log.txt");
+                file.Close();
+                return log;
+            }
+
             using (StreamReader sr = new StreamReader("log.txt"))
             {
                 if (sr == null)
