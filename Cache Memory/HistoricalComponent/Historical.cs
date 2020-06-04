@@ -17,7 +17,7 @@ namespace HistoricalComponent
 
         public Historical()
         {
-
+            
         }
 
         public static Historical GetInstance()
