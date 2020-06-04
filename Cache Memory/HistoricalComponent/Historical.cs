@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Cache_Memory;
 using Cache_Memory.Database;
+using ModelsAndProps.Historical;
 
 namespace HistoricalComponent
 {
@@ -33,6 +34,10 @@ namespace HistoricalComponent
             return instance;
         }
 
-
+        public void AddToDatabase(ListDescription lista)
+        {
+            database.ListDescriptions.Add(lista);
+            database.SaveChanges();
+        }
     }
 }
