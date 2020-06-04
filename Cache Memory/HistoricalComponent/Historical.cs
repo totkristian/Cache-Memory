@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Cache_Memory;
 using Cache_Memory.Database;
 using ModelsAndProps.Historical;
+using LoggerComponent;
 
 namespace HistoricalComponent
 {
@@ -38,6 +39,7 @@ namespace HistoricalComponent
         {
             database.ListDescriptions.Add(lista);
             database.SaveChanges();
+            Logger.WriteLog("Seccessfully added to database", "Historical", "AddToDatabase");
         }
 
 
