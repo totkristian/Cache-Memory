@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cache Memory", "Cache Memor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelsAndProps", "ModelsAndProps\ModelsAndProps.csproj", "{6D4F6E0B-682F-4150-9A4C-86EE6CFD2E11}"
 EndProject
+<<<<<<< HEAD
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HistoricalComponent", "HistoricalComponent\HistoricalComponent.csproj", "{1283DDFD-96D6-4B9C-96EC-186B4A4965FD}"
+=======
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerComponent", "LoggerComponent\LoggerComponent.csproj", "{54CDF8DE-F715-44DB-A40F-F89BB2CA3E32}"
+>>>>>>> develop
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +27,17 @@ Global
 		{6D4F6E0B-682F-4150-9A4C-86EE6CFD2E11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D4F6E0B-682F-4150-9A4C-86EE6CFD2E11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D4F6E0B-682F-4150-9A4C-86EE6CFD2E11}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
+		{1283DDFD-96D6-4B9C-96EC-186B4A4965FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1283DDFD-96D6-4B9C-96EC-186B4A4965FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1283DDFD-96D6-4B9C-96EC-186B4A4965FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1283DDFD-96D6-4B9C-96EC-186B4A4965FD}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{54CDF8DE-F715-44DB-A40F-F89BB2CA3E32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54CDF8DE-F715-44DB-A40F-F89BB2CA3E32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54CDF8DE-F715-44DB-A40F-F89BB2CA3E32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54CDF8DE-F715-44DB-A40F-F89BB2CA3E32}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> develop
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

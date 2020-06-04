@@ -15,6 +15,6 @@ namespace Cache_Memory.Database
         {
 
         }
-        DbSet<ListDescription> ListDescriptions { get; set; }
+        public DbSet<ListDescription> ListDescriptions { get; set; }
     }
 }
