@@ -37,9 +37,17 @@ namespace HistoricalComponent
 
         public void AddToDatabase(ListDescription lista)
         {
-            database.ListDescriptions.Add(lista);
-            database.SaveChanges();
-            Logger.WriteLog("Seccessfully added to database", "Historical", "AddToDatabase");
+            try
+            {
+                database.ListDescriptions.Add(lista);
+                database.SaveChanges();
+                Logger.WriteLog("Successfully added to database", "Historical", "AddToDatabase");
+            }
+            catch(Exception ex)
+            {
+                Logger.WriteLog(ex.Message, "Historical", "AddToDatabase");
+            }
+           
         }
 
 
