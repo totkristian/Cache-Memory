@@ -53,6 +53,8 @@ namespace HistoricalComponent
        
         public bool CheckDataset(Codes code)
         {
+            if ((int)code < 0 || (int)code > 9)
+                throw new ArgumentException("Code must be in interval 0-9!");
            switch(code)
             {
                 case Codes.CODE_ANALOG:
