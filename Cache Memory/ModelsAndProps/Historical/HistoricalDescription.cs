@@ -19,6 +19,8 @@ namespace ModelsAndProps.Historical
 
         public HistoricalDescription(int id, int dataset)
         {
+            if (dataset < 1 || dataset > 5)
+                throw new ArgumentException("Dataset must be in interval from 1-5!");
             this.Id = id;
             this.dataset = dataset;
         }
