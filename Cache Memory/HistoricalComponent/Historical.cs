@@ -8,6 +8,7 @@ using Cache_Memory;
 using Cache_Memory.Database;
 using ModelsAndProps.Historical;
 using LoggerComponent;
+using System.Diagnostics;
 
 namespace HistoricalComponent
 {
@@ -16,6 +17,7 @@ namespace HistoricalComponent
         private static Historical instance;
         private static object syncLock = new object();
         private Database database = new Database();
+        private static IQueryable<ListDescription> listDescription;
         private int dataset;
         public Historical()
         {
@@ -29,7 +31,6 @@ namespace HistoricalComponent
                 if (instance == null)
                 {
                     instance = new Historical();
-                    
                 }
             }
 
@@ -48,7 +49,6 @@ namespace HistoricalComponent
             {
                 Logger.WriteLog(ex.Message, "Historical", "AddToDatabase");
             }
-           
         }
 
        
@@ -85,6 +85,20 @@ namespace HistoricalComponent
 
         }
 
+        public void ReadFromDatabase()
+        {
+            try
+            {
+               
+                listDescription = database.ListDescriptions;
+                Logger.WriteLog("Successfully read from database", "Historical", "ReadFromDatabase");
+            }
+            catch(Exception ex)
+            {
+               // Debug.WriteLine(ex.Message);
+                Logger.WriteLog(ex.Message, "Historical", "ReadFromDatabase");
+            }
+        }
         
 
     }
