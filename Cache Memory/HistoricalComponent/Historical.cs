@@ -50,6 +50,11 @@ namespace HistoricalComponent
            
         }
 
+       
+        public bool CheckDataset(Codes code)
+        {
+            
+        }
 
     }
 }
