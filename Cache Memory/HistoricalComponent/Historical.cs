@@ -16,6 +16,7 @@ namespace HistoricalComponent
         private static Historical instance;
         private static object syncLock = new object();
         private Database database = new Database();
+        private static IQueryable<ListDescription> listDescription;
         private int dataset;
         public Historical()
         {
@@ -29,6 +30,7 @@ namespace HistoricalComponent
                 if (instance == null)
                 {
                     instance = new Historical();
+                    
                     
                 }
             }
@@ -85,6 +87,18 @@ namespace HistoricalComponent
 
         }
 
+        public void ReadFromDatabase()
+        {
+            try
+            {
+               
+                listDescription = database.ListDescriptions;
+            }
+            catch
+            {
+
+            }
+        }
         
 
     }
