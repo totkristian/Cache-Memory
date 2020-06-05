@@ -16,7 +16,7 @@ namespace HistoricalComponent
         private static Historical instance;
         private static object syncLock = new object();
         private Database database = new Database();
-
+        private int dataset;
         public Historical()
         {
             
@@ -53,7 +53,36 @@ namespace HistoricalComponent
        
         public bool CheckDataset(Codes code)
         {
-            
+           switch(code)
+            {
+                case Codes.CODE_ANALOG:
+                case Codes.CODE_DIGITAL:
+                    dataset = 1;
+                    break;
+                case Codes.CODE_CUSTOM:
+                case Codes.CODE_LIMITSET:
+                    dataset = 2;
+                    break;
+                case Codes.CODE_SINGLENOE:
+                case Codes.CODE_MULTIPLENODE:
+                    dataset = 3;
+                    break;
+                case Codes.CODE_CONSUMER:
+                case Codes.CODE_SOURCE:
+                    dataset = 4;
+                    break;
+                case Codes.CODE_MOTION:
+                case Codes.CODE_SENSOR:
+                    dataset = 5;
+                    break;
+                default:
+                    dataset = -1;
+                    break;
+            }
+            if (dataset != -1)
+                return true;
+            return false;
+
         }
 
     }
