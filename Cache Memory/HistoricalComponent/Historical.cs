@@ -8,6 +8,7 @@ using Cache_Memory;
 using Cache_Memory.Database;
 using ModelsAndProps.Historical;
 using LoggerComponent;
+using System.Diagnostics;
 
 namespace HistoricalComponent
 {
@@ -30,8 +31,6 @@ namespace HistoricalComponent
                 if (instance == null)
                 {
                     instance = new Historical();
-                    
-                    
                 }
             }
 
@@ -50,7 +49,6 @@ namespace HistoricalComponent
             {
                 Logger.WriteLog(ex.Message, "Historical", "AddToDatabase");
             }
-           
         }
 
        
@@ -93,10 +91,12 @@ namespace HistoricalComponent
             {
                
                 listDescription = database.ListDescriptions;
+                Logger.WriteLog("Successfully read from database", "Historical", "ReadFromDatabase");
             }
-            catch
+            catch(Exception ex)
             {
-
+               // Debug.WriteLine(ex.Message);
+                Logger.WriteLog(ex.Message, "Historical", "ReadFromDatabase");
             }
         }
         
