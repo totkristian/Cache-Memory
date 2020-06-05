@@ -60,30 +60,27 @@ namespace HistoricalComponent
                 case Codes.CODE_ANALOG:
                 case Codes.CODE_DIGITAL:
                     dataset = 1;
-                    break;
+                    return true;
                 case Codes.CODE_CUSTOM:
                 case Codes.CODE_LIMITSET:
                     dataset = 2;
-                    break;
+                    return true;
                 case Codes.CODE_SINGLENOE:
                 case Codes.CODE_MULTIPLENODE:
                     dataset = 3;
-                    break;
+                    return true;
                 case Codes.CODE_CONSUMER:
                 case Codes.CODE_SOURCE:
                     dataset = 4;
-                    break;
+                    return true;
                 case Codes.CODE_MOTION:
                 case Codes.CODE_SENSOR:
                     dataset = 5;
-                    break;
+                    return true;
                 default:
                     dataset = -1;
-                    break;
+                    return false;
             }
-            if (dataset != -1)
-                return true;
-            return false;
 
         }
 
