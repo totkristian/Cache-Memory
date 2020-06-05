@@ -29,6 +29,7 @@ namespace HistoricalComponent
                 if (instance == null)
                 {
                     instance = new Historical();
+                    
                 }
             }
 
