@@ -60,6 +60,10 @@
       <Project>{66521bc7-49c6-4a7f-9c26-b968cff50815}</Project>
       <Name>Cache Memory</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LoggerComponent\LoggerComponent.csproj">
+      <Project>{54cdf8de-f715-44db-a40f-f89bb2ca3e32}</Project>
+      <Name>LoggerComponent</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ModelsAndProps\ModelsAndProps.csproj">
       <Project>{6d4f6e0b-682f-4150-9a4c-86ee6cfd2e11}</Project>
       <Name>ModelsAndProps</Name>
