@@ -66,7 +66,7 @@ namespace HistoricalComponent
                 case Codes.CODE_LIMITSET:
                     dataset = 2;
                     return true;
-                case Codes.CODE_SINGLENOE:
+                case Codes.CODE_SINGLENODE:
                 case Codes.CODE_MULTIPLENODE:
                     dataset = 3;
                     return true;
@@ -85,11 +85,64 @@ namespace HistoricalComponent
 
         }
 
+        public List<HistoricalProperty> GetChangesForInterval(Codes code)
+        {
+            switch (code)
+            {
+                case Codes.CODE_ANALOG:
+                case Codes.CODE_DIGITAL:
+                    return GetCgangesForAnalogOrDigital(code);
+
+                case Codes.CODE_CUSTOM:
+                case Codes.CODE_LIMITSET:
+                    return GetChangesForCustomOrLimitset(code);
+
+                case Codes.CODE_SINGLENODE:
+                case Codes.CODE_MULTIPLENODE:
+                    return GetChangesForSinglenodeOrMultiplenode(code);
+
+                case Codes.CODE_CONSUMER:
+                case Codes.CODE_SOURCE:
+                    return GetChangesForConsumerOrSource(code);
+
+                case Codes.CODE_MOTION:
+                case Codes.CODE_SENSOR:
+                    return GetChangesForMotionOrSensor(code);
+                default:
+                    return null;
+            }
+            
+        }
+
+        private List<HistoricalProperty> GetChangesForMotionOrSensor(Codes code)
+        {
+            throw new NotImplementedException();
+        }
+
+        private List<HistoricalProperty> GetChangesForConsumerOrSource(Codes code)
+        {
+            throw new NotImplementedException();
+        }
+
+        private List<HistoricalProperty> GetChangesForSinglenodeOrMultiplenode(Codes code)
+        {
+            throw new NotImplementedException();
+        }
+
+        private List<HistoricalProperty> GetChangesForCustomOrLimitset(Codes code)
+        {
+            throw new NotImplementedException();
+        }
+
+        private List<HistoricalProperty> GetCgangesForAnalogOrDigital(Codes code)
+        {
+            throw new NotImplementedException();
+        }
+
         public void ReadFromDatabase()
         {
             try
             {
-               
                 listDescription = database.ListDescriptions;
                 Logger.WriteLog("Successfully read from database", "Historical", "ReadFromDatabase");
             }
