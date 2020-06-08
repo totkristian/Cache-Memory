@@ -18,6 +18,7 @@ namespace HistoricalComponent
         private static object syncLock = new object();
         private Database database = new Database();
         private static IQueryable<ListDescription> listDescription;
+        private static ListDescription lista;
         private int dataset;
         public Historical()
         {
@@ -31,6 +32,7 @@ namespace HistoricalComponent
                 if (instance == null)
                 {
                     instance = new Historical();
+                    lista = new ListDescription();
                 }
             }
 
@@ -85,7 +87,7 @@ namespace HistoricalComponent
 
         }
 
-        public List<HistoricalProperty> GetChangesForInterval(Codes code)
+        public ListDescription GetChangesForInterval(Codes code)
         {
             switch (code)
             {
@@ -114,27 +116,27 @@ namespace HistoricalComponent
             
         }
 
-        private List<HistoricalProperty> GetChangesForMotionOrSensor(Codes code)
+        private ListDescription GetChangesForMotionOrSensor(Codes code)
         {
             throw new NotImplementedException();
         }
 
-        private List<HistoricalProperty> GetChangesForConsumerOrSource(Codes code)
+        private ListDescription GetChangesForConsumerOrSource(Codes code)
         {
             throw new NotImplementedException();
         }
 
-        private List<HistoricalProperty> GetChangesForSinglenodeOrMultiplenode(Codes code)
+        private ListDescription GetChangesForSinglenodeOrMultiplenode(Codes code)
         {
             throw new NotImplementedException();
         }
 
-        private List<HistoricalProperty> GetChangesForCustomOrLimitset(Codes code)
+        private ListDescription GetChangesForCustomOrLimitset(Codes code)
         {
             throw new NotImplementedException();
         }
 
-        private List<HistoricalProperty> GetCgangesForAnalogOrDigital(Codes code)
+        private ListDescription GetCgangesForAnalogOrDigital(Codes code)
         {
             throw new NotImplementedException();
         }

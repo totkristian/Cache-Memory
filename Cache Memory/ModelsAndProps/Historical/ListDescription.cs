@@ -9,9 +9,9 @@ namespace ModelsAndProps.Historical
     public class ListDescription
     {
         private int id;
-        HashSet<HistoricalDescription> historicalDescriptions = new HashSet<HistoricalDescription>();
+        List<HistoricalDescription> historicalDescriptions = new List<HistoricalDescription>();
 
-        public HashSet<HistoricalDescription> HistoricalDescriptions { get => historicalDescriptions; set => historicalDescriptions = value; }
+        public List<HistoricalDescription> HistoricalDescriptions { get => historicalDescriptions; set => historicalDescriptions = value; }
         public int Id { get => id; set => id = value; }
 
         public ListDescription()
