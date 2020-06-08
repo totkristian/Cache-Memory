@@ -118,6 +118,7 @@ namespace HistoricalComponent
 
         private List<HistoricalProperty> GetChangesForMotionOrSensor(Codes code)
         {
+            ReadFromDatabase();
             List<HistoricalProperty> ret = new List<HistoricalProperty>();
             foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription.Where(x => x.Id == 5).Select(x => x.HistoricalDescriptions))
             {
@@ -134,6 +135,7 @@ namespace HistoricalComponent
 
         private List<HistoricalProperty> GetChangesForConsumerOrSource(Codes code)
         {
+            ReadFromDatabase();
             List<HistoricalProperty> ret = new List<HistoricalProperty>();
             foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription.Where(x => x.Id == 4).Select(x => x.HistoricalDescriptions))
             {
@@ -150,6 +152,7 @@ namespace HistoricalComponent
 
         private List<HistoricalProperty> GetChangesForSinglenodeOrMultiplenode(Codes code)
         {
+            ReadFromDatabase();
             List<HistoricalProperty> ret = new List<HistoricalProperty>();
             foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription.Where(x => x.Id == 3).Select(x => x.HistoricalDescriptions))
             {
@@ -166,6 +169,7 @@ namespace HistoricalComponent
 
         private List<HistoricalProperty> GetChangesForCustomOrLimitset(Codes code)
         {
+            ReadFromDatabase();
             List<HistoricalProperty> ret = new List<HistoricalProperty>();
             foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription.Where(x => x.Id == 2).Select(x => x.HistoricalDescriptions))
             {
@@ -182,6 +186,7 @@ namespace HistoricalComponent
 
         private List<HistoricalProperty> GetCgangesForAnalogOrDigital(Codes code)
         {
+            ReadFromDatabase();
             List<HistoricalProperty> ret = new List<HistoricalProperty>();
             foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription.Where(x => x.Id == 1).Select(x => x.HistoricalDescriptions))
             {
