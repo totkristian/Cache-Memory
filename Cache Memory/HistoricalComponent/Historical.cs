@@ -18,6 +18,7 @@ namespace HistoricalComponent
         private static object syncLock = new object();
         private Database database = new Database();
         private static IQueryable<ListDescription> listDescription;
+        private static List<HistoricalProperty> lista;
         private int dataset;
         public Historical()
         {
@@ -31,6 +32,7 @@ namespace HistoricalComponent
                 if (instance == null)
                 {
                     instance = new Historical();
+                    lista = new List<HistoricalProperty>();
                 }
             }
 
@@ -66,7 +68,7 @@ namespace HistoricalComponent
                 case Codes.CODE_LIMITSET:
                     dataset = 2;
                     return true;
-                case Codes.CODE_SINGLENOE:
+                case Codes.CODE_SINGLENODE:
                 case Codes.CODE_MULTIPLENODE:
                     dataset = 3;
                     return true;
@@ -85,11 +87,124 @@ namespace HistoricalComponent
 
         }
 
+        public List<HistoricalProperty> GetChangesForInterval(Codes code)
+        {
+            switch (code)
+            {
+                case Codes.CODE_ANALOG:
+                case Codes.CODE_DIGITAL:
+                    return GetCgangesForAnalogOrDigital(code);
+
+                case Codes.CODE_CUSTOM:
+                case Codes.CODE_LIMITSET:
+                    return GetChangesForCustomOrLimitset(code);
+
+                case Codes.CODE_SINGLENODE:
+                case Codes.CODE_MULTIPLENODE:
+                    return GetChangesForSinglenodeOrMultiplenode(code);
+
+                case Codes.CODE_CONSUMER:
+                case Codes.CODE_SOURCE:
+                    return GetChangesForConsumerOrSource(code);
+
+                case Codes.CODE_MOTION:
+                case Codes.CODE_SENSOR:
+                    return GetChangesForMotionOrSensor(code);
+                default:
+                    return null;
+            }
+            
+        }
+
+        private List<HistoricalProperty> GetChangesForMotionOrSensor(Codes code)
+        {
+            ReadFromDatabase();
+            List<HistoricalProperty> ret = new List<HistoricalProperty>();
+            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription.Where(x => x.Id == 5).Select(x => x.HistoricalDescriptions))
+            {
+                foreach(HistoricalProperty hp in hd.HistoricalProperties)
+                {
+                    if (code.Equals(hp.Codes))
+                    {
+                        ret.Add(hp);
+                    }
+                }
+            }
+            return ret;
+        }
+
+        private List<HistoricalProperty> GetChangesForConsumerOrSource(Codes code)
+        {
+            ReadFromDatabase();
+            List<HistoricalProperty> ret = new List<HistoricalProperty>();
+            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription.Where(x => x.Id == 4).Select(x => x.HistoricalDescriptions))
+            {
+                foreach (HistoricalProperty hp in hd.HistoricalProperties)
+                {
+                    if (code.Equals(hp.Codes))
+                    {
+                        ret.Add(hp);
+                    }
+                }
+            }
+            return ret;
+        }
+
+        private List<HistoricalProperty> GetChangesForSinglenodeOrMultiplenode(Codes code)
+        {
+            ReadFromDatabase();
+            List<HistoricalProperty> ret = new List<HistoricalProperty>();
+            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription.Where(x => x.Id == 3).Select(x => x.HistoricalDescriptions))
+            {
+                foreach (HistoricalProperty hp in hd.HistoricalProperties)
+                {
+                    if (code.Equals(hp.Codes))
+                    {
+                        ret.Add(hp);
+                    }
+                }
+            }
+            return ret;
+        }
+
+        private List<HistoricalProperty> GetChangesForCustomOrLimitset(Codes code)
+        {
+            ReadFromDatabase();
+            List<HistoricalProperty> ret = new List<HistoricalProperty>();
+            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription.Where(x => x.Id == 2).Select(x => x.HistoricalDescriptions))
+            {
+                foreach (HistoricalProperty hp in hd.HistoricalProperties)
+                {
+                    if (code.Equals(hp.Codes))
+                    {
+                        ret.Add(hp);
+                    }
+                }
+            }
+            return ret;
+        }
+
+        private List<HistoricalProperty> GetCgangesForAnalogOrDigital(Codes code)
+        {
+            ReadFromDatabase();
+            List<HistoricalProperty> ret = new List<HistoricalProperty>();
+            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription.Where(x => x.Id == 1).Select(x => x.HistoricalDescriptions))
+            {
+                foreach (HistoricalProperty hp in hd.HistoricalProperties)
+                {
+                    if (code.Equals(hp.Codes))
+                    {
+                        ret.Add(hp);
+                    }
+                }
+            }
+            return ret;
+        }
+
         public void ReadFromDatabase()
         {
             try
             {
-               
                 listDescription = database.ListDescriptions;
                 Logger.WriteLog("Successfully read from database", "Historical", "ReadFromDatabase");
             }

@@ -10,7 +10,7 @@ namespace ModelsAndProps.Historical
     {
         private int id;
         private int dataset;
-        private HashSet<HistoricalProperty> historicalProperties = new HashSet<HistoricalProperty>();
+        private List<HistoricalProperty> historicalProperties = new List<HistoricalProperty>();
 
         public HistoricalDescription()
         {
@@ -26,7 +26,7 @@ namespace ModelsAndProps.Historical
         }
 
         public int Dataset { get => dataset; set => dataset = value; }
-        public HashSet<HistoricalProperty> HistoricalProperties { get => historicalProperties; set => historicalProperties = value; }
+        public List<HistoricalProperty> HistoricalProperties { get => historicalProperties; set => historicalProperties = value; }
         public int Id { get => id; set => id = value; }
     }
 }
