@@ -18,7 +18,7 @@ namespace HistoricalComponent
         private static object syncLock = new object();
         private Database database = new Database();
         private static IQueryable<ListDescription> listDescription;
-        private static ListDescription lista;
+        private static List<HistoricalProperty> lista;
         private int dataset;
         public Historical()
         {
@@ -32,7 +32,7 @@ namespace HistoricalComponent
                 if (instance == null)
                 {
                     instance = new Historical();
-                    lista = new ListDescription();
+                    lista = new List<HistoricalProperty>();
                 }
             }
 
@@ -87,7 +87,7 @@ namespace HistoricalComponent
 
         }
 
-        public ListDescription GetChangesForInterval(Codes code)
+        public List<HistoricalProperty> GetChangesForInterval(Codes code)
         {
             switch (code)
             {
@@ -116,27 +116,38 @@ namespace HistoricalComponent
             
         }
 
-        private ListDescription GetChangesForMotionOrSensor(Codes code)
+        private List<HistoricalProperty> GetChangesForMotionOrSensor(Codes code)
+        {
+            List<HistoricalProperty> ret = new List<HistoricalProperty>();
+            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription.Where(x => x.Id == 5).Select(x => x.HistoricalDescriptions))
+            {
+                foreach(HistoricalProperty hp in hd.HistoricalProperties)
+                {
+                    if (code.Equals(hp.Codes))
+                    {
+                        ret.Add(hp);
+                    }
+                }
+            }
+            return ret;
+        }
+
+        private List<HistoricalProperty> GetChangesForConsumerOrSource(Codes code)
         {
             throw new NotImplementedException();
         }
 
-        private ListDescription GetChangesForConsumerOrSource(Codes code)
+        private List<HistoricalProperty> GetChangesForSinglenodeOrMultiplenode(Codes code)
         {
             throw new NotImplementedException();
         }
 
-        private ListDescription GetChangesForSinglenodeOrMultiplenode(Codes code)
+        private List<HistoricalProperty> GetChangesForCustomOrLimitset(Codes code)
         {
             throw new NotImplementedException();
         }
 
-        private ListDescription GetChangesForCustomOrLimitset(Codes code)
-        {
-            throw new NotImplementedException();
-        }
-
-        private ListDescription GetCgangesForAnalogOrDigital(Codes code)
+        private List<HistoricalProperty> GetCgangesForAnalogOrDigital(Codes code)
         {
             throw new NotImplementedException();
         }
