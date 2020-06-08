@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WriterComponent;
 
 namespace Cache_Memory
 {
@@ -10,6 +11,7 @@ namespace Cache_Memory
     {
         static void Main(string[] args)
         {
+            
         }
     }
 }
