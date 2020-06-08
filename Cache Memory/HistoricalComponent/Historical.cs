@@ -182,7 +182,18 @@ namespace HistoricalComponent
 
         private List<HistoricalProperty> GetCgangesForAnalogOrDigital(Codes code)
         {
-            throw new NotImplementedException();
+            List<HistoricalProperty> ret = new List<HistoricalProperty>();
+            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription.Where(x => x.Id == 1).Select(x => x.HistoricalDescriptions))
+            {
+                foreach (HistoricalProperty hp in hd.HistoricalProperties)
+                {
+                    if (code.Equals(hp.Codes))
+                    {
+                        ret.Add(hp);
+                    }
+                }
+            }
+            return ret;
         }
 
         public void ReadFromDatabase()
