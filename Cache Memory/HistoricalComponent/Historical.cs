@@ -19,7 +19,6 @@ namespace HistoricalComponent
         private Database database = new Database();
         private static IQueryable<ListDescription> listDescription;
         private static List<HistoricalProperty> lista;
-        private int dataset;
         public Historical()
         {
             
@@ -54,7 +53,7 @@ namespace HistoricalComponent
         }
 
        
-        public bool CheckDataset(Codes code)
+        public int CheckDataset(Codes code)
         {
             if ((int)code < 0 || (int)code > 9)
                 throw new ArgumentException("Code must be in interval 0-9!");
@@ -62,27 +61,21 @@ namespace HistoricalComponent
             {
                 case Codes.CODE_ANALOG:
                 case Codes.CODE_DIGITAL:
-                    dataset = 1;
-                    return true;
+                    return 1;
                 case Codes.CODE_CUSTOM:
                 case Codes.CODE_LIMITSET:
-                    dataset = 2;
-                    return true;
+                    return 2;
                 case Codes.CODE_SINGLENODE:
                 case Codes.CODE_MULTIPLENODE:
-                    dataset = 3;
-                    return true;
+                    return 3;
                 case Codes.CODE_CONSUMER:
                 case Codes.CODE_SOURCE:
-                    dataset = 4;
-                    return true;
+                    return 4;
                 case Codes.CODE_MOTION:
                 case Codes.CODE_SENSOR:
-                    dataset = 5;
-                    return true;
+                    return 5;
                 default:
-                    dataset = -1;
-                    return false;
+                    return -1;
             }
 
         }
