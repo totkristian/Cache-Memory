@@ -9,6 +9,7 @@ using LoggerComponent;
 using System.Diagnostics;
 using HistoricalComponent.DatabaseConn;
 using ModelsAndProps.ValueStructure;
+using System.Xml;
 
 namespace HistoricalComponent
 {
@@ -223,15 +224,50 @@ namespace HistoricalComponent
 
             HistoricalDescription hDesc = new HistoricalDescription();
             hDesc.HistoricalProperties.Add(hProp);
-            int id = CheckDataset(code);
+            int dataset = CheckDataset(code);
             
-            if(id == -1)
+            
+            if(dataset == -1)
             {
                 //throw new exception
             }
 
-            hDesc.Dataset = id;
-            hDesc.Id = id;
+            hDesc.Dataset = dataset;
+            hDesc.Id = dataset; //so that we can query our list
+            ListDescription listDescription = new ListDescription();
+            listDescription.Id = dataset;
+            listDescription.HistoricalDescriptions.Add(hDesc);
+
+            switch(dataset)
+            {
+                case 1:
+                    //checkDeadBand
+                    database.ListDescription1.Add(listDescription);
+                    database.SaveChanges();
+                    break;
+                case 2:
+                    //checkDeadBand
+                    database.ListDescription2.Add(listDescription);
+                    database.SaveChanges();
+                    break;
+                case 3:
+                    //checkDeadBand
+                    database.ListDescription3.Add(listDescription);
+                    database.SaveChanges();
+                    break;
+                case 4:
+                    //checkDeadBand
+                    database.ListDescription4.Add(listDescription);
+                    database.SaveChanges();
+                    break;
+                case 5:
+                    //checkDeadBand
+                    database.ListDescription5.Add(listDescription);
+                    database.SaveChanges();
+                    break;
+            }
+
+
 
 
 
