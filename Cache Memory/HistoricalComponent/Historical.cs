@@ -220,41 +220,12 @@ namespace HistoricalComponent
             hDesc.Dataset = dataset;
 
             ReadFromDatabase();
-            switch(dataset)
-            {
-                case 1:
-                    ListDescription list1 = database.ListDescriptions.Where(x => x.Id == 1).FirstOrDefault();
-                    list1.HistoricalDescriptions.Add(hDesc);
-                    database.SaveChanges();
-                    break;
-                case 2:
-                    ListDescription list2 = (ListDescription)database.ListDescriptions.Where(x => x.Id == 2).FirstOrDefault();
-                    list2.HistoricalDescriptions.Add(hDesc);
-                    database.SaveChanges();
-                    break;
-                case 3:
-                    ListDescription list3 = (ListDescription)database.ListDescriptions.Where(x => x.Id == 3).FirstOrDefault();
-                    list3.HistoricalDescriptions.Add(hDesc);
-                    database.SaveChanges();
-                    break;
-                case 4:
-                    ListDescription list4 = (ListDescription)database.ListDescriptions.Where(x => x.Id == 4).FirstOrDefault();
-                    list4.HistoricalDescriptions.Add(hDesc);
-                    database.SaveChanges();
-                    break;
-                case 5:
-                    ListDescription list5 = (ListDescription)database.ListDescriptions.Where(x => x.Id == 5).FirstOrDefault();
-                    list5.HistoricalDescriptions.Add(hDesc);
-                    database.SaveChanges();
-                    break;
-            }
 
-
-
-
-
+            ListDescription list1 = database.ListDescriptions.Where(x => x.Id == dataset).FirstOrDefault();
+            list1.HistoricalDescriptions.Add(hDesc);
+            database.SaveChanges();
         }
-        
+
 
     }
 }
