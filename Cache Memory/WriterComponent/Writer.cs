@@ -1,8 +1,10 @@
 ﻿using HistoricalComponent;
+using ModelsAndProps.ValueStructure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -57,10 +59,28 @@ namespace WriterComponent
         {
             bool isOk = false;
             Codes code = (Codes)Meni();
-            while(!isOk)
+            int geographicalLocationId;
+            double consumption;
+            while (!isOk)
             {
-
+                try
+                {
+                    Console.WriteLine("Input stared...\n");
+                    Console.WriteLine("Enter the geographical location id:");
+                    geographicalLocationId = Int32.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter the consumption:");
+                    consumption = double.Parse(Console.ReadLine());
+                    isOk = true;
+                    //callLogger
+                }
+                catch
+                {
+                    //callLogger
+                    Console.WriteLine("Something went wrong with your input data. Please try again!");
+                    isOk = false;
+                }
             }
+            //actually send to historical component
         }
     }
 }
