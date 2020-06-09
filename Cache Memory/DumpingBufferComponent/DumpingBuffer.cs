@@ -6,7 +6,28 @@ using System.Threading.Tasks;
 
 namespace DumpingBufferComponent
 {
-    public class Class1
+    public class DumpingBuffer
     {
+        private static DumpingBuffer instance;
+        private static object syncLock = new object();
+        public DumpingBuffer()
+        {
+
+        }
+
+        public static DumpingBuffer GetInstance()
+        {
+            lock (syncLock)
+            {
+                if (instance == null)
+                {
+                    instance = new DumpingBuffer();
+                }
+            }
+
+            return instance;
+        }
+
+
     }
 }
