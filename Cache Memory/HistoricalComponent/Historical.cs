@@ -241,32 +241,33 @@ namespace HistoricalComponent
             ListDescription listDescription = new ListDescription();
             listDescription.Id = dataset;
             listDescription.HistoricalDescriptions.Add(hDesc);
+            
 
             switch(dataset)
             {
                 case 1:
-                    //checkDeadBand
-                    database.ListDescription1.Add(listDescription);
+                    ListDescription list1 = (ListDescription)database.ListDescription1.Select(x => x);
+                    list1.HistoricalDescriptions.Add(hDesc);
                     database.SaveChanges();
                     break;
                 case 2:
-                    //checkDeadBand
-                    database.ListDescription2.Add(listDescription);
+                    ListDescription list2 = (ListDescription)database.ListDescription2.Select(x => x);
+                    list2.HistoricalDescriptions.Add(hDesc);
                     database.SaveChanges();
                     break;
                 case 3:
-                    //checkDeadBand
-                    database.ListDescription3.Add(listDescription);
+                    ListDescription list3 = (ListDescription)database.ListDescription2.Select(x => x);
+                    list3.HistoricalDescriptions.Add(hDesc);
                     database.SaveChanges();
                     break;
                 case 4:
-                    //checkDeadBand
-                    database.ListDescription4.Add(listDescription);
+                    ListDescription list4 = (ListDescription)database.ListDescription2.Select(x => x);
+                    list4.HistoricalDescriptions.Add(hDesc);
                     database.SaveChanges();
                     break;
                 case 5:
-                    //checkDeadBand
-                    database.ListDescription5.Add(listDescription);
+                    ListDescription list5 = (ListDescription)database.ListDescription2.Select(x => x);
+                    list5.HistoricalDescriptions.Add(hDesc);
                     database.SaveChanges();
                     break;
             }
