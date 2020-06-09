@@ -210,8 +210,25 @@ namespace HistoricalComponent
         public void ManualWriteToHistory(Codes code, Value val)
         {
             HistoricalProperty hProp = new HistoricalProperty();
-            HistoricalDescription hDesc = new HistoricalDescription();
+            
             hProp.Code = code;
+            hProp.HistoricalValue = val;
+            hProp.Time = DateTime.Now;
+            hProp.Id = Guid.NewGuid().ToString();
+
+            HistoricalDescription hDesc = new HistoricalDescription();
+            hDesc.HistoricalProperties.Add(hProp);
+            int id = CheckDataset(code);
+            
+            if(id == -1)
+            {
+                //throw new exception
+            }
+
+            hDesc.Dataset = id;
+            hDesc.Id = id;
+
+
 
         }
         

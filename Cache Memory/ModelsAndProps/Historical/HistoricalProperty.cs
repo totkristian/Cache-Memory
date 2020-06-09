@@ -9,7 +9,7 @@ namespace ModelsAndProps.Historical
 {
     public class HistoricalProperty
     {
-        private int id;
+        private string id;
         private Codes code;
         private Value historicalValue;
         private DateTime time;
@@ -17,7 +17,7 @@ namespace ModelsAndProps.Historical
         public Codes Code { get => code; set => code = value; }
         public Value HistoricalValue { get => historicalValue; set => historicalValue = value; }
         public DateTime Time { get => time; set => time = value; }
-        public int Id { get => id; set => id = value; }
+        public string Id { get => id; set => id = value; }
 
         public HistoricalProperty ()
         {
