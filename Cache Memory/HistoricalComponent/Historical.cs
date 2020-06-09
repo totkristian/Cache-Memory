@@ -8,6 +8,7 @@ using ModelsAndProps.Historical;
 using LoggerComponent;
 using System.Diagnostics;
 using HistoricalComponent.DatabaseConn;
+using ModelsAndProps.ValueStructure;
 
 namespace HistoricalComponent
 {
@@ -50,8 +51,7 @@ namespace HistoricalComponent
                 Logger.WriteLog(ex.Message, "Historical", "AddToDatabase");
             }
         }
-
-       
+   
         public int CheckDataset(Codes code)
         {
             if ((int)code < 0 || (int)code > 9)
@@ -205,6 +205,14 @@ namespace HistoricalComponent
                // Debug.WriteLine(ex.Message);
                 Logger.WriteLog(ex.Message, "Historical", "ReadFromDatabase");
             }
+        }
+
+        public void ManualWriteToHistory(Codes code, Value val)
+        {
+            HistoricalProperty hProp = new HistoricalProperty();
+            HistoricalDescription hDesc = new HistoricalDescription();
+            hProp.Codes = code;
+
         }
         
 
