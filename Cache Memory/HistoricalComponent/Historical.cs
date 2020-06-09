@@ -17,7 +17,12 @@ namespace HistoricalComponent
         private static Historical instance;
         private static object syncLock = new object();
         private Database database = new Database();
-        private static IQueryable<ListDescription> listDescription;
+        private static IQueryable<ListDescription> listDescription1;
+        private static IQueryable<ListDescription> listDescription2;
+        private static IQueryable<ListDescription> listDescription3;
+        private static IQueryable<ListDescription> listDescription4;
+        private static IQueryable<ListDescription> listDescription5;
+
         private static List<HistoricalProperty> lista;
         public Historical()
         {
@@ -112,7 +117,7 @@ namespace HistoricalComponent
         {
             ReadFromDatabase();
             List<HistoricalProperty> ret = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription.Where(x => x.Id == 5).Select(x => x.HistoricalDescriptions))
+            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription5.Select(x => x.HistoricalDescriptions))
             {
                 foreach(HistoricalProperty hp in hd.HistoricalProperties)
                 {
@@ -129,7 +134,7 @@ namespace HistoricalComponent
         {
             ReadFromDatabase();
             List<HistoricalProperty> ret = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription.Where(x => x.Id == 4).Select(x => x.HistoricalDescriptions))
+            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription4.Select(x => x.HistoricalDescriptions))
             {
                 foreach (HistoricalProperty hp in hd.HistoricalProperties)
                 {
@@ -146,7 +151,7 @@ namespace HistoricalComponent
         {
             ReadFromDatabase();
             List<HistoricalProperty> ret = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription.Where(x => x.Id == 3).Select(x => x.HistoricalDescriptions))
+            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription3.Select(x => x.HistoricalDescriptions))
             {
                 foreach (HistoricalProperty hp in hd.HistoricalProperties)
                 {
@@ -163,7 +168,7 @@ namespace HistoricalComponent
         {
             ReadFromDatabase();
             List<HistoricalProperty> ret = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription.Where(x => x.Id == 2).Select(x => x.HistoricalDescriptions))
+            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription2.Select(x => x.HistoricalDescriptions))
             {
                 foreach (HistoricalProperty hp in hd.HistoricalProperties)
                 {
@@ -180,7 +185,7 @@ namespace HistoricalComponent
         {
             ReadFromDatabase();
             List<HistoricalProperty> ret = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription.Where(x => x.Id == 1).Select(x => x.HistoricalDescriptions))
+            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription1.Select(x => x.HistoricalDescriptions))
             {
                 foreach (HistoricalProperty hp in hd.HistoricalProperties)
                 {
