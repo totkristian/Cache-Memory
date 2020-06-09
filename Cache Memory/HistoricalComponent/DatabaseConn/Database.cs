@@ -15,6 +15,10 @@ namespace HistoricalComponent.DatabaseConn
         {
 
         }
-        public DbSet<ListDescription> ListDescriptions { get; set; }
+        public DbSet<ListDescription> ListDescription1 { get; set; }
+        public DbSet<ListDescription> ListDescription2 { get; set; }
+        public DbSet<ListDescription> ListDescription3 { get; set; }
+        public DbSet<ListDescription> ListDescription4 { get; set; }
+        public DbSet<ListDescription> ListDescription5 { get; set; }
     }
 }

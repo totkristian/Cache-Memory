@@ -38,11 +38,11 @@ namespace HistoricalComponent
             return instance;
         }
 
-        public void AddToDatabase(ListDescription lista)
+        public void AddToDatabase()
         {
             try
             {
-                database.ListDescriptions.Add(lista);
+               // database.ListDescriptions.Add(lista);
                 database.SaveChanges();
                 Logger.WriteLog("Successfully added to database", "Historical", "AddToDatabase");
             }
@@ -197,7 +197,7 @@ namespace HistoricalComponent
         {
             try
             {
-                listDescription = database.ListDescriptions;
+               // listDescription = database.ListDescriptions;
                 Logger.WriteLog("Successfully read from database", "Historical", "ReadFromDatabase");
             }
             catch(Exception ex)
