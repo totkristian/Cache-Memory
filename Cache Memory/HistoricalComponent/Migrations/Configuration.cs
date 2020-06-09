@@ -1,4 +1,4 @@
-﻿namespace Cache_Memory.Migrations
+﻿namespace HistoricalComponent.Migrations
 {
     using System;
     using System.Data.Entity;

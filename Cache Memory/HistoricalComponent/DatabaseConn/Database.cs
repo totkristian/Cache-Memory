@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ModelsAndProps;
 using ModelsAndProps.Historical;
 
-namespace Cache_Memory.Database
+namespace HistoricalComponent.DatabaseConn
 {
     public class Database : DbContext
     {

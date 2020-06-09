@@ -4,11 +4,10 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Cache_Memory;
-using Cache_Memory.Database;
 using ModelsAndProps.Historical;
 using LoggerComponent;
 using System.Diagnostics;
+using HistoricalComponent.DatabaseConn;
 
 namespace HistoricalComponent
 {

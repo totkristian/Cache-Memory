@@ -44,5 +44,19 @@
     <Compile Include="Writer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HistoricalComponent\HistoricalComponent.csproj">
+      <Project>{1283ddfd-96d6-4b9c-96ec-186b4a4965fd}</Project>
+      <Name>HistoricalComponent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LoggerComponent\LoggerComponent.csproj">
+      <Project>{54cdf8de-f715-44db-a40f-f89bb2ca3e32}</Project>
+      <Name>LoggerComponent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModelsAndProps\ModelsAndProps.csproj">
+      <Project>{6d4f6e0b-682f-4150-9a4c-86ee6cfd2e11}</Project>
+      <Name>ModelsAndProps</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

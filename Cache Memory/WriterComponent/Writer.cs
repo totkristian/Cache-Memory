@@ -1,14 +1,17 @@
-﻿using System;
+﻿using HistoricalComponent;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace WriterComponent
 {
     public class Writer
     {
+        private Historical historical = Historical.GetInstance();
         public Writer()
         {
            
@@ -48,6 +51,11 @@ namespace WriterComponent
 
             }
             return number - 1;
+        }
+
+        public void SendToHistorical()
+        {
+
         }
     }
 }
