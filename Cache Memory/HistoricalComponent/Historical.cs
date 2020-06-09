@@ -203,7 +203,11 @@ namespace HistoricalComponent
         {
             try
             {
-               // listDescription = database.ListDescriptions;
+                listDescription1 = database.ListDescription1;
+                listDescription2 = database.ListDescription2;
+                listDescription3 = database.ListDescription3;
+                listDescription4 = database.ListDescription4;
+                listDescription5 = database.ListDescription5;
                 Logger.WriteLog("Successfully read from database", "Historical", "ReadFromDatabase");
             }
             catch(Exception ex)
