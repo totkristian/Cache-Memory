@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using WriterComponent;
+using WriterComponent;
 
 namespace Cache_Memory
 {
@@ -11,10 +11,11 @@ namespace Cache_Memory
     {
         static void Main(string[] args)
         {
-           // Writer w = new Writer();
-           // int br = w.Menu();
-           // Console.WriteLine(br);
-            Console.ReadLine();
+           Writer w = new Writer();
+
+            w.SendToHistorical();
+            Console.WriteLine("GOTOVO");
+            Console.ReadLine(); 
         }
     }
 }

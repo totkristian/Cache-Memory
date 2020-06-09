@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ModelsAndProps;
 using ModelsAndProps.Historical;
+using SqlProviderServices = System.Data.Entity.SqlServer.SqlProviderServices;
 
 namespace HistoricalComponent.DatabaseConn
 {
@@ -13,12 +14,11 @@ namespace HistoricalComponent.DatabaseConn
     {
         public Database() :base("ResConn")
         {
-
+           
         }
-        public DbSet<ListDescription> ListDescription1 { get; set; }
-        public DbSet<ListDescription> ListDescription2 { get; set; }
-        public DbSet<ListDescription> ListDescription3 { get; set; }
-        public DbSet<ListDescription> ListDescription4 { get; set; }
-        public DbSet<ListDescription> ListDescription5 { get; set; }
+        public DbSet<ListDescription> ListDescriptions { get; set; }
+
+        
+
     }
 }
