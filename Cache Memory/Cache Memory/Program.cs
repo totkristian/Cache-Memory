@@ -11,7 +11,11 @@ namespace Cache_Memory
     {
         static void Main(string[] args)
         {
-            
+            Writer w = new Writer();
+            int br = w.Menu();
+
+            Console.WriteLine(br);
+            Console.ReadLine();
         }
     }
 }
