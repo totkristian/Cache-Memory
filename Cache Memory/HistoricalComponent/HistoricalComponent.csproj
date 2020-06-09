@@ -52,7 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\Database.cs" />
+    <Compile Include="DatabaseConn\Database.cs" />
     <Compile Include="Historical.cs" />
     <Compile Include="Migrations\202006090834510_CreateListDescriptions.cs" />
     <Compile Include="Migrations\202006090834510_CreateListDescriptions.designer.cs">

@@ -116,7 +116,7 @@ namespace HistoricalComponent
             {
                 foreach(HistoricalProperty hp in hd.HistoricalProperties)
                 {
-                    if (code.Equals(hp.Codes))
+                    if (code.Equals(hp.Code))
                     {
                         ret.Add(hp);
                     }
@@ -133,7 +133,7 @@ namespace HistoricalComponent
             {
                 foreach (HistoricalProperty hp in hd.HistoricalProperties)
                 {
-                    if (code.Equals(hp.Codes))
+                    if (code.Equals(hp.Code))
                     {
                         ret.Add(hp);
                     }
@@ -150,7 +150,7 @@ namespace HistoricalComponent
             {
                 foreach (HistoricalProperty hp in hd.HistoricalProperties)
                 {
-                    if (code.Equals(hp.Codes))
+                    if (code.Equals(hp.Code))
                     {
                         ret.Add(hp);
                     }
@@ -167,7 +167,7 @@ namespace HistoricalComponent
             {
                 foreach (HistoricalProperty hp in hd.HistoricalProperties)
                 {
-                    if (code.Equals(hp.Codes))
+                    if (code.Equals(hp.Code))
                     {
                         ret.Add(hp);
                     }
@@ -184,7 +184,7 @@ namespace HistoricalComponent
             {
                 foreach (HistoricalProperty hp in hd.HistoricalProperties)
                 {
-                    if (code.Equals(hp.Codes))
+                    if (code.Equals(hp.Code))
                     {
                         ret.Add(hp);
                     }
@@ -211,7 +211,7 @@ namespace HistoricalComponent
         {
             HistoricalProperty hProp = new HistoricalProperty();
             HistoricalDescription hDesc = new HistoricalDescription();
-            hProp.Codes = code;
+            hProp.Code = code;
 
         }
         
