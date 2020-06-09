@@ -18,7 +18,7 @@ namespace WriterComponent
         }
        
 
-        public int Menu()
+        public int Meni()
         {
             int number = 0;
             bool isOk = false;
@@ -55,7 +55,12 @@ namespace WriterComponent
 
         public void SendToHistorical()
         {
+            bool isOk = false;
+            Codes code = (Codes)Meni();
+            while(!isOk)
+            {
 
+            }
         }
     }
 }
