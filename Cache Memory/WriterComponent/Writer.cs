@@ -59,17 +59,17 @@ namespace WriterComponent
         {
             bool isOk = false;
             Codes code = (Codes)Meni();
-            int geographicalLocationId;
-            double consumption;
+            string geographicalLocationId = "";
+            float consumption = 0;
             while (!isOk)
             {
                 try
                 {
                     Console.WriteLine("Input stared...\n");
                     Console.WriteLine("Enter the geographical location id:");
-                    geographicalLocationId = Int32.Parse(Console.ReadLine());
+                    geographicalLocationId = Console.ReadLine();
                     Console.WriteLine("Enter the consumption:");
-                    consumption = double.Parse(Console.ReadLine());
+                    consumption = float.Parse(Console.ReadLine());
                     isOk = true;
                     //callLogger
                 }
@@ -80,7 +80,14 @@ namespace WriterComponent
                     isOk = false;
                 }
             }
-            //actually send to historical component
+            Console.WriteLine("Sending to historical component...");
+            historical.ManualWriteToHistory(code, new Value
+            {
+                Timestamp = DateTime.Now,
+                GeographicalLocationId = geographicalLocationId,
+                Consumption = consumption
+
+            });
         }
     }
 }

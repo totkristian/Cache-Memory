@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,5 +29,9 @@ namespace ModelsAndProps.Historical
         public int Dataset { get => dataset; set => dataset = value; }
         public List<HistoricalProperty> HistoricalProperties { get => historicalProperties; set => historicalProperties = value; }
         public int Id { get => id; set => id = value; }
+
+        public int? ListDescriptionId { get; set; }
+        [ForeignKey("ListDescriptionId")]
+        public ListDescription listDescription { get; set; }
     }
 }

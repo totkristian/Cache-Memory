@@ -18,11 +18,8 @@ namespace HistoricalComponent
         private static Historical instance;
         private static object syncLock = new object();
         private Database database = new Database();
-        private static IQueryable<ListDescription> listDescription1;
-        private static IQueryable<ListDescription> listDescription2;
-        private static IQueryable<ListDescription> listDescription3;
-        private static IQueryable<ListDescription> listDescription4;
-        private static IQueryable<ListDescription> listDescription5;
+        private static IQueryable<ListDescription> listDescriptions;
+
 
         private static List<HistoricalProperty> lista;
         public Historical()
@@ -44,19 +41,6 @@ namespace HistoricalComponent
             return instance;
         }
 
-        public void AddToDatabase()
-        {
-            try
-            {
-               // database.ListDescriptions.Add(lista);
-                database.SaveChanges();
-                Logger.WriteLog("Successfully added to database", "Historical", "AddToDatabase");
-            }
-            catch(Exception ex)
-            {
-                Logger.WriteLog(ex.Message, "Historical", "AddToDatabase");
-            }
-        }
    
         public int CheckDataset(Codes code)
         {
@@ -118,7 +102,7 @@ namespace HistoricalComponent
         {
             ReadFromDatabase();
             List<HistoricalProperty> ret = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription5.Select(x => x.HistoricalDescriptions))
+            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescriptions.Where(x=>x.Id == 5).Select(x => x.HistoricalDescriptions))
             {
                 foreach(HistoricalProperty hp in hd.HistoricalProperties)
                 {
@@ -135,7 +119,7 @@ namespace HistoricalComponent
         {
             ReadFromDatabase();
             List<HistoricalProperty> ret = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription4.Select(x => x.HistoricalDescriptions))
+            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescriptions.Where(x => x.Id == 4).Select(x => x.HistoricalDescriptions))
             {
                 foreach (HistoricalProperty hp in hd.HistoricalProperties)
                 {
@@ -152,7 +136,7 @@ namespace HistoricalComponent
         {
             ReadFromDatabase();
             List<HistoricalProperty> ret = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription3.Select(x => x.HistoricalDescriptions))
+            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescriptions.Where(x => x.Id == 3).Select(x => x.HistoricalDescriptions))
             {
                 foreach (HistoricalProperty hp in hd.HistoricalProperties)
                 {
@@ -169,7 +153,7 @@ namespace HistoricalComponent
         {
             ReadFromDatabase();
             List<HistoricalProperty> ret = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription2.Select(x => x.HistoricalDescriptions))
+            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescriptions.Where(x => x.Id == 2).Select(x => x.HistoricalDescriptions))
             {
                 foreach (HistoricalProperty hp in hd.HistoricalProperties)
                 {
@@ -186,7 +170,7 @@ namespace HistoricalComponent
         {
             ReadFromDatabase();
             List<HistoricalProperty> ret = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescription1.Select(x => x.HistoricalDescriptions))
+            foreach (HistoricalDescription hd in (List<HistoricalDescription>)listDescriptions.Where(x => x.Id == 1).Select(x => x.HistoricalDescriptions))
             {
                 foreach (HistoricalProperty hp in hd.HistoricalProperties)
                 {
@@ -203,11 +187,7 @@ namespace HistoricalComponent
         {
             try
             {
-                listDescription1 = database.ListDescription1;
-                listDescription2 = database.ListDescription2;
-                listDescription3 = database.ListDescription3;
-                listDescription4 = database.ListDescription4;
-                listDescription5 = database.ListDescription5;
+                listDescriptions = database.ListDescriptions;
                 Logger.WriteLog("Successfully read from database", "Historical", "ReadFromDatabase");
             }
             catch(Exception ex)
@@ -241,32 +221,32 @@ namespace HistoricalComponent
             ListDescription listDescription = new ListDescription();
             listDescription.Id = dataset;
             listDescription.HistoricalDescriptions.Add(hDesc);
-            
 
+            ReadFromDatabase();
             switch(dataset)
             {
                 case 1:
-                    ListDescription list1 = (ListDescription)database.ListDescription1.Select(x => x);
-                    list1.HistoricalDescriptions.Add(hDesc);
-                    database.SaveChanges();
+                        ListDescription list1 = database.ListDescriptions.Where(x => x.Id == 1).FirstOrDefault();
+                        list1.HistoricalDescriptions.Add(hDesc);
+                        database.SaveChanges();
                     break;
                 case 2:
-                    ListDescription list2 = (ListDescription)database.ListDescription2.Select(x => x);
-                    list2.HistoricalDescriptions.Add(hDesc);
-                    database.SaveChanges();
+                        ListDescription list2 = (ListDescription)database.ListDescriptions.Where(x => x.Id == 2).Select(x => x);
+                        list2.HistoricalDescriptions.Add(hDesc);
+                        database.SaveChanges();
                     break;
                 case 3:
-                    ListDescription list3 = (ListDescription)database.ListDescription2.Select(x => x);
-                    list3.HistoricalDescriptions.Add(hDesc);
-                    database.SaveChanges();
+                      ListDescription list3 = (ListDescription)database.ListDescriptions.Where(x => x.Id == 3).Select(x => x);
+                      list3.HistoricalDescriptions.Add(hDesc);
+                      database.SaveChanges();
                     break;
                 case 4:
-                    ListDescription list4 = (ListDescription)database.ListDescription2.Select(x => x);
+                    ListDescription list4 = (ListDescription)database.ListDescriptions.Where(x => x.Id == 4).Select(x => x);
                     list4.HistoricalDescriptions.Add(hDesc);
                     database.SaveChanges();
                     break;
                 case 5:
-                    ListDescription list5 = (ListDescription)database.ListDescription2.Select(x => x);
+                    ListDescription list5 = (ListDescription)database.ListDescriptions.Where(x => x.Id == 5).Select(x => x);
                     list5.HistoricalDescriptions.Add(hDesc);
                     database.SaveChanges();
                     break;
