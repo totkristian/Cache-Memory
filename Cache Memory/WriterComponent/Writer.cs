@@ -1,21 +1,26 @@
-﻿using System;
+﻿using HistoricalComponent;
+using ModelsAndProps.ValueStructure;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace WriterComponent
 {
     public class Writer
     {
+        private Historical historical = Historical.GetInstance();
         public Writer()
         {
            
         }
        
 
-        public int Menu()
+        public int Meni()
         {
             int number = 0;
             bool isOk = false;
@@ -48,6 +53,34 @@ namespace WriterComponent
 
             }
             return number - 1;
+        }
+
+        public void SendToHistorical()
+        {
+            bool isOk = false;
+            Codes code = (Codes)Meni();
+            int geographicalLocationId;
+            double consumption;
+            while (!isOk)
+            {
+                try
+                {
+                    Console.WriteLine("Input stared...\n");
+                    Console.WriteLine("Enter the geographical location id:");
+                    geographicalLocationId = Int32.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter the consumption:");
+                    consumption = double.Parse(Console.ReadLine());
+                    isOk = true;
+                    //callLogger
+                }
+                catch
+                {
+                    //callLogger
+                    Console.WriteLine("Something went wrong with your input data. Please try again!");
+                    isOk = false;
+                }
+            }
+            //actually send to historical component
         }
     }
 }

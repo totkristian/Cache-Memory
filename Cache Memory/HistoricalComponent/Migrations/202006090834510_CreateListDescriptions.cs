@@ -1,9 +1,9 @@
-﻿namespace Cache_Memory.Migrations
+﻿namespace HistoricalComponent.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class CreateListDescription : DbMigration
+    public partial class CreateListDescriptions : DbMigration
     {
         public override void Up()
         {

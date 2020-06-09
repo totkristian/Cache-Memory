@@ -52,14 +52,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseConn\Database.cs" />
     <Compile Include="Historical.cs" />
+    <Compile Include="Migrations\202006090834510_CreateListDescriptions.cs" />
+    <Compile Include="Migrations\202006090834510_CreateListDescriptions.designer.cs">
+      <DependentUpon>202006090834510_CreateListDescriptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Cache Memory\Cache Memory.csproj">
-      <Project>{66521bc7-49c6-4a7f-9c26-b968cff50815}</Project>
-      <Name>Cache Memory</Name>
-    </ProjectReference>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\LoggerComponent\LoggerComponent.csproj">
       <Project>{54cdf8de-f715-44db-a40f-f89bb2ca3e32}</Project>
       <Name>LoggerComponent</Name>
@@ -70,8 +76,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
+    <EmbeddedResource Include="Migrations\202006090834510_CreateListDescriptions.resx">
+      <DependentUpon>202006090834510_CreateListDescriptions.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
