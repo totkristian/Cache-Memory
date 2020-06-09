@@ -226,6 +226,40 @@ namespace HistoricalComponent
             database.SaveChanges();
         }
 
+        private bool CheckDeadband(HistoricalProperty hprop, int dataset)
+        {
+            if(hprop == null)
+            {
+                throw new ArgumentNullException("You need to have historical property!");
+            }
 
+            
+            if (hprop.Code.Equals(Codes.CODE_DIGITAL))
+            {
+                return true;
+            }
+
+
+            List<HistoricalDescription> l = (List<HistoricalDescription>)listDescriptions.Where(x => x.Id == dataset).Select(x => x.HistoricalDescriptions);
+            foreach (HistoricalDescription hd in l)
+            {
+                foreach (HistoricalProperty hp in hd.HistoricalProperties)
+                {
+                    if(hp.Id == hprop.Id)
+                    {
+                        if (hprop.HistoricalValue.Consumption < (hp.HistoricalValue.Consumption - (hp.HistoricalValue.Consumption / 100) * 2) ||
+                                hprop.HistoricalValue.Consumption > (hp.HistoricalValue.Consumption + (hp.HistoricalValue.Consumption / 100) * 2))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
     }
 }
