@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HistoricalComponent;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace DumpingBufferComponent
     {
         private static DumpingBuffer instance;
         private static object syncLock = new object();
+        private static Historical historical = Historical.GetInstance();
         public DumpingBuffer()
         {
 
