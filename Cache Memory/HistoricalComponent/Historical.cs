@@ -16,7 +16,7 @@ namespace HistoricalComponent
     public class Historical
     {
         private static Historical instance;
-        private static object syncLock = new object();
+        private static readonly object syncLock = new object();
         private Database database = new Database();
         private static IQueryable<ListDescription> listDescriptions;
 

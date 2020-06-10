@@ -8,11 +8,11 @@ namespace ModelsAndProps.Dumping_buffer
 {
     public class CollectionDescription
     {
-        private int id;
+        private string id;
         private int dataset;
         private DumpingPropertyCollection dumpingPropertyCollection = new DumpingPropertyCollection();
 
-        public int Id { get => id; set => id = value; }
+        public string Id { get => id; set => id = value; }
         public int Dataset { get => dataset; set => dataset = value; }
         public DumpingPropertyCollection DumpingPropertyCollection { get => dumpingPropertyCollection; set => dumpingPropertyCollection = value; }
 
@@ -20,7 +20,7 @@ namespace ModelsAndProps.Dumping_buffer
         {
 
         }
-        public CollectionDescription(int id, int dataset)
+        public CollectionDescription(string id, int dataset)
         {
             this.id = id;
             this.dataset = dataset;
