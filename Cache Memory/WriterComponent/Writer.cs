@@ -1,4 +1,5 @@
-﻿using HistoricalComponent;
+﻿using DumpingBufferComponent;
+using HistoricalComponent;
 using ModelsAndProps.ValueStructure;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 
@@ -14,6 +16,7 @@ namespace WriterComponent
     public class Writer
     {
         private Historical historical = Historical.GetInstance();
+        private DumpingBuffer dumpingBuffer = DumpingBuffer.GetInstance();
         public Writer()
         {
            
@@ -88,6 +91,29 @@ namespace WriterComponent
                 Consumption = consumption
 
             });
+        }
+
+        public void SendToDumpingBuffer()
+        {
+            //call logger
+            
+            dumpingBuffer.WriteToDumpingBuffer(GenerateRandomCode(), GenerateRandomValue());
+            Thread.Sleep(2000);
+        }
+
+        public Codes GenerateRandomCode()
+        {
+             Random random = new Random();
+             return (Codes)random.Next(0, 9);
+        }
+        public Value GenerateRandomValue()
+        {
+            Random random = new Random();
+            Value val = new Value();
+            val.Consumption =(float)random.NextDouble() * 10;
+            val.GeographicalLocationId = Guid.NewGuid().ToString();
+            val.Timestamp = DateTime.Now;
+            return val;
         }
     }
 }
