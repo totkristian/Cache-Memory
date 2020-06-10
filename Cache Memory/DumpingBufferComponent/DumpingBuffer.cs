@@ -17,7 +17,6 @@ namespace DumpingBufferComponent
         private static object syncLock = new object();
         private static Historical historical = Historical.GetInstance();
         private static Dictionary<int,CollectionDescription> collectionDescriptions;
-        private bool updated = false;
         public DumpingBuffer()
         {
 
@@ -54,9 +53,9 @@ namespace DumpingBufferComponent
             {
                 //something wrong with dataset
             }
-            updated = false;
+            bool updated = false;
 
-            //checkUpdate
+            updated = CheckUpdate(dataset,dp);
 
             if(!updated)
             {
@@ -67,5 +66,23 @@ namespace DumpingBufferComponent
            
         }
 
+        private bool CheckUpdate(int dataset,DumpingProperty tempDp)
+        {
+            if(dataset < 1 || dataset > 5)
+            {
+                //baci exception
+            }
+           
+            foreach(DumpingProperty dp in collectionDescriptions[dataset].DumpingPropertyCollection.DumpingProperties)
+            {
+                if (dp.Code.Equals(tempDp.Code))
+                {
+                    dp.DumpingValue = tempDp.DumpingValue;
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
