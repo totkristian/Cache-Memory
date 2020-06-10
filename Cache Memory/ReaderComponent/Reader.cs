@@ -95,9 +95,11 @@ namespace ReaderComponent
                     return ReadCodeSensor(code);
 
                 case Codes.CODE_SINGLENODE:
+                    listDescription = historical.ReadOneLDFromDB(3);
                     return ReadCodeSinglenode(code);
 
                 case Codes.CODE_SOURCE:
+                    listDescription = historical.ReadOneLDFromDB(4);
                     return ReadCodeSource(code);
 
                 default:
