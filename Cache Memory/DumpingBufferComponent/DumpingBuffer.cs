@@ -14,7 +14,7 @@ namespace DumpingBufferComponent
     public class DumpingBuffer
     {
         private static DumpingBuffer instance;
-        private static object syncLock = new object();
+        private static readonly object syncLock = new object();
         private static Historical historical = Historical.GetInstance();
         private static Dictionary<int,CollectionDescription> collectionDescriptions;
         public DumpingBuffer()
