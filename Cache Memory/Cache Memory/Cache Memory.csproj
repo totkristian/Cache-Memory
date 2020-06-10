@@ -53,6 +53,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ReaderComponent\ReaderComponent.csproj">
+      <Project>{0c742330-6ea8-4b6c-b3e2-c0dbb3f56b07}</Project>
+      <Name>ReaderComponent</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WriterComponent\WriterComponent.csproj">
       <Project>{7158b2ff-3839-4401-b11e-c5601e6f4d00}</Project>
       <Name>WriterComponent</Name>
