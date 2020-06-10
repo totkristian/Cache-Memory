@@ -23,6 +23,11 @@ namespace ModelsAndProps.Dumping_buffer
             add = new Dictionary<int, CollectionDescription>();
             update = new Dictionary<int, CollectionDescription>();
             remove = new Dictionary<int, CollectionDescription>();
+            for (int i = 1; i < 6; i++) {
+                add.Add(i, new CollectionDescription());
+                update.Add(i, new CollectionDescription());
+                remove.Add(i, new CollectionDescription());
+            }
         }
     }
 }
