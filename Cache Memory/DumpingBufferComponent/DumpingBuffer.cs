@@ -16,6 +16,7 @@ namespace DumpingBufferComponent
         private static DumpingBuffer instance;
         private static object syncLock = new object();
         private static Historical historical = Historical.GetInstance();
+        private static List<CollectionDescription> collectionDescriptions;
         public DumpingBuffer()
         {
 
@@ -28,6 +29,7 @@ namespace DumpingBufferComponent
                 if (instance == null)
                 {
                     instance = new DumpingBuffer();
+                    collectionDescriptions = new List<CollectionDescription>(5);
                 }
             }
 
@@ -41,6 +43,12 @@ namespace DumpingBufferComponent
             //check Val.Consumption and the resto of the properties if they are valid
             DumpingProperty dp = new DumpingProperty(code, val);
             int dataset = historical.CheckDataset(code);
+
+            if(dataset == -1)
+            {
+                //something wrong with dataset
+            }
+
            
         }
 
