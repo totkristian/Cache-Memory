@@ -222,7 +222,18 @@ namespace ReaderComponent
 
         private List<HistoricalProperty> ReadCodeConsumer(Codes code)
         {
-            throw new NotImplementedException();
+            List<HistoricalProperty> hps = new List<HistoricalProperty>();
+            foreach (HistoricalDescription hd in listDescription.HistoricalDescriptions)
+            {
+                foreach (HistoricalProperty hp in hd.HistoricalProperties)
+                {
+                    if (hp.Code.Equals(code))
+                    {
+                        hps.Add(hp);
+                    }
+                }
+            }
+            return hps;
         }
 
         private List<HistoricalProperty> ReadCodeDigital(Codes code)
