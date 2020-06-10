@@ -45,6 +45,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DumpingBufferComponent\DumpingBufferComponent.csproj">
+      <Project>{a1d34211-6dd2-464e-bd8d-22846d8b13c8}</Project>
+      <Name>DumpingBufferComponent</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HistoricalComponent\HistoricalComponent.csproj">
       <Project>{1283ddfd-96d6-4b9c-96ec-186b4a4965fd}</Project>
       <Name>HistoricalComponent</Name>

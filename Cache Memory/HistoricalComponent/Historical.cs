@@ -226,6 +226,8 @@ namespace HistoricalComponent
             database.SaveChanges();
         }
 
+
+
         private bool CheckDeadband(HistoricalProperty hprop, int dataset)
         {
             if(hprop == null)
@@ -260,6 +262,14 @@ namespace HistoricalComponent
                 }
             }
             return false;
+        }
+
+
+        public ListDescription ReadOneLDFromDB(int dataset)
+        {
+            ListDescription ld = new ListDescription();
+            ld = database.ListDescriptions.Where(x => x.Id == dataset).FirstOrDefault();
+            return ld;
         }
     }
 }
