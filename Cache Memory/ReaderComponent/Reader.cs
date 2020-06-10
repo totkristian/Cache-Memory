@@ -71,21 +71,27 @@ namespace ReaderComponent
                     return ReadCodeDigital(code);
 
                 case Codes.CODE_CONSUMER:
+                    listDescription = historical.ReadOneLDFromDB(4);
                     return ReadCodeConsumer(code);
 
                 case Codes.CODE_CUSTOM:
+                    listDescription = historical.ReadOneLDFromDB(2);
                     return ReadCodeCustom(code);
 
                 case Codes.CODE_LIMITSET:
+                    listDescription = historical.ReadOneLDFromDB(2);
                     return ReadCodeLimitset(code);
 
                 case Codes.CODE_MOTION:
+                    listDescription = historical.ReadOneLDFromDB(5);
                     return ReadCodeMotion(code);
 
                 case Codes.CODE_MULTIPLENODE:
+                    listDescription = historical.ReadOneLDFromDB(3);
                     return ReadCodeMultiplenode(code);
 
                 case Codes.CODE_SENSOR:
+                    listDescription = historical.ReadOneLDFromDB(5);
                     return ReadCodeSensor(code);
 
                 case Codes.CODE_SINGLENODE:
