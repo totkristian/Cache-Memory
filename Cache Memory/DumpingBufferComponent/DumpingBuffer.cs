@@ -16,7 +16,8 @@ namespace DumpingBufferComponent
         private static DumpingBuffer instance;
         private static object syncLock = new object();
         private static Historical historical = Historical.GetInstance();
-        private static List<CollectionDescription> collectionDescriptions;
+        private static Dictionary<int,CollectionDescription> collectionDescriptions;
+        private bool updated = false;
         public DumpingBuffer()
         {
 
@@ -29,7 +30,12 @@ namespace DumpingBufferComponent
                 if (instance == null)
                 {
                     instance = new DumpingBuffer();
-                    collectionDescriptions = new List<CollectionDescription>(5);
+                    collectionDescriptions = new Dictionary<int, CollectionDescription>(5);
+                    collectionDescriptions.Add(1, new CollectionDescription());
+                    collectionDescriptions.Add(2, new CollectionDescription());
+                    collectionDescriptions.Add(3, new CollectionDescription());
+                    collectionDescriptions.Add(4, new CollectionDescription());
+                    collectionDescriptions.Add(5, new CollectionDescription());
                 }
             }
 
@@ -48,7 +54,9 @@ namespace DumpingBufferComponent
             {
                 //something wrong with dataset
             }
+            updated = false;
 
+            //checkUpdate
            
         }
 
