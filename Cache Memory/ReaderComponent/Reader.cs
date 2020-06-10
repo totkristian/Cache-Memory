@@ -254,7 +254,18 @@ namespace ReaderComponent
 
         private List<HistoricalProperty> ReadCodeAnalog(Codes code)
         {
-            throw new NotImplementedException();
+            List<HistoricalProperty> hps = new List<HistoricalProperty>();
+            foreach (HistoricalDescription hd in listDescription.HistoricalDescriptions)
+            {
+                foreach (HistoricalProperty hp in hd.HistoricalProperties)
+                {
+                    if (hp.Code.Equals(code))
+                    {
+                        hps.Add(hp);
+                    }
+                }
+            }
+            return hps;
         }
     }
 }
