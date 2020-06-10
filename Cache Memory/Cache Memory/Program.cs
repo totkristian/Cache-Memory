@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReaderComponent;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,11 +12,11 @@ namespace Cache_Memory
     {
         static void Main(string[] args)
         {
-           Writer w = new Writer();
+            Reader r = new Reader();
 
-            w.SendToHistorical();
-            Console.WriteLine("GOTOVO");
-            Console.ReadLine(); 
+            r.Meni();
+
+            Console.ReadLine();
         }
     }
 }

@@ -34,5 +34,10 @@ namespace ModelsAndProps.Historical
             this.code = codes;
             this.historicalValue = value;
         }
+
+        public override string ToString()
+        {
+            return $"ID:{id}\nCODE:{code}\nTIME:{time}\nVALUE:{historicalValue.ToString()}";
+        }
     }
 }
