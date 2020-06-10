@@ -57,6 +57,13 @@ namespace DumpingBufferComponent
             updated = false;
 
             //checkUpdate
+
+            if(!updated)
+            {
+                collectionDescriptions[dataset].Dataset = dataset;
+                collectionDescriptions[dataset].DumpingPropertyCollection.DumpingProperties.Add(dp); //i can make a new dp here also
+                collectionDescriptions[dataset].Id = Guid.NewGuid().ToString();
+            }
            
         }
 
