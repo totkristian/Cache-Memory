@@ -40,34 +40,8 @@ namespace DumpingBufferComponent
                 throw new ArgumentException("Code must be in interval 0-9!");
             //check Val.Consumption and the resto of the properties if they are valid
             DumpingProperty dp = new DumpingProperty(code, val);
+            int dataset = historical.CheckDataset(code);
            
-        }
-
-        public int CheckDataset(Codes code)
-        {
-            if ((int)code < 0 || (int)code > 9)
-                throw new ArgumentException("Code must be in interval 0-9!");
-            switch (code)
-            {
-                case Codes.CODE_ANALOG:
-                case Codes.CODE_DIGITAL:
-                    return 1;
-                case Codes.CODE_CUSTOM:
-                case Codes.CODE_LIMITSET:
-                    return 2;
-                case Codes.CODE_SINGLENODE:
-                case Codes.CODE_MULTIPLENODE:
-                    return 3;
-                case Codes.CODE_CONSUMER:
-                case Codes.CODE_SOURCE:
-                    return 4;
-                case Codes.CODE_MOTION:
-                case Codes.CODE_SENSOR:
-                    return 5;
-                default:
-                    return -1;
-            }
-
         }
 
     }
