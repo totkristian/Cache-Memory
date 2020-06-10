@@ -268,7 +268,16 @@ namespace HistoricalComponent
         public ListDescription ReadOneLDFromDB(int dataset)
         {
             ListDescription ld = new ListDescription();
-            ld = database.ListDescriptions.Where(x => x.Id == dataset).FirstOrDefault();
+            List<HistoricalDescription> list = database.HistoricalDescriptions.Where(x => x.ListDescriptionId == dataset).ToList();
+            ld.HistoricalDescriptions = list;
+
+            for (int i = 0; i < ld.HistoricalDescriptions.Count; i++)
+            {
+                int id = ld.HistoricalDescriptions[i].Id;
+                List<HistoricalProperty> hpList = database.HistoricalProperties.Where(x => x.HistoricalDescriptionId == id).ToList();
+                ld.HistoricalDescriptions[i].HistoricalProperties = hpList;
+            }
+
             return ld;
         }
     }

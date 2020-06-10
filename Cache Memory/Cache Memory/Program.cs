@@ -12,6 +12,10 @@ namespace Cache_Memory
     {
         static void Main(string[] args)
         {
+            Writer w = new Writer();
+
+            w.SendToHistorical();
+            Console.WriteLine("Writer je zavrsio!");
             Reader r = new Reader();
 
             r.Meni();

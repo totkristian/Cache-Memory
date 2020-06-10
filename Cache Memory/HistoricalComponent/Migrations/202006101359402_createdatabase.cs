@@ -3,18 +3,10 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class CreateListDescriptions : DbMigration
+    public partial class createdatabase : DbMigration
     {
         public override void Up()
         {
-            CreateTable(
-                "dbo.ListDescriptions",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                    })
-                .PrimaryKey(t => t.Id);
-            
             CreateTable(
                 "dbo.HistoricalDescriptions",
                 c => new
@@ -43,6 +35,14 @@
                 .ForeignKey("dbo.HistoricalDescriptions", t => t.HistoricalDescriptionId)
                 .Index(t => t.HistoricalDescriptionId);
             
+            CreateTable(
+                "dbo.ListDescriptions",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                    })
+                .PrimaryKey(t => t.Id);
+            
         }
         
         public override void Down()
@@ -51,9 +51,9 @@
             DropForeignKey("dbo.HistoricalProperties", "HistoricalDescriptionId", "dbo.HistoricalDescriptions");
             DropIndex("dbo.HistoricalProperties", new[] { "HistoricalDescriptionId" });
             DropIndex("dbo.HistoricalDescriptions", new[] { "ListDescriptionId" });
+            DropTable("dbo.ListDescriptions");
             DropTable("dbo.HistoricalProperties");
             DropTable("dbo.HistoricalDescriptions");
-            DropTable("dbo.ListDescriptions");
         }
     }
 }

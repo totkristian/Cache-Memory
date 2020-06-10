@@ -7,13 +7,13 @@ namespace HistoricalComponent.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class CreateListDescriptions : IMigrationMetadata
+    public sealed partial class createdatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateListDescriptions));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(createdatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "202006091404578_CreateListDescriptions"; }
+            get { return "202006101359402_createdatabase"; }
         }
         
         string IMigrationMetadata.Source
