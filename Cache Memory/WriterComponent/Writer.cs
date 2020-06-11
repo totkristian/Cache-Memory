@@ -104,7 +104,7 @@ namespace WriterComponent
         public Codes GenerateRandomCode()
         {
              Random random = new Random();
-             return (Codes)random.Next(0, 9);
+             return (Codes)random.Next(0, 10);
         }
         public Value GenerateRandomValue()
         {

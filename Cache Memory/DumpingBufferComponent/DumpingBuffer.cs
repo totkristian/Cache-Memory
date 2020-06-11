@@ -17,7 +17,7 @@ namespace DumpingBufferComponent
         private static readonly object syncLock = new object();
         private static Historical historical = Historical.GetInstance();
         private static Dictionary<int,CollectionDescription> collectionDescriptions;
-        private static Dictionary<string,Operations> operationAndId;
+        private static Dictionary<string,List<Operations>> operationAndId;
         
         public DumpingBuffer()
         {
@@ -37,7 +37,7 @@ namespace DumpingBufferComponent
                     collectionDescriptions.Add(3, new CollectionDescription());
                     collectionDescriptions.Add(4, new CollectionDescription());
                     collectionDescriptions.Add(5, new CollectionDescription());
-                    operationAndId = new Dictionary<string,Operations>();
+                    operationAndId = new Dictionary<string, List<Operations>>();
                 }
             }
 
@@ -64,8 +64,8 @@ namespace DumpingBufferComponent
             {//data does not exist, i need to add id 
                 collectionDescriptions[dataset].Dataset = dataset;
                 collectionDescriptions[dataset].DumpingPropertyCollection.DumpingProperties.Add(dp); //i can make a new dp here also
-                collectionDescriptions[dataset].Id = Guid.NewGuid().ToString();
-                
+                collectionDescriptions[dataset].Id = dataset;
+                AddToOperationsAndId(collectionDescriptions[dataset].Id, Operations.ADD);
             }
             else
             {
@@ -74,6 +74,18 @@ namespace DumpingBufferComponent
 
             
            
+        }
+        private void AddToOperationsAndId(string id, Operations operation)
+        {
+            if(operationAndId.ContainsKey(id))
+            {
+                operationAndId[id].Add(operation);
+            }
+            else
+            {
+                operationAndId.Add(id, new List<Operations>());
+                operationAndId[id].Add(operation);
+            }
         }
 
         private bool CheckUpdate(int dataset,DumpingProperty tempDp)
@@ -88,6 +100,7 @@ namespace DumpingBufferComponent
                 if (dp.Code.Equals(tempDp.Code))
                 {
                     dp.DumpingValue = tempDp.DumpingValue;
+                    AddToOperationsAndId(collectionDescriptions[dataset].Id, Operations.UPDATE);
                     return true;
                 }
             }
