@@ -64,7 +64,7 @@ namespace DumpingBufferComponent
             {//data does not exist, i need to add id 
                 collectionDescriptions[dataset].Dataset = dataset;
                 collectionDescriptions[dataset].DumpingPropertyCollection.DumpingProperties.Add(dp); //i can make a new dp here also
-                collectionDescriptions[dataset].Id = Guid.NewGuid().ToString();
+                collectionDescriptions[dataset].Id = dataset;
                 AddToOperationsAndId(collectionDescriptions[dataset].Id, Operations.ADD);
             }
             else
