@@ -11,3 +11,10 @@
     CODE_MOTION,
     CODE_SENSOR
 }
+
+public enum Operations
+{
+    ADD,
+    UPDATE,
+    REMOVE
+}

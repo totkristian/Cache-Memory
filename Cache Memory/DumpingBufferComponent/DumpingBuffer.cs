@@ -17,6 +17,8 @@ namespace DumpingBufferComponent
         private static readonly object syncLock = new object();
         private static Historical historical = Historical.GetInstance();
         private static Dictionary<int,CollectionDescription> collectionDescriptions;
+        private static Dictionary<string,Operations> operationAndId;
+        
         public DumpingBuffer()
         {
 
@@ -35,6 +37,7 @@ namespace DumpingBufferComponent
                     collectionDescriptions.Add(3, new CollectionDescription());
                     collectionDescriptions.Add(4, new CollectionDescription());
                     collectionDescriptions.Add(5, new CollectionDescription());
+                    operationAndId = new Dictionary<string,Operations>();
                 }
             }
 
@@ -58,11 +61,18 @@ namespace DumpingBufferComponent
             updated = CheckUpdate(dataset,dp);
 
             if(!updated)
-            {
+            {//data does not exist, i need to add id 
                 collectionDescriptions[dataset].Dataset = dataset;
                 collectionDescriptions[dataset].DumpingPropertyCollection.DumpingProperties.Add(dp); //i can make a new dp here also
                 collectionDescriptions[dataset].Id = Guid.NewGuid().ToString();
+                
             }
+            else
+            {
+                //data exist and it has been updated
+            }
+
+            
            
         }
 
