@@ -17,6 +17,7 @@ namespace WriterComponent
     {
         private Historical historical = Historical.GetInstance();
         private DumpingBuffer dumpingBuffer = DumpingBuffer.GetInstance();
+        private RandomGenerator generator = new RandomGenerator();
         public Writer()
         {
            
@@ -97,23 +98,11 @@ namespace WriterComponent
         {
             //call logger
             
-            dumpingBuffer.WriteToDumpingBuffer(GenerateRandomCode(), GenerateRandomValue());
+            dumpingBuffer.WriteToDumpingBuffer(generator.GenerateRandomCode(), generator.RandomValueGenerator());
             Thread.Sleep(2000);
         }
 
-        public Codes GenerateRandomCode()
-        {
-             Random random = new Random();
-             return (Codes)random.Next(0, 10);
-        }
-        public Value GenerateRandomValue()
-        {
-            Random random = new Random();
-            Value val = new Value();
-            val.Consumption =(float)random.NextDouble() * 10;
-            val.GeographicalLocationId = Guid.NewGuid().ToString();
-            val.Timestamp = DateTime.Now;
-            return val;
-        }
+        
+        
     }
 }
