@@ -26,5 +26,10 @@ namespace WriterComponent
         {
             return (Codes)random.Next(0, 10);
         }
+
+        public Operations GenerateRandomOperation()
+        {
+            return (Operations)random.Next(0, 3);
+        }
     }
 }
