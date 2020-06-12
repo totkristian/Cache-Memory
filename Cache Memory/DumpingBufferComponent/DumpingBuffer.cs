@@ -17,7 +17,7 @@ namespace DumpingBufferComponent
         private static readonly object syncLock = new object();
         private static Historical historical = Historical.GetInstance();
         private static Dictionary<int,CollectionDescription> collectionDescriptions;
-        private static Dictionary<string,List<Operations>> operationAndId;
+        private static Dictionary<int,List<Operations>> operationAndId;
         
         public DumpingBuffer()
         {
@@ -37,7 +37,7 @@ namespace DumpingBufferComponent
                     collectionDescriptions.Add(3, new CollectionDescription());
                     collectionDescriptions.Add(4, new CollectionDescription());
                     collectionDescriptions.Add(5, new CollectionDescription());
-                    operationAndId = new Dictionary<string, List<Operations>>();
+                    operationAndId = new Dictionary<int, List<Operations>>();
                 }
             }
 
@@ -75,7 +75,7 @@ namespace DumpingBufferComponent
             
            
         }
-        private void AddToOperationsAndId(string id, Operations operation)
+        private void AddToOperationsAndId(int id, Operations operation)
         {
             if(operationAndId.ContainsKey(id))
             {

@@ -1,5 +1,6 @@
 ﻿using DumpingBufferComponent;
 using HistoricalComponent;
+using ModelsAndProps.Historical;
 using ModelsAndProps.ValueStructure;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,12 @@ namespace WriterComponent
     {
         private Historical historical = Historical.GetInstance();
         private DumpingBuffer dumpingBuffer = DumpingBuffer.GetInstance();
+        private RandomGenerator generator = new RandomGenerator();
         public Writer()
         {
-           
+
         }
-       
+
 
         public int Meni()
         {
@@ -44,7 +46,7 @@ namespace WriterComponent
                 try
                 {
                     number = int.Parse(Console.ReadLine());
-                    if(number >= 1 && number <= 10)
+                    if (number >= 1 && number <= 10)
                     {
                         isOk = true;
                     }
@@ -96,24 +98,33 @@ namespace WriterComponent
         public void SendToDumpingBuffer()
         {
             //call logger
-            
-            dumpingBuffer.WriteToDumpingBuffer(GenerateRandomCode(), GenerateRandomValue());
+            Operations op = generator.GenerateRandomOperation();
+            switch (op)
+            {
+                case Operations.ADD:
+                    dumpingBuffer.WriteToDumpingBuffer(generator.GenerateRandomCode(), generator.RandomNewValueGenerator());
+                    break;
+                case Operations.UPDATE:
+                    HistoricalProperty hp = GetRandomHistoricalProperty();
+                    dumpingBuffer.WriteToDumpingBuffer(hp.Code, hp.HistoricalValue);
+                    break;
+                case Operations.REMOVE:
+                    HistoricalProperty hp1 = GetRandomHistoricalProperty();
+                    dumpingBuffer.WriteToDumpingBuffer(hp1.Code, hp1.HistoricalValue);
+                    //search through existing properties and remove a property
+                    break;
+            }
+
             Thread.Sleep(2000);
         }
 
-        public Codes GenerateRandomCode()
+        public HistoricalProperty GetRandomHistoricalProperty()
         {
-             Random random = new Random();
-             return (Codes)random.Next(0, 10);
+           return  generator.getRandomPropertyForUpdateOrRemove(historical.GetHistoricalProperties());
+
         }
-        public Value GenerateRandomValue()
-        {
-            Random random = new Random();
-            Value val = new Value();
-            val.Consumption =(float)random.NextDouble() * 10;
-            val.GeographicalLocationId = Guid.NewGuid().ToString();
-            val.Timestamp = DateTime.Now;
-            return val;
-        }
+
+        
+        
     }
 }
