@@ -44,7 +44,7 @@ namespace DumpingBufferComponent
             return instance;
         }
 
-        public void WriteToDumpingBuffer(Codes code, Value val)
+        public void WriteToDumpingBuffer(Operations op,Codes code, Value val)
         {
             if ((int)code < 0 || (int)code > 9)
                 throw new ArgumentException("Code must be in interval 0-9!");
@@ -65,12 +65,15 @@ namespace DumpingBufferComponent
                 collectionDescriptions[dataset].Dataset = dataset;
                 collectionDescriptions[dataset].DumpingPropertyCollection.DumpingProperties.Add(dp); //i can make a new dp here also
                 collectionDescriptions[dataset].Id = dataset;
-                AddToOperationsAndId(collectionDescriptions[dataset].Id, Operations.ADD);
+                AddToOperationsAndId(collectionDescriptions[dataset].Id, op); //operation can be add or remove
             }
             else
             {
                 //data exist and it has been updated
             }
+
+
+           
 
             
            
@@ -105,6 +108,18 @@ namespace DumpingBufferComponent
                 }
             }
 
+            return false;
+        }
+
+        private bool checkDumpingPropertyCount()
+        {
+            for(int i =1; i <6;i++)
+            {
+                if(collectionDescriptions[i].DumpingPropertyCollection.DumpingProperties.Count >=2)
+                {
+                    return true;
+                }
+            }
             return false;
         }
     }

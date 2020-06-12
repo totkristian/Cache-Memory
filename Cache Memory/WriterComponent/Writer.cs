@@ -102,15 +102,15 @@ namespace WriterComponent
             switch (op)
             {
                 case Operations.ADD:
-                    dumpingBuffer.WriteToDumpingBuffer(generator.GenerateRandomCode(), generator.RandomNewValueGenerator());
+                    dumpingBuffer.WriteToDumpingBuffer(op,generator.GenerateRandomCode(), generator.RandomNewValueGenerator());
                     break;
                 case Operations.UPDATE:
                     HistoricalProperty hp = GetRandomHistoricalProperty();
-                    dumpingBuffer.WriteToDumpingBuffer(hp.Code, hp.HistoricalValue);
+                    dumpingBuffer.WriteToDumpingBuffer(op,hp.Code, hp.HistoricalValue);
                     break;
                 case Operations.REMOVE:
                     HistoricalProperty hp1 = GetRandomHistoricalProperty();
-                    dumpingBuffer.WriteToDumpingBuffer(hp1.Code, hp1.HistoricalValue);
+                    dumpingBuffer.WriteToDumpingBuffer(op,hp1.Code, hp1.HistoricalValue);
                     //search through existing properties and remove a property
                     break;
             }
