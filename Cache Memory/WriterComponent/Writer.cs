@@ -1,5 +1,6 @@
 ﻿using DumpingBufferComponent;
 using HistoricalComponent;
+using ModelsAndProps.Historical;
 using ModelsAndProps.ValueStructure;
 using System;
 using System.Collections.Generic;
@@ -20,9 +21,9 @@ namespace WriterComponent
         private RandomGenerator generator = new RandomGenerator();
         public Writer()
         {
-           
+
         }
-       
+
 
         public int Meni()
         {
@@ -45,7 +46,7 @@ namespace WriterComponent
                 try
                 {
                     number = int.Parse(Console.ReadLine());
-                    if(number >= 1 && number <= 10)
+                    if (number >= 1 && number <= 10)
                     {
                         isOk = true;
                     }
@@ -97,9 +98,30 @@ namespace WriterComponent
         public void SendToDumpingBuffer()
         {
             //call logger
-            
-            dumpingBuffer.WriteToDumpingBuffer(generator.GenerateRandomCode(), generator.RandomValueGenerator());
+            Operations op = generator.GenerateRandomOperation();
+            switch (op)
+            {
+                case Operations.ADD:
+                    dumpingBuffer.WriteToDumpingBuffer(generator.GenerateRandomCode(), generator.RandomNewValueGenerator());
+                    break;
+                case Operations.UPDATE:
+                    HistoricalProperty hp = GetRandomHistoricalProperty();
+                    dumpingBuffer.WriteToDumpingBuffer(hp.Code, hp.HistoricalValue);
+                    break;
+                case Operations.REMOVE:
+                    HistoricalProperty hp1 = GetRandomHistoricalProperty();
+                    dumpingBuffer.WriteToDumpingBuffer(hp1.Code, hp1.HistoricalValue);
+                    //search through existing properties and remove a property
+                    break;
+            }
+
             Thread.Sleep(2000);
+        }
+
+        public HistoricalProperty GetRandomHistoricalProperty()
+        {
+           return  generator.getRandomPropertyForUpdateOrRemove(historical.GetHistoricalProperties());
+
         }
 
         

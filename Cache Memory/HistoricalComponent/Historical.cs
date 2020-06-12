@@ -280,5 +280,11 @@ namespace HistoricalComponent
 
             return ld;
         }
+
+        public List<HistoricalProperty> GetHistoricalProperties()
+        {
+            List<HistoricalProperty> list = database.HistoricalProperties.ToList();
+            return list;
+        }
     }
 }

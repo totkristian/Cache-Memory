@@ -1,4 +1,5 @@
-﻿using ModelsAndProps.ValueStructure;
+﻿using ModelsAndProps.Historical;
+using ModelsAndProps.ValueStructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace WriterComponent
         {
 
         }
-        public Value RandomValueGenerator()
+        public Value RandomNewValueGenerator()
         {
             Value val = new Value();
             val.Consumption = (float)random.NextDouble() * 10;
@@ -30,6 +31,16 @@ namespace WriterComponent
         public Operations GenerateRandomOperation()
         {
             return (Operations)random.Next(0, 3);
+        }
+
+        public HistoricalProperty getRandomPropertyForUpdateOrRemove(List<HistoricalProperty> hp)
+        {
+            if (hp.Count != 0)
+            {
+                return hp[random.Next(0, hp.Count)];
+            }
+            else
+                return hp[0];
         }
     }
 }
