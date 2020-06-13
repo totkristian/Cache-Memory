@@ -10,6 +10,7 @@ using System.Diagnostics;
 using HistoricalComponent.DatabaseConn;
 using ModelsAndProps.ValueStructure;
 using System.Xml;
+using ModelsAndProps.Dumping_buffer;
 
 namespace HistoricalComponent
 {
@@ -285,6 +286,42 @@ namespace HistoricalComponent
         {
             List<HistoricalProperty> list = database.HistoricalProperties.ToList();
             return list;
+        }
+
+        public void ReadFromDumpingBuffer(DeltaCD deltaCD)
+        {
+            for (int i = 1; i < 6; i++)
+            {
+                CollectionDescription add = deltaCD.Add[i];
+                CollectionDescription update = deltaCD.Update[i];
+                CollectionDescription remove = deltaCD.Remove[i];
+
+                
+            }
+        }
+
+        public void AddCollectionDescription(CollectionDescription cd,int dataset)
+        {
+            ListDescription list1 = database.ListDescriptions.Where(x => x.Id == dataset).FirstOrDefault();
+            HistoricalDescription hd = new HistoricalDescription();
+            List<HistoricalProperty> histProp = new List<HistoricalProperty>();
+            foreach (DumpingProperty dp in cd.DumpingPropertyCollection.DumpingProperties)
+            {
+                HistoricalProperty hp = new HistoricalProperty();
+                hp.Code = dp.Code;
+                hp.Time = DateTime.Now;
+                //setuj id
+                hp.HistoricalValue = dp.DumpingValue;
+                histProp.Add(hp);
+
+            }
+            hd.HistoricalProperties = histProp;
+            hd.Dataset = cd.Dataset;
+            //hd.Id = 
+
+            // list1.HistoricalDescriptions = database.HistoricalDescriptions.Where(x => x.Dataset == dataset).ToList();
+            list1.HistoricalDescriptions.Add(hd);
+            database.SaveChanges();
         }
     }
 }
