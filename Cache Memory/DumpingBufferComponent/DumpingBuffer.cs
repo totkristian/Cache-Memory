@@ -18,6 +18,7 @@ namespace DumpingBufferComponent
         private static Historical historical = Historical.GetInstance();
         private static Dictionary<int,CollectionDescription> collectionDescriptions;
         private static Dictionary<int,List<Operations>> operationAndId;
+        private static DeltaCD deltaCD;
         private static int counter;
         
         public DumpingBuffer()
@@ -40,6 +41,7 @@ namespace DumpingBufferComponent
                     collectionDescriptions.Add(5, new CollectionDescription());
                     operationAndId = new Dictionary<int, List<Operations>>();
                     counter = 0;
+                    deltaCD = new DeltaCD();
                 }
             }
 
@@ -67,18 +69,23 @@ namespace DumpingBufferComponent
                 collectionDescriptions[dataset].Dataset = dataset;
                 collectionDescriptions[dataset].DumpingPropertyCollection.DumpingProperties.Add(dp); //i can make a new dp here also
                 collectionDescriptions[dataset].Id = dataset;
-                AddToOperationsAndId(collectionDescriptions[dataset].Id, op); //operation can be add or remove 
+                AddToOperationsAndId(collectionDescriptions[dataset].Id, op); //operation can be add or remove, or update 
                 //UPDATE HAS HAPPEND in the CHECKUPDATE function
+
+                
             }
             //data added need to check dp.COunt;
             if(checkDumpingPropertyCount() && counter < 3)
             {
-                //pack data into deltaCD component after that clear dictionary
+                
+                FillDeltaCD(); //pack data into deltaCD component
+                //clear dictonarys
 
             }
             else if(counter >= 10)
             {
                 //we have enough data, add into deltaCD and send and clear
+                FillDeltaCD();
             }
         }
         private void AddToOperationsAndId(int id, Operations operation)
@@ -106,7 +113,6 @@ namespace DumpingBufferComponent
                 if (dp.Code.Equals(tempDp.Code))
                 {
                     dp.DumpingValue = tempDp.DumpingValue;
-                    AddToOperationsAndId(collectionDescriptions[dataset].Id, Operations.UPDATE);
                     return true;
                 }
             }
@@ -124,6 +130,35 @@ namespace DumpingBufferComponent
                 }
             }
             return false;
+        }
+
+        private void FillDeltaCD()
+        {
+            int cnt;
+            for(int i = 1; i < 6; i++)
+            {
+                cnt = 0;
+                List<Operations> ops = operationAndId[i];
+                foreach (DumpingProperty dp in collectionDescriptions[i].DumpingPropertyCollection.DumpingProperties)
+                {
+                    switch(ops[cnt++])
+                    {
+                        case Operations.ADD:
+                            deltaCD.Add[i].Dataset = collectionDescriptions[i].Dataset;
+                            deltaCD.Add[i].DumpingPropertyCollection.DumpingProperties.Add(dp);
+                            break;
+                        case Operations.UPDATE:
+                            deltaCD.Update[i].Dataset = collectionDescriptions[i].Dataset;
+                            deltaCD.Update[i].DumpingPropertyCollection.DumpingProperties.Add(dp);
+                            break;
+                        case Operations.REMOVE:
+                            deltaCD.Remove[i].Dataset = collectionDescriptions[i].Dataset;
+                            deltaCD.Remove[i].DumpingPropertyCollection.DumpingProperties.Add(dp);
+                            break;
+                    }
+                    
+                }
+            }
         }
     }
 }
