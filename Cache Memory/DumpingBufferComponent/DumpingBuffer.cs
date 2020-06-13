@@ -34,11 +34,7 @@ namespace DumpingBufferComponent
                 {
                     instance = new DumpingBuffer();
                     collectionDescriptions = new Dictionary<int, CollectionDescription>(5);
-                    collectionDescriptions.Add(1, new CollectionDescription());
-                    collectionDescriptions.Add(2, new CollectionDescription());
-                    collectionDescriptions.Add(3, new CollectionDescription());
-                    collectionDescriptions.Add(4, new CollectionDescription());
-                    collectionDescriptions.Add(5, new CollectionDescription());
+                    InitalizeCollectionDescriptions();
                     operationAndId = new Dictionary<int, List<Operations>>();
                     counter = 0;
                     deltaCD = new DeltaCD();
@@ -69,7 +65,8 @@ namespace DumpingBufferComponent
                 collectionDescriptions[dataset].Dataset = dataset;
                 collectionDescriptions[dataset].DumpingPropertyCollection.DumpingProperties.Add(dp); //i can make a new dp here also
                 collectionDescriptions[dataset].Id = dataset;
-                AddToOperationsAndId(collectionDescriptions[dataset].Id, op); //operation can be add or remove, or update 
+                AddToOperationsAndId(collectionDescriptions[dataset].Id, op); //operation can be add,remove or update 
+                counter++;
                 //UPDATE HAS HAPPEND in the CHECKUPDATE function
 
                 
@@ -79,13 +76,22 @@ namespace DumpingBufferComponent
             {
                 
                 FillDeltaCD(); //pack data into deltaCD component
+                //send data to historical (make a converter or something)
+
                 //clear dictonarys
+                ClearStructures();
+
 
             }
             else if(counter >= 10)
             {
                 //we have enough data, add into deltaCD and send and clear
                 FillDeltaCD();
+
+                //send data to historical (make a converter or something)
+
+                //clear dictonarys
+                ClearStructures();
             }
         }
         private void AddToOperationsAndId(int id, Operations operation)
@@ -156,9 +162,28 @@ namespace DumpingBufferComponent
                             deltaCD.Remove[i].DumpingPropertyCollection.DumpingProperties.Add(dp);
                             break;
                     }
-                    
                 }
             }
+        }
+        private void ClearStructures()
+        {
+            collectionDescriptions.Clear();
+            InitalizeCollectionDescriptions();
+            operationAndId.Clear();
+          //  deltaCD = new DeltaCD();
+        }
+
+        private static void InitalizeCollectionDescriptions()
+        {
+            for (int i = 1; i < 6; i++)
+            {
+                collectionDescriptions.Add(i, new CollectionDescription());
+            }
+        }
+
+        private void SendToHistorical()
+        {
+
         }
     }
 }
