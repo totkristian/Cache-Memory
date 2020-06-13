@@ -18,6 +18,7 @@ namespace DumpingBufferComponent
         private static Historical historical = Historical.GetInstance();
         private static Dictionary<int,CollectionDescription> collectionDescriptions;
         private static Dictionary<int,List<Operations>> operationAndId;
+        private static int counter;
         
         public DumpingBuffer()
         {
@@ -38,6 +39,7 @@ namespace DumpingBufferComponent
                     collectionDescriptions.Add(4, new CollectionDescription());
                     collectionDescriptions.Add(5, new CollectionDescription());
                     operationAndId = new Dictionary<int, List<Operations>>();
+                    counter = 0;
                 }
             }
 
@@ -65,18 +67,19 @@ namespace DumpingBufferComponent
                 collectionDescriptions[dataset].Dataset = dataset;
                 collectionDescriptions[dataset].DumpingPropertyCollection.DumpingProperties.Add(dp); //i can make a new dp here also
                 collectionDescriptions[dataset].Id = dataset;
-                AddToOperationsAndId(collectionDescriptions[dataset].Id, op); //operation can be add or remove
+                AddToOperationsAndId(collectionDescriptions[dataset].Id, op); //operation can be add or remove 
+                //UPDATE HAS HAPPEND in the CHECKUPDATE function
             }
-            else
+            //data added need to check dp.COunt;
+            if(checkDumpingPropertyCount() && counter < 3)
             {
-                //data exist and it has been updated
+                //pack data into deltaCD component after that clear dictionary
+
             }
-
-
-           
-
-            
-           
+            else if(counter >= 10)
+            {
+                //we have enough data, add into deltaCD and send and clear
+            }
         }
         private void AddToOperationsAndId(int id, Operations operation)
         {
