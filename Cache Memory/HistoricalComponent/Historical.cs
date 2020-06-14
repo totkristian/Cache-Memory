@@ -20,7 +20,6 @@ namespace HistoricalComponent
         private static Historical instance;
         private static readonly object syncLock = new object();
         private Database database = new Database();
-        private static IQueryable<ListDescription> listDescriptions;
 
 
         private static List<HistoricalProperty> lista;
@@ -71,29 +70,9 @@ namespace HistoricalComponent
 
         }
 
-
-        public void ReadFromDatabase()
-        {
-            try
-            {
-                listDescriptions = database.ListDescriptions;
-                Logger.WriteLog("Successfully read from database", "Historical", "ReadFromDatabase");
-            }
-            catch(Exception ex)
-            {
-               // Debug.WriteLine(ex.Message);
-                Logger.WriteLog(ex.Message, "Historical", "ReadFromDatabase");
-            }
-        }
-
         public void ManualWriteToHistory(Codes code, Value val)
         {
-            HistoricalProperty hProp = new HistoricalProperty();
-            
-            hProp.Code = code;
-            hProp.HistoricalValue = val;
-            hProp.Time = DateTime.Now;
-            hProp.Id = Guid.NewGuid().ToString();
+            HistoricalProperty hProp = new HistoricalProperty(code,val);
 
             HistoricalDescription hDesc = new HistoricalDescription();
             hDesc.HistoricalProperties.Add(hProp);
