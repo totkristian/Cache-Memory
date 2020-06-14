@@ -11,11 +11,7 @@ namespace ReaderComponent
     public class Reader
     {
         private Historical historical = Historical.GetInstance();
-        private Codes code;
         private ListDescription listDescription = new ListDescription();
-
-        public Codes Code { get => code; set => code = value; }
-
         public void Meni()
         {
             int number = 0;
@@ -24,7 +20,7 @@ namespace ReaderComponent
 
             while (!isOk)
             {
-                Console.WriteLine("Which one do you want?: \n");
+                Console.WriteLine("Which one do you want to read?: \n");
                 Console.WriteLine("1. CODE_ANALOG");
                 Console.WriteLine("2. CODE_DIGITAL");
                 Console.WriteLine("3. CODE_CUSTOM");
@@ -60,6 +56,9 @@ namespace ReaderComponent
         public List<HistoricalProperty> GetChangesForInterval(Codes code)
         {
             //treba kada pozivamo ovu metodu da samo ispisujemo hp.ToString();
+            int dataset = historical.CheckDataset(code);
+            listDescription = historical.ReadOneLDFromDB(dataset);
+            
             switch (code)
             {
                 case Codes.CODE_ANALOG:

@@ -20,7 +20,8 @@ namespace HistoricalComponent
         private static Historical instance;
         private static readonly object syncLock = new object();
         private Database database = new Database();
-        private static IQueryable<ListDescription> listDescriptions;
+        private DatabaseOperations databaseOperations = new DatabaseOperations();
+        private ConverterFromCdToHistorical converter = new ConverterFromCdToHistorical();
 
 
         private static List<HistoricalProperty> lista;
@@ -71,29 +72,9 @@ namespace HistoricalComponent
 
         }
 
-
-        public void ReadFromDatabase()
-        {
-            try
-            {
-                listDescriptions = database.ListDescriptions;
-                Logger.WriteLog("Successfully read from database", "Historical", "ReadFromDatabase");
-            }
-            catch(Exception ex)
-            {
-               // Debug.WriteLine(ex.Message);
-                Logger.WriteLog(ex.Message, "Historical", "ReadFromDatabase");
-            }
-        }
-
         public void ManualWriteToHistory(Codes code, Value val)
         {
-            HistoricalProperty hProp = new HistoricalProperty();
-            
-            hProp.Code = code;
-            hProp.HistoricalValue = val;
-            hProp.Time = DateTime.Now;
-            hProp.Id = Guid.NewGuid().ToString();
+            HistoricalProperty hProp = new HistoricalProperty(code,val);
 
             HistoricalDescription hDesc = new HistoricalDescription();
             hDesc.HistoricalProperties.Add(hProp);
@@ -108,71 +89,17 @@ namespace HistoricalComponent
 
             hDesc.Dataset = dataset;
 
-            ReadFromDatabase();
-
-            ListDescription list1 = database.ListDescriptions.Where(x => x.Id == dataset).FirstOrDefault();
-            list1.HistoricalDescriptions.Add(hDesc);
-            database.SaveChanges();
+            //call logger
+            databaseOperations.AddHistoricalDescription(hDesc, dataset);
         }
-
-
-
-        private bool CheckDeadband(HistoricalProperty hprop, int dataset)
-        {
-            if(hprop == null)
-            {
-                throw new ArgumentNullException("You need to have historical property!");
-            }
-
-            
-            if (hprop.Code.Equals(Codes.CODE_DIGITAL))
-            {
-                return true;
-            }
-
-            ListDescription list = ReadOneLDFromDB(dataset);
-            foreach (HistoricalDescription hd in list.HistoricalDescriptions)
-            {
-                foreach (HistoricalProperty hp in hd.HistoricalProperties)
-                {
-                    if(hp.Id == hprop.Id)
-                    {
-                        if (hprop.HistoricalValue.Consumption < (hp.HistoricalValue.Consumption - (hp.HistoricalValue.Consumption / 100) * 2) ||
-                                hprop.HistoricalValue.Consumption > (hp.HistoricalValue.Consumption + (hp.HistoricalValue.Consumption / 100) * 2))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            return false;
-        }
-
-
+      
         public ListDescription ReadOneLDFromDB(int dataset)
         {
-            ListDescription ld = new ListDescription();
-            List<HistoricalDescription> list = database.HistoricalDescriptions.Where(x => x.ListDescriptionId == dataset).ToList();
-            ld.HistoricalDescriptions = list;
-
-            for (int i = 0; i < ld.HistoricalDescriptions.Count; i++)
-            {
-                int id = ld.HistoricalDescriptions[i].Id;
-                List<HistoricalProperty> hpList = database.HistoricalProperties.Where(x => x.HistoricalDescriptionId == id).ToList();
-                ld.HistoricalDescriptions[i].HistoricalProperties = hpList;
-            }
-
-            return ld;
+            return databaseOperations.ReadListDescription(dataset);
         }
-
         public List<HistoricalProperty> GetHistoricalProperties()
         {
-            List<HistoricalProperty> list = database.HistoricalProperties.ToList();
-            return list;
+            return databaseOperations.ReadHistoricalProperties();
         }
 
         public void ReadFromDumpingBuffer(DeltaCD deltaCD)
@@ -182,87 +109,30 @@ namespace HistoricalComponent
                 //check if i have data in any of these
                 if(checkIfTheresDataInCollectionDescription(deltaCD.Add[i]))
                 {
-                    AddCollectionDescription(deltaCD.Add[i], i);
+                    HistoricalDescription hd = converter.ConvertCollectionDescription(deltaCD.Add[i], i);
+                    databaseOperations.AddHistoricalDescription(hd,i);
                 }
                 
                 if (checkIfTheresDataInCollectionDescription(deltaCD.Update[i]))
                 {
-                    UpdateCollectionDescription(deltaCD.Update[i], i);
+                    HistoricalDescription hd = converter.ConvertCollectionDescription(deltaCD.Update[i], i);
+                    databaseOperations.UpdateHistoricalDescriptions(hd, i);
                 }
                 
                 if (checkIfTheresDataInCollectionDescription(deltaCD.Remove[i]))
                 {
-                    RemoveCollectionDescription(deltaCD.Remove[i], i);
+                    HistoricalDescription hd = converter.ConvertCollectionDescription(deltaCD.Remove[i], i);
+                    databaseOperations.RemoveHistoricalProperties(hd, i);
                 }
-                
-                
             }
         }
         private bool checkIfTheresDataInCollectionDescription(CollectionDescription cd)
         {
-            if(cd.Dataset == 0 || cd.Id == 0 || cd.DumpingPropertyCollection.DumpingProperties.Count ==0)
+            if(cd.Dataset == 0 || cd.Id == 0 || cd.DumpingPropertyCollection.DumpingProperties.Count == 0)
             {
                 return false;
             }
             return true;
-        }
-
-        public void AddCollectionDescription(CollectionDescription cd,int dataset)
-        {
-            ListDescription list1 = database.ListDescriptions.Where(x => x.Id == dataset).FirstOrDefault();
-            HistoricalDescription hd = new HistoricalDescription();
-            List<HistoricalProperty> histProp = new List<HistoricalProperty>();
-
-            foreach (DumpingProperty dp in cd.DumpingPropertyCollection.DumpingProperties)
-            {
-                HistoricalProperty hp = new HistoricalProperty();
-                hp.Code = dp.Code;
-                hp.Time = DateTime.Now;
-                hp.Id = Guid.NewGuid().ToString();
-                hp.HistoricalValue = dp.DumpingValue;
-                histProp.Add(hp);
-
-            }
-            hd.HistoricalProperties = histProp;
-            hd.Dataset = cd.Dataset;
-            list1.HistoricalDescriptions.Add(hd);
-            database.SaveChanges();
-
-        }
-        public void UpdateCollectionDescription(CollectionDescription cd, int dataset)
-        {
-            List<HistoricalProperty> historicalProperties = database.HistoricalProperties.ToList();
-            foreach(DumpingProperty dp in cd.DumpingPropertyCollection.DumpingProperties)
-            {
-                
-                foreach(HistoricalProperty hp in historicalProperties)
-                {
-                    if(hp.HistoricalValue.GeographicalLocationId == dp.DumpingValue.GeographicalLocationId && hp.Code.Equals(dp.Code))
-                    {
-                        CheckDeadband(hp, dataset);
-                        hp.HistoricalValue = dp.DumpingValue;
-                        break;
-                    }
-                }
-            }
-            database.SaveChanges();
-        }
-
-        public void RemoveCollectionDescription(CollectionDescription cd, int dataset)
-        {
-            List<HistoricalProperty> historicalProperties = database.HistoricalProperties.ToList();
-            foreach (DumpingProperty dp in cd.DumpingPropertyCollection.DumpingProperties)
-            {
-                for(int i = 0; i < historicalProperties.Count; i++)
-                {
-                    if (historicalProperties[i].HistoricalValue.GeographicalLocationId == dp.DumpingValue.GeographicalLocationId && historicalProperties[i].Code.Equals(dp.Code))
-                    {
-                        database.HistoricalProperties.Remove(historicalProperties[i]);
-                        break;
-                    }
-                }
-            }
-            database.SaveChanges();
         }
     }
 }

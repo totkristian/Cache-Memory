@@ -19,6 +19,7 @@ namespace DumpingBufferComponent
         private static Dictionary<int,CollectionDescription> collectionDescriptions;
         private static Dictionary<int,List<Operations>> operationAndId;
         private static DeltaCD deltaCD;
+        private ConvertToDeltaCD converter = new ConvertToDeltaCD();
         private static int counter;
         
         public DumpingBuffer()
@@ -76,8 +77,9 @@ namespace DumpingBufferComponent
             //data added need to check dp.COunt;
             if(checkDumpingPropertyCount() && counter < 3)
             {
-                
-                FillDeltaCD(); //pack data into deltaCD component
+
+                // FillDeltaCD(); //pack data into deltaCD component
+                deltaCD = converter.FillDeltaCD(operationAndId, collectionDescriptions);
                 //send data to historical (make a converter or something)
                 SendToHistorical();
                 //clear dictonarys
@@ -88,7 +90,8 @@ namespace DumpingBufferComponent
             else if(counter >= 10)
             {
                 //we have enough data, add into deltaCD and send and clear
-                FillDeltaCD();
+                /*FillDeltaCD(); */
+                deltaCD = converter.FillDeltaCD(operationAndId,collectionDescriptions);
 
                 //send data to historical (make a converter or something)
                 SendToHistorical();
@@ -140,7 +143,7 @@ namespace DumpingBufferComponent
             return false;
         }
 
-        private void FillDeltaCD()
+        /*private void FillDeltaCD()
         {
             int cnt;
             deltaCD.TransactionID = Guid.NewGuid().ToString();
@@ -170,13 +173,14 @@ namespace DumpingBufferComponent
                     }
                 }
             }
-        }
+        } */
         private void ClearStructures()
         {
             collectionDescriptions.Clear();
             operationAndId.Clear();
             InitalizeCollectionDescriptions();
             deltaCD = new DeltaCD();
+            counter = 0;
         }
 
         private static void InitalizeCollectionDescriptions()

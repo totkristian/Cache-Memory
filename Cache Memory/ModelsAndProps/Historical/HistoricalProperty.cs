@@ -33,6 +33,8 @@ namespace ModelsAndProps.Historical
         {
             this.code = codes;
             this.historicalValue = value;
+            this.time = DateTime.Now;
+            this.id = Guid.NewGuid().ToString();
         }
 
         public override string ToString()
