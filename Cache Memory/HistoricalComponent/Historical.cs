@@ -129,10 +129,9 @@ namespace HistoricalComponent
             {
                 return true;
             }
-            //OVO NI KURCU NE VALJA
 
-            List<HistoricalDescription> listHd = database.HistoricalDescriptions.Where(x => x.Dataset == dataset).ToList();
-            foreach (HistoricalDescription hd in listHd)
+            ListDescription list = ReadOneLDFromDB(dataset);
+            foreach (HistoricalDescription hd in list.HistoricalDescriptions)
             {
                 foreach (HistoricalProperty hp in hd.HistoricalProperties)
                 {
