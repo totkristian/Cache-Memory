@@ -14,7 +14,10 @@ namespace Cache_Memory
         {
             Writer w = new Writer();
 
-            w.SendToHistorical();
+            while(!Console.KeyAvailable) {
+                w.SendToDumpingBuffer();
+            }
+           
             Console.WriteLine("Writer je zavrsio!");
             Reader r = new Reader();
 

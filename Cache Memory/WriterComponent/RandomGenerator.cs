@@ -35,12 +35,13 @@ namespace WriterComponent
 
         public HistoricalProperty getRandomPropertyForUpdateOrRemove(List<HistoricalProperty> hp)
         {
-            if (hp.Count != 0)
-            {
-                return hp[random.Next(0, hp.Count)];
-            }
-            else
-                return hp[0];
+
+                if (hp.Count > 0)
+                {
+                    return hp[random.Next(0, hp.Count)];
+                }
+                else
+                    return null;
         }
     }
 }

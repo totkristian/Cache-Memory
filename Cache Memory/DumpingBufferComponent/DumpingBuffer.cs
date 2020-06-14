@@ -34,8 +34,8 @@ namespace DumpingBufferComponent
                 {
                     instance = new DumpingBuffer();
                     collectionDescriptions = new Dictionary<int, CollectionDescription>(5);
-                    InitalizeCollectionDescriptions();
                     operationAndId = new Dictionary<int, List<Operations>>();
+                    InitalizeCollectionDescriptions();
                     counter = 0;
                     deltaCD = new DeltaCD();
                 }
@@ -46,6 +46,8 @@ namespace DumpingBufferComponent
 
         public void WriteToDumpingBuffer(Operations op,Codes code, Value val)
         {
+            
+            
             if ((int)code < 0 || (int)code > 9)
                 throw new ArgumentException("Code must be in interval 0-9!");
             //check Val.Consumption and the resto of the properties if they are valid
@@ -116,7 +118,7 @@ namespace DumpingBufferComponent
            
             foreach(DumpingProperty dp in collectionDescriptions[dataset].DumpingPropertyCollection.DumpingProperties)
             {
-                if (dp.Code.Equals(tempDp.Code))
+                if (dp.DumpingValue.GeographicalLocationId == tempDp.DumpingValue.GeographicalLocationId)
                 {
                     dp.DumpingValue = tempDp.DumpingValue;
                     return true;
@@ -153,14 +155,17 @@ namespace DumpingBufferComponent
                         case Operations.ADD:
                             deltaCD.Add[i].Dataset = collectionDescriptions[i].Dataset;
                             deltaCD.Add[i].DumpingPropertyCollection.DumpingProperties.Add(dp);
+                            deltaCD.Add[i].Id = collectionDescriptions[i].Id;
                             break;
                         case Operations.UPDATE:
                             deltaCD.Update[i].Dataset = collectionDescriptions[i].Dataset;
                             deltaCD.Update[i].DumpingPropertyCollection.DumpingProperties.Add(dp);
+                            deltaCD.Update[i].Id = collectionDescriptions[i].Id;
                             break;
                         case Operations.REMOVE:
                             deltaCD.Remove[i].Dataset = collectionDescriptions[i].Dataset;
                             deltaCD.Remove[i].DumpingPropertyCollection.DumpingProperties.Add(dp);
+                            deltaCD.Remove[i].Id = collectionDescriptions[i].Id;
                             break;
                     }
                 }
@@ -169,8 +174,8 @@ namespace DumpingBufferComponent
         private void ClearStructures()
         {
             collectionDescriptions.Clear();
-            InitalizeCollectionDescriptions();
             operationAndId.Clear();
+            InitalizeCollectionDescriptions();
             deltaCD = new DeltaCD();
         }
 
@@ -179,6 +184,7 @@ namespace DumpingBufferComponent
             for (int i = 1; i < 6; i++)
             {
                 collectionDescriptions.Add(i, new CollectionDescription());
+                operationAndId.Add(i, new List<Operations>());
             }
         }
 
