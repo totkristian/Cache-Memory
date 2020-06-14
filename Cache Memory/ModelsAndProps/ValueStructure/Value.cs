@@ -29,7 +29,7 @@ namespace ModelsAndProps.ValueStructure
 
         public override string ToString()
         {
-            return $"\n\tGEO ID:{geographicalLocationId}\n\tCONSUMPTION:{consumption}\n\tTIME STAMP:{timestamp}";
+            return $"\n\tGEO ID:{geographicalLocationId}\n\tCONSUMPTION:{consumption}\n\tTIME STAMP:{timestamp} \n-----------------------------------------------";
         }
 
     }

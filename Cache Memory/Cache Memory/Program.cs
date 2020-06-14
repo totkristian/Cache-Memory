@@ -18,7 +18,7 @@ namespace Cache_Memory
                 w.SendToDumpingBuffer();
             }
            
-            Console.WriteLine("Writer je zavrsio!");
+            Console.WriteLine("Writer je zavrsio!"); 
             Reader r = new Reader();
 
             r.Meni();
