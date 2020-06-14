@@ -42,5 +42,52 @@ namespace HistoricalComponent
             List<HistoricalProperty> list = database.HistoricalProperties.ToList();
             return list;
         }
+
+        public void UpdateHistoricalDescriptions(HistoricalDescription hd, int dataset)
+        {
+            List<HistoricalProperty> historicalProperties = ReadHistoricalProperties();
+            foreach (HistoricalProperty hp in historicalProperties)
+            {
+                foreach (HistoricalProperty hpTemp in hd.HistoricalProperties)
+                {
+                    if(hp.HistoricalValue.GeographicalLocationId == hpTemp.HistoricalValue.GeographicalLocationId && hp.Code.Equals(hpTemp.Code))
+                    {
+                        if(CheckDeadband(hp, hpTemp))
+                        {
+                            hp.HistoricalValue = hpTemp.HistoricalValue;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool CheckDeadband(HistoricalProperty hp, HistoricalProperty hpTemp)
+        {
+            if (hp == null || hpTemp == null)
+            {
+                throw new ArgumentNullException("You need to have historical property!");
+            }
+
+
+            if (hpTemp.Code.Equals(Codes.CODE_DIGITAL) && hp.Code.Equals(Codes.CODE_DIGITAL))
+            {
+                return true;
+            }
+            if (hp.Id == hpTemp.Id)
+            {
+                if (hpTemp.HistoricalValue.Consumption < (hp.HistoricalValue.Consumption - hp.HistoricalValue.Consumption * 0.02) ||
+                    hpTemp.HistoricalValue.Consumption > (hp.HistoricalValue.Consumption + hp.HistoricalValue.Consumption * 0.02))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            //tj exception jer nisu prosledjena dva ista parametra
+            return false;
+        }
     }
 }

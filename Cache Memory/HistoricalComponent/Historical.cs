@@ -21,6 +21,7 @@ namespace HistoricalComponent
         private static readonly object syncLock = new object();
         private Database database = new Database();
         private DatabaseOperations databaseOperations = new DatabaseOperations();
+        private ConverterFromCdToHistorical converter = new ConverterFromCdToHistorical();
 
 
         private static List<HistoricalProperty> lista;
@@ -97,7 +98,7 @@ namespace HistoricalComponent
 
 
 
-        private bool CheckDeadband(HistoricalProperty hprop, int dataset)
+       /* private bool CheckDeadband(HistoricalProperty hprop, int dataset)
         {
             if(hprop == null)
             {
@@ -130,7 +131,7 @@ namespace HistoricalComponent
                 }
             }
             return false;
-        }
+        } */
         public ListDescription ReadOneLDFromDB(int dataset)
         {
             return databaseOperations.ReadListDescription(dataset);
@@ -147,11 +148,15 @@ namespace HistoricalComponent
                 //check if i have data in any of these
                 if(checkIfTheresDataInCollectionDescription(deltaCD.Add[i]))
                 {
-                    AddCollectionDescription(deltaCD.Add[i], i);
+                    HistoricalDescription hd = converter.ConvertCollectionDescription(deltaCD.Add[i], i);
+                    databaseOperations.AddHistoricalDescription(hd,i);
+                    //AddCollectionDescription(deltaCD.Add[i], i);
                 }
                 
                 if (checkIfTheresDataInCollectionDescription(deltaCD.Update[i]))
                 {
+                    HistoricalDescription hd = converter.ConvertCollectionDescription(deltaCD.Update[i], i);
+                    
                     UpdateCollectionDescription(deltaCD.Update[i], i);
                 }
                 
@@ -172,9 +177,9 @@ namespace HistoricalComponent
             return true;
         }
 
-        public void AddCollectionDescription(CollectionDescription cd,int dataset)
+        /*public void AddCollectionDescription(CollectionDescription cd,int dataset)
         {
-            ListDescription list1 = database.ListDescriptions.Where(x => x.Id == dataset).FirstOrDefault();
+           // ListDescription list1 = database.ListDescriptions.Where(x => x.Id == dataset).FirstOrDefault();
             HistoricalDescription hd = new HistoricalDescription();
             List<HistoricalProperty> histProp = new List<HistoricalProperty>();
 
@@ -190,9 +195,11 @@ namespace HistoricalComponent
             }
             hd.HistoricalProperties = histProp;
             hd.Dataset = cd.Dataset;
-            list1.HistoricalDescriptions.Add(hd);
-            database.SaveChanges();
-        }
+           
+            databaseOperations.AddHistoricalDescription(hd, dataset);
+            //list1.HistoricalDescriptions.Add(hd);
+           // database.SaveChanges();
+        } */
         public void UpdateCollectionDescription(CollectionDescription cd, int dataset)
         {
             List<HistoricalProperty> historicalProperties = database.HistoricalProperties.ToList();
@@ -203,7 +210,7 @@ namespace HistoricalComponent
                 {
                     if(hp.HistoricalValue.GeographicalLocationId == dp.DumpingValue.GeographicalLocationId && hp.Code.Equals(dp.Code))
                     {
-                        CheckDeadband(hp, dataset);
+                       // CheckDeadband(hp, dataset);
                         hp.HistoricalValue = dp.DumpingValue;
                         break;
                     }
