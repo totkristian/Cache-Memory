@@ -20,6 +20,7 @@ namespace HistoricalComponent
         private static Historical instance;
         private static readonly object syncLock = new object();
         private Database database = new Database();
+        private DatabaseOperations databaseOperations = new DatabaseOperations();
 
 
         private static List<HistoricalProperty> lista;
@@ -86,11 +87,12 @@ namespace HistoricalComponent
             }
 
             hDesc.Dataset = dataset;
-            
+
             //call logger
-            ListDescription list1 = database.ListDescriptions.Where(x => x.Id == dataset).FirstOrDefault();
+            databaseOperations.AddHistoricalDescription(hDesc, dataset);
+           /* ListDescription list1 = database.ListDescriptions.Where(x => x.Id == dataset).FirstOrDefault();
             list1.HistoricalDescriptions.Add(hDesc);
-            database.SaveChanges();
+            database.SaveChanges();*/
         }
 
 
