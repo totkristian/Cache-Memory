@@ -86,8 +86,8 @@ namespace HistoricalComponent
             }
 
             hDesc.Dataset = dataset;
-
-
+            
+            //call logger
             ListDescription list1 = database.ListDescriptions.Where(x => x.Id == dataset).FirstOrDefault();
             list1.HistoricalDescriptions.Add(hDesc);
             database.SaveChanges();
@@ -115,8 +115,8 @@ namespace HistoricalComponent
                 {
                     if(hp.Id == hprop.Id)
                     {
-                        if (hprop.HistoricalValue.Consumption < (hp.HistoricalValue.Consumption - (hp.HistoricalValue.Consumption / 100) * 2) ||
-                                hprop.HistoricalValue.Consumption > (hp.HistoricalValue.Consumption + (hp.HistoricalValue.Consumption / 100) * 2))
+                        if (hprop.HistoricalValue.Consumption < (hp.HistoricalValue.Consumption - hp.HistoricalValue.Consumption * 0.02) ||
+                                hprop.HistoricalValue.Consumption > (hp.HistoricalValue.Consumption + hp.HistoricalValue.Consumption * 0.02))
                         {
                             return true;
                         }
