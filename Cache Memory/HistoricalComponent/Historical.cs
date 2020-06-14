@@ -108,7 +108,6 @@ namespace HistoricalComponent
 
             hDesc.Dataset = dataset;
 
-            ReadFromDatabase();
 
             ListDescription list1 = database.ListDescriptions.Where(x => x.Id == dataset).FirstOrDefault();
             list1.HistoricalDescriptions.Add(hDesc);
@@ -200,7 +199,7 @@ namespace HistoricalComponent
         }
         private bool checkIfTheresDataInCollectionDescription(CollectionDescription cd)
         {
-            if(cd.Dataset == 0 || cd.Id == 0 || cd.DumpingPropertyCollection.DumpingProperties.Count ==0)
+            if(cd.Dataset == 0 || cd.Id == 0 || cd.DumpingPropertyCollection.DumpingProperties.Count == 0)
             {
                 return false;
             }
@@ -227,7 +226,6 @@ namespace HistoricalComponent
             hd.Dataset = cd.Dataset;
             list1.HistoricalDescriptions.Add(hd);
             database.SaveChanges();
-
         }
         public void UpdateCollectionDescription(CollectionDescription cd, int dataset)
         {

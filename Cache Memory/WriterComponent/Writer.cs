@@ -108,7 +108,7 @@ namespace WriterComponent
                 case Operations.UPDATE:
                     HistoricalProperty hp = GetRandomHistoricalProperty();
                     if (hp == null)
-                        return;
+                        break;
                         
                         Value v = generator.RandomNewValueGenerator();
                         v.GeographicalLocationId = hp.HistoricalValue.GeographicalLocationId;
@@ -118,13 +118,13 @@ namespace WriterComponent
                 case Operations.REMOVE:
                     HistoricalProperty hp1 = GetRandomHistoricalProperty();
                     if (hp1 == null)
-                        return;
+                        break;
                     dumpingBuffer.WriteToDumpingBuffer(op,hp1.Code, hp1.HistoricalValue);
                     //search through existing properties and remove a property
                     break;
             }
 
-           // Thread.Sleep(2000);
+            Thread.Sleep(2000);
         }
 
         public HistoricalProperty GetRandomHistoricalProperty()
