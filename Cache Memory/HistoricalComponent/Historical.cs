@@ -293,11 +293,8 @@ namespace HistoricalComponent
             for (int i = 1; i < 6; i++)
             {
                 AddCollectionDescription(deltaCD.Add[i], i);
-
                 UpdateCollectionDescription(deltaCD.Update[i],i);
                 RemoveCollectionDescription(deltaCD.Remove[i],i);
-
-                
             }
         }
 

@@ -77,7 +77,7 @@ namespace DumpingBufferComponent
                 
                 FillDeltaCD(); //pack data into deltaCD component
                 //send data to historical (make a converter or something)
-
+                SendToHistorical();
                 //clear dictonarys
                 ClearStructures();
 
@@ -89,7 +89,7 @@ namespace DumpingBufferComponent
                 FillDeltaCD();
 
                 //send data to historical (make a converter or something)
-
+                SendToHistorical();
                 //clear dictonarys
                 ClearStructures();
             }
@@ -171,7 +171,7 @@ namespace DumpingBufferComponent
             collectionDescriptions.Clear();
             InitalizeCollectionDescriptions();
             operationAndId.Clear();
-          //  deltaCD = new DeltaCD();
+            deltaCD = new DeltaCD();
         }
 
         private static void InitalizeCollectionDescriptions()
@@ -184,7 +184,7 @@ namespace DumpingBufferComponent
 
         private void SendToHistorical()
         {
-
+            historical.ReadFromDumpingBuffer(deltaCD);
         }
     }
 }
