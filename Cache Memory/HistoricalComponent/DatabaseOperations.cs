@@ -22,6 +22,7 @@ namespace HistoricalComponent
 
         public ListDescription ReadListDescription(int dataset)
         {
+            //call logger
             ListDescription ld = new ListDescription();
             List<HistoricalDescription> list = database.HistoricalDescriptions.Where(x => x.ListDescriptionId == dataset).ToList();
             ld.HistoricalDescriptions = list;
@@ -32,8 +33,14 @@ namespace HistoricalComponent
                 List<HistoricalProperty> hpList = database.HistoricalProperties.Where(x => x.HistoricalDescriptionId == id).ToList();
                 ld.HistoricalDescriptions[i].HistoricalProperties = hpList;
             }
-
             return ld;
+        }
+
+        public List<HistoricalProperty> ReadHistoricalProperties()
+        {
+            //call logger
+            List<HistoricalProperty> list = database.HistoricalProperties.ToList();
+            return list;
         }
     }
 }

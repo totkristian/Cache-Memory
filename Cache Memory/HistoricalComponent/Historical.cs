@@ -131,17 +131,13 @@ namespace HistoricalComponent
             }
             return false;
         }
-
-
         public ListDescription ReadOneLDFromDB(int dataset)
         {
             return databaseOperations.ReadListDescription(dataset);
         }
-
         public List<HistoricalProperty> GetHistoricalProperties()
         {
-            List<HistoricalProperty> list = database.HistoricalProperties.ToList();
-            return list;
+            return databaseOperations.ReadHistoricalProperties();
         }
 
         public void ReadFromDumpingBuffer(DeltaCD deltaCD)
