@@ -1,5 +1,6 @@
 ﻿using DumpingBufferComponent;
 using HistoricalComponent;
+using ModelsAndProps;
 using ModelsAndProps.Historical;
 using ModelsAndProps.ValueStructure;
 using System;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace WriterComponent
 {
-    public class Writer
+    public class Writer : IWriter
     {
         private Historical historical = Historical.GetInstance();
         private DumpingBuffer dumpingBuffer = DumpingBuffer.GetInstance();
@@ -25,7 +26,7 @@ namespace WriterComponent
         }
 
 
-        public int Meni()
+        private int Meni()
         {
             int number = 0;
             bool isOk = false;
