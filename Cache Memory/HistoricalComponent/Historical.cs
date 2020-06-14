@@ -292,9 +292,10 @@ namespace HistoricalComponent
         {
             for (int i = 1; i < 6; i++)
             {
-                CollectionDescription add = deltaCD.Add[i];
-                CollectionDescription update = deltaCD.Update[i];
-                CollectionDescription remove = deltaCD.Remove[i];
+                AddCollectionDescription(deltaCD.Add[i], i);
+
+                UpdateCollectionDescription(deltaCD.Update[i],i);
+                RemoveCollectionDescription(deltaCD.Remove[i],i);
 
                 
             }
@@ -305,22 +306,66 @@ namespace HistoricalComponent
             ListDescription list1 = database.ListDescriptions.Where(x => x.Id == dataset).FirstOrDefault();
             HistoricalDescription hd = new HistoricalDescription();
             List<HistoricalProperty> histProp = new List<HistoricalProperty>();
+
             foreach (DumpingProperty dp in cd.DumpingPropertyCollection.DumpingProperties)
             {
                 HistoricalProperty hp = new HistoricalProperty();
                 hp.Code = dp.Code;
                 hp.Time = DateTime.Now;
-                //setuj id
+                hp.Id = Guid.NewGuid().ToString();
                 hp.HistoricalValue = dp.DumpingValue;
                 histProp.Add(hp);
 
             }
             hd.HistoricalProperties = histProp;
             hd.Dataset = cd.Dataset;
-            //hd.Id = 
-
-            // list1.HistoricalDescriptions = database.HistoricalDescriptions.Where(x => x.Dataset == dataset).ToList();
             list1.HistoricalDescriptions.Add(hd);
+            database.SaveChanges();
+
+        }
+        public void UpdateCollectionDescription(CollectionDescription cd, int dataset)
+        {
+
+            List<HistoricalProperty> historicalProperties = database.HistoricalProperties.ToList();
+            bool updated = false;
+            foreach(DumpingProperty dp in cd.DumpingPropertyCollection.DumpingProperties)
+            {
+                foreach(HistoricalProperty hp in historicalProperties)
+                {
+                    if(hp.HistoricalValue.GeographicalLocationId == dp.DumpingValue.GeographicalLocationId && hp.Code.Equals(dp.Code))
+                    {
+                        hp.HistoricalValue = dp.DumpingValue;
+                        updated = true;
+                        break;
+                    }
+                }
+                if (updated)
+                    break;
+            }
+            database.SaveChanges();
+        }
+
+        public void RemoveCollectionDescription(CollectionDescription cd, int dataset)
+        {
+            List<HistoricalProperty> historicalProperties = database.HistoricalProperties.ToList();
+            int index = -1;
+            foreach (DumpingProperty dp in cd.DumpingPropertyCollection.DumpingProperties)
+            {
+                for(int i = 0; i < historicalProperties.Count; i++)
+                {
+                    if (historicalProperties[i].HistoricalValue.GeographicalLocationId == dp.DumpingValue.GeographicalLocationId && historicalProperties[i].Code.Equals(dp.Code))
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+                if (index != -1)
+                    break;
+            }
+            if(index != -1)
+            {
+                historicalProperties.RemoveAt(index);
+            }
             database.SaveChanges();
         }
     }

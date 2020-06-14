@@ -141,6 +141,7 @@ namespace DumpingBufferComponent
         private void FillDeltaCD()
         {
             int cnt;
+            deltaCD.TransactionID = Guid.NewGuid().ToString();
             for(int i = 1; i < 6; i++)
             {
                 cnt = 0;
