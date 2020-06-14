@@ -52,6 +52,7 @@ namespace HistoricalComponent
                 {
                     if(hp.HistoricalValue.GeographicalLocationId == hpTemp.HistoricalValue.GeographicalLocationId && hp.Code.Equals(hpTemp.Code))
                     {
+                        hpTemp.Id = hp.Id;
                         if(CheckDeadband(hp, hpTemp))
                         {
                             hp.HistoricalValue = hpTemp.HistoricalValue;
@@ -60,6 +61,24 @@ namespace HistoricalComponent
                     }
                 }
             }
+            database.SaveChanges();
+        }
+
+        public void RemoveHistoricalProperties(HistoricalDescription hd, int dataset)
+        {
+            List<HistoricalProperty> historicalProperties = ReadHistoricalProperties();
+            foreach(HistoricalProperty hpTemp in hd.HistoricalProperties)
+            {
+                foreach(HistoricalProperty hp in historicalProperties)
+                {
+                    if(hpTemp.HistoricalValue.GeographicalLocationId == hp.HistoricalValue.GeographicalLocationId && hp.Code.Equals(hpTemp.Code))
+                    {
+                        database.HistoricalProperties.Remove(hp);
+                        break;
+                    }
+                }
+            }
+            database.SaveChanges();
         }
 
         private bool CheckDeadband(HistoricalProperty hp, HistoricalProperty hpTemp)
@@ -74,19 +93,12 @@ namespace HistoricalComponent
             {
                 return true;
             }
-            if (hp.Id == hpTemp.Id)
+            
+            if (hpTemp.HistoricalValue.Consumption < (hp.HistoricalValue.Consumption - (hp.HistoricalValue.Consumption * 0.02)) ||
+                    hpTemp.HistoricalValue.Consumption > (hp.HistoricalValue.Consumption + (hp.HistoricalValue.Consumption * 0.02)))
             {
-                if (hpTemp.HistoricalValue.Consumption < (hp.HistoricalValue.Consumption - hp.HistoricalValue.Consumption * 0.02) ||
-                    hpTemp.HistoricalValue.Consumption > (hp.HistoricalValue.Consumption + hp.HistoricalValue.Consumption * 0.02))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return true;
             }
-            //tj exception jer nisu prosledjena dva ista parametra
             return false;
         }
     }
