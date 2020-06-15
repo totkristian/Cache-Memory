@@ -83,7 +83,7 @@ namespace WriterComponent
                     isOk = true;
                     //callLogger
                 }
-                catch()
+                catch
                 {
                     //callLogger
                     Console.WriteLine("Something went wrong with your input data. Please try again!");
