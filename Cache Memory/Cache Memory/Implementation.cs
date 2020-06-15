@@ -47,6 +47,35 @@ namespace Cache_Memory
         }
 
 
+        public void ReadMenu()
+        {
+            while (true)
+            {
+                switch (MenuChoiseInput())
+                {
+                    case 1:
+                        //dumping buffer
+                        SendToDumpingBuffer();
+                        break;
+                    case 2:
+                        //manualWrite
+                        NewMethod();
+                        break;
+                    case 3:
+                        //read
+                        ReadData();
+                        break;
+                    case 4:
+                        return;
+                }
+            }
+        }
+
+        private static void NewMethod()
+        {
+            ManualWriteToHistory();
+        }
+
         public void ReadData()
         {
             ConsoleKeyInfo cki;
