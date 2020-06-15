@@ -34,6 +34,10 @@ namespace HistoricalComponent
             List<HistoricalDescription> list = database.HistoricalDescriptions.Where(x => x.ListDescriptionId == dataset).ToList();
             ld.HistoricalDescriptions = list;
 
+            lock (syncLock)
+            {
+                Logger.WriteLog("Reading list description", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
             for (int i = 0; i < ld.HistoricalDescriptions.Count; i++)
             {
                 int id = ld.HistoricalDescriptions[i].Id;
@@ -46,6 +50,10 @@ namespace HistoricalComponent
         public List<HistoricalProperty> ReadHistoricalProperties()
         {
             //call logger
+            lock (syncLock)
+            {
+                Logger.WriteLog("Reading historical properties", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
             List<HistoricalProperty> list = database.HistoricalProperties.ToList();
             return list;
         }
@@ -98,6 +106,10 @@ namespace HistoricalComponent
 
         private bool CheckDeadband(HistoricalProperty hp, HistoricalProperty hpTemp)
         {
+            lock (syncLock)
+            {
+                Logger.WriteLog("Checking deadband", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
             if (hp == null || hpTemp == null)
             {
                 throw new ArgumentNullException("You need to have historical property!");
@@ -119,6 +131,10 @@ namespace HistoricalComponent
 
         public bool CheckGeoId(string id)
         {
+            lock (syncLock)
+            {
+                Logger.WriteLog("Checking id", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
             HistoricalProperty hp = database.HistoricalProperties.Where(x => x.HistoricalValue.GeographicalLocationId.Equals(id)).FirstOrDefault();
             if (hp != null)
                 return false;
