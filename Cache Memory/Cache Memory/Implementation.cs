@@ -59,7 +59,7 @@ namespace Cache_Memory
                         break;
                     case 2:
                         //manualWrite
-                        NewMethod();
+                        ManualWriteToHistory();
                         break;
                     case 3:
                         //read
@@ -71,9 +71,15 @@ namespace Cache_Memory
             }
         }
 
-        private static void NewMethod()
+        public void ManualWriteToHistory()
         {
-            ManualWriteToHistory();
+            ConsoleKeyInfo cki;
+            do
+            {
+                w.SendToHistorical();
+                Console.Write("\nPress 'Escape' to exit reader");
+                cki = Console.ReadKey();
+            } while (cki.Key != ConsoleKey.Escape);
         }
 
         public void ReadData()
