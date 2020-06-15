@@ -12,6 +12,7 @@ using ModelsAndProps.ValueStructure;
 using System.Xml;
 using ModelsAndProps.Dumping_buffer;
 using System.Runtime.CompilerServices;
+using System.Reflection;
 
 namespace HistoricalComponent
 {
@@ -49,7 +50,11 @@ namespace HistoricalComponent
         {
             if ((int)code < 0 || (int)code > 9)
                 throw new ArgumentException("Code must be in interval 0-9!");
-           switch(code)
+            lock (syncLock)
+            {
+                Logger.WriteLog("Checking dataset", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
+            switch (code)
             {
                 case Codes.CODE_ANALOG:
                 case Codes.CODE_DIGITAL:
@@ -88,7 +93,10 @@ namespace HistoricalComponent
             }
 
             hDesc.Dataset = dataset;
-
+            lock (syncLock)
+            {
+                Logger.WriteLog("Writing to history", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
             //call logger
             databaseOperations.AddHistoricalDescription(hDesc, dataset);
         }
