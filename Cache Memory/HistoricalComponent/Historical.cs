@@ -50,10 +50,12 @@ namespace HistoricalComponent
         {
             if ((int)code < 0 || (int)code > 9)
                 throw new ArgumentException("Code must be in interval 0-9!");
-            lock (syncLock)
-            {
-                Logger.WriteLog("Checking dataset", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
-            }
+
+            //lock (syncLock)
+            //{
+            //    Logger.WriteLog("Checking dataset", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            //}
+
             switch (code)
             {
                 case Codes.CODE_ANALOG:
@@ -93,20 +95,17 @@ namespace HistoricalComponent
             }
 
             hDesc.Dataset = dataset;
+
             lock (syncLock)
             {
                 Logger.WriteLog("Writing to history", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
             }
-            //call logger
+
             databaseOperations.AddHistoricalDescription(hDesc, dataset);
         }
       
         public ListDescription ReadOneLDFromDB(int dataset)
         {
-            lock (syncLock)
-            {
-                Logger.WriteLog("Reading LD from DB", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
-            }
             return databaseOperations.ReadListDescription(dataset);
         }
         public List<HistoricalProperty> GetHistoricalProperties()
@@ -120,6 +119,7 @@ namespace HistoricalComponent
             {
                 Logger.WriteLog("Reading from Dumping buffer", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
             }
+
             for (int i = 1; i < 6; i++)
             {
                 //check if i have data in any of these
@@ -144,10 +144,6 @@ namespace HistoricalComponent
         }
         private bool checkIfTheresDataInCollectionDescription(CollectionDescription cd)
         {
-            lock (syncLock)
-            {
-                Logger.WriteLog("Checking data in CD", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
-            }
             if (cd.Dataset == 0 || cd.Id == 0 || cd.DumpingPropertyCollection.DumpingProperties.Count == 0)
             {
                 return false;
@@ -156,10 +152,6 @@ namespace HistoricalComponent
         }
         public bool CheckIfIdIsUnique(string id)
         {
-            lock (syncLock)
-            {
-                Logger.WriteLog("Checking id", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
-            }
             return databaseOperations.CheckGeoId(id);
         }
     }

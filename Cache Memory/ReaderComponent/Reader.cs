@@ -58,9 +58,9 @@ namespace ReaderComponent
 
         public List<HistoricalProperty> GetChangesForInterval(Codes code)
         {
-            //call logger
             int dataset = historical.CheckDataset(code);
             ListDescription listDescription = historical.ReadOneLDFromDB(dataset);
+
             lock (syncLock)
             {
                 Logger.WriteLog("Getting changes for interval", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
@@ -72,10 +72,12 @@ namespace ReaderComponent
         private List<HistoricalProperty> ReadCode(Codes code, ListDescription listDescription)
         {
             List<HistoricalProperty> hps = new List<HistoricalProperty>();
+
             lock (syncLock)
             {
                 Logger.WriteLog("Reading code", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
             }
+
             foreach (HistoricalDescription hd in listDescription.HistoricalDescriptions)
             {
                 foreach (HistoricalProperty hp in hd.HistoricalProperties)

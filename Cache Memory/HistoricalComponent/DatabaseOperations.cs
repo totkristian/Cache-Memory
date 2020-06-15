@@ -38,6 +38,7 @@ namespace HistoricalComponent
             {
                 Logger.WriteLog("Reading list description", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
             }
+
             for (int i = 0; i < ld.HistoricalDescriptions.Count; i++)
             {
                 int id = ld.HistoricalDescriptions[i].Id;
@@ -63,8 +64,9 @@ namespace HistoricalComponent
             List<HistoricalProperty> historicalProperties = ReadHistoricalProperties();
             lock (syncLock)
             {
-                Logger.WriteLog("Updating historical description", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+                Logger.WriteLog("Updating historical properties", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
             }
+
             foreach (HistoricalProperty hp in historicalProperties)
             {
                 foreach (HistoricalProperty hpTemp in hd.HistoricalProperties)
@@ -86,10 +88,12 @@ namespace HistoricalComponent
         public void RemoveHistoricalProperties(HistoricalDescription hd, int dataset)
         {
             List<HistoricalProperty> historicalProperties = ReadHistoricalProperties();
+
             lock (syncLock)
             {
                 Logger.WriteLog("Removing historical properties", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
             }
+
             foreach (HistoricalProperty hpTemp in hd.HistoricalProperties)
             {
                 foreach(HistoricalProperty hp in historicalProperties)
@@ -106,10 +110,7 @@ namespace HistoricalComponent
 
         private bool CheckDeadband(HistoricalProperty hp, HistoricalProperty hpTemp)
         {
-            lock (syncLock)
-            {
-                Logger.WriteLog("Checking deadband", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
-            }
+            
             if (hp == null || hpTemp == null)
             {
                 throw new ArgumentNullException("You need to have historical property!");
@@ -131,10 +132,7 @@ namespace HistoricalComponent
 
         public bool CheckGeoId(string id)
         {
-            lock (syncLock)
-            {
-                Logger.WriteLog("Checking id", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
-            }
+            
             HistoricalProperty hp = database.HistoricalProperties.Where(x => x.HistoricalValue.GeographicalLocationId.Equals(id)).FirstOrDefault();
             if (hp != null)
                 return false;
