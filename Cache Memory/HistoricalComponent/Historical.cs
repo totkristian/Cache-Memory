@@ -103,6 +103,10 @@ namespace HistoricalComponent
       
         public ListDescription ReadOneLDFromDB(int dataset)
         {
+            lock (syncLock)
+            {
+                Logger.WriteLog("Reading LD from DB", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
             return databaseOperations.ReadListDescription(dataset);
         }
         public List<HistoricalProperty> GetHistoricalProperties()
@@ -112,6 +116,10 @@ namespace HistoricalComponent
 
         public void ReadFromDumpingBuffer(DeltaCD deltaCD)
         {
+            lock (syncLock)
+            {
+                Logger.WriteLog("Reading from Dumping buffer", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
             for (int i = 1; i < 6; i++)
             {
                 //check if i have data in any of these
@@ -136,7 +144,11 @@ namespace HistoricalComponent
         }
         private bool checkIfTheresDataInCollectionDescription(CollectionDescription cd)
         {
-            if(cd.Dataset == 0 || cd.Id == 0 || cd.DumpingPropertyCollection.DumpingProperties.Count == 0)
+            lock (syncLock)
+            {
+                Logger.WriteLog("Checking data in CD", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
+            if (cd.Dataset == 0 || cd.Id == 0 || cd.DumpingPropertyCollection.DumpingProperties.Count == 0)
             {
                 return false;
             }
@@ -144,6 +156,10 @@ namespace HistoricalComponent
         }
         public bool CheckIfIdIsUnique(string id)
         {
+            lock (syncLock)
+            {
+                Logger.WriteLog("Checking id", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
             return databaseOperations.CheckGeoId(id);
         }
     }
