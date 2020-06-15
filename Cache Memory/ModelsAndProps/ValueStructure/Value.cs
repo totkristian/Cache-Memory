@@ -20,8 +20,17 @@ namespace ModelsAndProps.ValueStructure
         {
 
         }
-        public Value(DateTime? timestamp, string geoId,double usage)
+        public Value(DateTime? timestamp, string geoId, double usage)
         {
+            if (timestamp == null || string.IsNullOrWhiteSpace(geoId) || usage == 0.0)
+            {
+                throw new ArgumentNullException("Arguments cannot be null");
+            }
+            if (usage <= 0.0)
+            {
+                throw new ArgumentException("Usage cannot be negative");
+            }
+
             this.timestamp = timestamp;
             this.geographicalLocationId = geoId;
             this.consumption = usage;
