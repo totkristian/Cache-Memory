@@ -1,8 +1,10 @@
 ﻿using HistoricalComponent.DatabaseConn;
+using LoggerComponent;
 using ModelsAndProps.Historical;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,10 +13,15 @@ namespace HistoricalComponent
     public class DatabaseOperations
     {
         private Database database = new Database();
+        private static readonly object syncLock = new object();
 
         public void AddHistoricalDescription(HistoricalDescription hd, int dataset)
         {
             //call logger
+            lock (syncLock)
+            {
+                Logger.WriteLog("Adding historical description", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
             ListDescription list1 = database.ListDescriptions.Where(x => x.Id == dataset).FirstOrDefault();
             list1.HistoricalDescriptions.Add(hd);
             database.SaveChanges();
@@ -46,6 +53,10 @@ namespace HistoricalComponent
         public void UpdateHistoricalDescriptions(HistoricalDescription hd, int dataset)
         {
             List<HistoricalProperty> historicalProperties = ReadHistoricalProperties();
+            lock (syncLock)
+            {
+                Logger.WriteLog("Updating historical description", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
             foreach (HistoricalProperty hp in historicalProperties)
             {
                 foreach (HistoricalProperty hpTemp in hd.HistoricalProperties)
@@ -67,7 +78,11 @@ namespace HistoricalComponent
         public void RemoveHistoricalProperties(HistoricalDescription hd, int dataset)
         {
             List<HistoricalProperty> historicalProperties = ReadHistoricalProperties();
-            foreach(HistoricalProperty hpTemp in hd.HistoricalProperties)
+            lock (syncLock)
+            {
+                Logger.WriteLog("Removing historical properties", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
+            foreach (HistoricalProperty hpTemp in hd.HistoricalProperties)
             {
                 foreach(HistoricalProperty hp in historicalProperties)
                 {
