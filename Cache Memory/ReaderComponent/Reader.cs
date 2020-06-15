@@ -51,7 +51,7 @@ namespace ReaderComponent
             }
             List<HistoricalProperty> hp = GetChangesForInterval((Codes)(number - 1));
 
-            foreach(HistoricalProperty hps in hp)
+            foreach (HistoricalProperty hps in hp)
             {
                 Console.WriteLine(hps.ToString());
             }
@@ -59,88 +59,14 @@ namespace ReaderComponent
 
         public List<HistoricalProperty> GetChangesForInterval(Codes code)
         {
-            //treba kada pozivamo ovu metodu da samo ispisujemo hp.ToString();
-            switch (code)
-            {
-                case Codes.CODE_ANALOG:
-                    listDescription = historical.ReadOneLDFromDB(1);
-                    return ReadCodeAnalog(code);
+            //call logger
+            int dataset = historical.CheckDataset(code);
+            ListDescription listDescription = historical.ReadOneLDFromDB(dataset);
 
-                case Codes.CODE_DIGITAL:
-                    listDescription = historical.ReadOneLDFromDB(1);
-                    return ReadCodeDigital(code);
-
-                case Codes.CODE_CONSUMER:
-                    listDescription = historical.ReadOneLDFromDB(4);
-                    return ReadCodeConsumer(code);
-
-                case Codes.CODE_CUSTOM:
-                    listDescription = historical.ReadOneLDFromDB(2);
-                    return ReadCodeCustom(code);
-
-                case Codes.CODE_LIMITSET:
-                    listDescription = historical.ReadOneLDFromDB(2);
-                    return ReadCodeLimitset(code);
-
-                case Codes.CODE_MOTION:
-                    listDescription = historical.ReadOneLDFromDB(5);
-                    return ReadCodeMotion(code);
-
-                case Codes.CODE_MULTIPLENODE:
-                    listDescription = historical.ReadOneLDFromDB(3);
-                    return ReadCodeMultiplenode(code);
-
-                case Codes.CODE_SENSOR:
-                    listDescription = historical.ReadOneLDFromDB(5);
-                    return ReadCodeSensor(code);
-
-                case Codes.CODE_SINGLENODE:
-                    listDescription = historical.ReadOneLDFromDB(3);
-                    return ReadCodeSinglenode(code);
-
-                case Codes.CODE_SOURCE:
-                    listDescription = historical.ReadOneLDFromDB(4);
-                    return ReadCodeSource(code);
-
-                default:
-                    return null;
-            }
+            return ReadCode(code, listDescription);
         }
 
-        private List<HistoricalProperty> ReadCodeSource(Codes code)
-        {
-            List<HistoricalProperty> hps = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in listDescription.HistoricalDescriptions)
-            {
-                foreach(HistoricalProperty hp in hd.HistoricalProperties)
-                {
-                    if (hp.Code.Equals(code))
-                    {
-                        hps.Add(hp);
-                    }
-                }
-            }
-            return hps;
-        }
-
-        private List<HistoricalProperty> ReadCodeSinglenode(Codes code)
-        {
-            List<HistoricalProperty> hps = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in listDescription.HistoricalDescriptions)
-            {
-                foreach (HistoricalProperty hp in hd.HistoricalProperties)
-                {
-                    if (hp.Code.Equals(code))
-                    {
-                        hps.Add(hp);
-                    }
-                }
-            }
-
-            return hps;
-        }
-
-        private List<HistoricalProperty> ReadCodeSensor(Codes code)
+        private List<HistoricalProperty> ReadCode(Codes code, ListDescription listDescription)
         {
             List<HistoricalProperty> hps = new List<HistoricalProperty>();
             foreach (HistoricalDescription hd in listDescription.HistoricalDescriptions)
@@ -156,116 +82,5 @@ namespace ReaderComponent
             return hps;
         }
 
-        private List<HistoricalProperty> ReadCodeMultiplenode(Codes code)
-        {
-            List<HistoricalProperty> hps = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in listDescription.HistoricalDescriptions)
-            {
-                foreach (HistoricalProperty hp in hd.HistoricalProperties)
-                {
-                    if (hp.Code.Equals(code))
-                    {
-                        hps.Add(hp);
-                    }
-                }
-            }
-            return hps;
-        }
-
-        private List<HistoricalProperty> ReadCodeMotion(Codes code)
-        {
-            List<HistoricalProperty> hps = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in listDescription.HistoricalDescriptions)
-            {
-                foreach (HistoricalProperty hp in hd.HistoricalProperties)
-                {
-                    if (hp.Code.Equals(code))
-                    {
-                        hps.Add(hp);
-                    }
-                }
-            }
-            return hps;
-        }
-
-        private List<HistoricalProperty> ReadCodeLimitset(Codes code)
-        {
-            List<HistoricalProperty> hps = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in listDescription.HistoricalDescriptions)
-            {
-                foreach (HistoricalProperty hp in hd.HistoricalProperties)
-                {
-                    if (hp.Code.Equals(code))
-                    {
-                        hps.Add(hp);
-                    }
-                }
-            }
-            return hps;
-        }
-
-        private List<HistoricalProperty> ReadCodeCustom(Codes code)
-        {
-            List<HistoricalProperty> hps = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in listDescription.HistoricalDescriptions)
-            {
-                foreach (HistoricalProperty hp in hd.HistoricalProperties)
-                {
-                    if (hp.Code.Equals(code))
-                    {
-                        hps.Add(hp);
-                    }
-                }
-            }
-            return hps;
-        }
-
-        private List<HistoricalProperty> ReadCodeConsumer(Codes code)
-        {
-            List<HistoricalProperty> hps = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in listDescription.HistoricalDescriptions)
-            {
-                foreach (HistoricalProperty hp in hd.HistoricalProperties)
-                {
-                    if (hp.Code.Equals(code))
-                    {
-                        hps.Add(hp);
-                    }
-                }
-            }
-            return hps;
-        }
-
-        private List<HistoricalProperty> ReadCodeDigital(Codes code)
-        {
-            List<HistoricalProperty> hps = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in listDescription.HistoricalDescriptions)
-            {
-                foreach (HistoricalProperty hp in hd.HistoricalProperties)
-                {
-                    if (hp.Code.Equals(code))
-                    {
-                        hps.Add(hp);
-                    }
-                }
-            }
-            return hps;
-        }
-
-        private List<HistoricalProperty> ReadCodeAnalog(Codes code)
-        {
-            List<HistoricalProperty> hps = new List<HistoricalProperty>();
-            foreach (HistoricalDescription hd in listDescription.HistoricalDescriptions)
-            {
-                foreach (HistoricalProperty hp in hd.HistoricalProperties)
-                {
-                    if (hp.Code.Equals(code))
-                    {
-                        hps.Add(hp);
-                    }
-                }
-            }
-            return hps;
-        }
     }
 }
