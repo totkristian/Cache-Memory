@@ -13,6 +13,7 @@ namespace ReaderComponent
     public class Reader
     {
         private Historical historical = Historical.GetInstance();
+        private static readonly object syncLock = new object();
         public void Meni()
         {
             int number = 0;
@@ -60,6 +61,10 @@ namespace ReaderComponent
             //call logger
             int dataset = historical.CheckDataset(code);
             ListDescription listDescription = historical.ReadOneLDFromDB(dataset);
+            lock (syncLock)
+            {
+                Logger.WriteLog("Getting changes for interval", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
 
             return ReadCode(code, listDescription);
         }
@@ -67,6 +72,10 @@ namespace ReaderComponent
         private List<HistoricalProperty> ReadCode(Codes code, ListDescription listDescription)
         {
             List<HistoricalProperty> hps = new List<HistoricalProperty>();
+            lock (syncLock)
+            {
+                Logger.WriteLog("Reading code", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
             foreach (HistoricalDescription hd in listDescription.HistoricalDescriptions)
             {
                 foreach (HistoricalProperty hp in hd.HistoricalProperties)

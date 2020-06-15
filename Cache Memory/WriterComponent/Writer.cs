@@ -145,7 +145,6 @@ namespace WriterComponent
         public HistoricalProperty GetRandomHistoricalProperty()
         {
            return  generator.getRandomPropertyForUpdateOrRemove(historical.GetHistoricalProperties());
-
         }
 
         
