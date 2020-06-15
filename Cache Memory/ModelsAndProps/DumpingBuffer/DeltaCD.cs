@@ -20,6 +20,7 @@ namespace ModelsAndProps.Dumping_buffer
 
         public DeltaCD()
         {
+            TransactionID = Guid.NewGuid().ToString();
             add = new Dictionary<int, CollectionDescription>();
             update = new Dictionary<int, CollectionDescription>();
             remove = new Dictionary<int, CollectionDescription>();

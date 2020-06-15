@@ -16,7 +16,6 @@ namespace DumpingBufferComponent
         {
             int cnt;
             DeltaCD deltaCD = new DeltaCD();
-            deltaCD.TransactionID = Guid.NewGuid().ToString();
             lock (syncLock)
             {
                 Logger.WriteLog("Converting to Delta CD", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
