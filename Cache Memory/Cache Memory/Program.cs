@@ -12,18 +12,8 @@ namespace Cache_Memory
     {
         static void Main(string[] args)
         {
-            Writer w = new Writer();
-
-            while(!Console.KeyAvailable) {
-                w.SendToDumpingBuffer();
-            }
-           
-            Console.WriteLine("Writer je zavrsio!"); 
-            Reader r = new Reader();
-
-            r.Meni();
-
-            Console.ReadLine();
+            Implementation imp = new Implementation();
+            imp.ReadMenu();
         }
     }
 }
