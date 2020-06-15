@@ -87,7 +87,7 @@ namespace WriterComponent
                     //string functionName = MethodBase.GetCurrentMethod().Name;
                     lock (syncLock)
                     {
-                        Logger.WriteLog("poruka", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+                        Logger.WriteLog("Message has beed sent to historical", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
                     }
                 }
                 catch
@@ -111,6 +111,10 @@ namespace WriterComponent
         {
             //call logger
             Operations op = generator.GenerateRandomOperation();
+            lock (syncLock)
+            {
+                Logger.WriteLog("Sending to Dumping buffer", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
             switch (op)
             {
                 case Operations.ADD:

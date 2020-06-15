@@ -54,7 +54,6 @@ namespace ReaderComponent
 
         public List<HistoricalProperty> GetChangesForInterval(Codes code)
         {
-
             //call logger
             int dataset = historical.CheckDataset(code);
             ListDescription listDescription = historical.ReadOneLDFromDB(dataset);
