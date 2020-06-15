@@ -18,7 +18,7 @@ namespace ModelsAndProps.Historical
 
         }
 
-        public HistoricalDescription(int id, int dataset)
+        public HistoricalDescription(int dataset)
         {
             if (dataset < 1 || dataset > 5)
                 throw new ArgumentException("Dataset must be in interval from 1-5!");
@@ -30,7 +30,7 @@ namespace ModelsAndProps.Historical
         public List<HistoricalProperty> HistoricalProperties { get => historicalProperties; set => historicalProperties = value; }
         public int Id { get => id; set => id = value; }
 
-        public int? ListDescriptionId { get; set; }
+        public int ListDescriptionId { get; set; }
         [ForeignKey("ListDescriptionId")]
         public ListDescription listDescription { get; set; }
     }

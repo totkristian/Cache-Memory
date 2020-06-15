@@ -29,9 +29,17 @@ namespace ModelsAndProps.Historical
 
         }
 
-        public HistoricalProperty(Codes? codes, Value value)
+        public HistoricalProperty(Codes? code, Value value)
         {
-            this.code = codes;
+            if(code == null || value == null)
+            {
+                throw new ArgumentNullException("Parameters cannot be null");
+            }
+            if((int)code < 0 || (int)code > 9)
+            {
+                throw new ArgumentException("Something wrong with code");
+            }
+            this.code = code;
             this.historicalValue = value;
             this.time = DateTime.Now;
             this.id = Guid.NewGuid().ToString();
