@@ -68,7 +68,7 @@ namespace WriterComponent
             bool isOk = false;
             Codes code = (Codes)Meni();
             string geographicalLocationId = "";
-            float consumption = 0;
+            double consumption = 0;
             while (!isOk)
             {
                 try
@@ -81,7 +81,7 @@ namespace WriterComponent
                         throw new Exception("Geographical location id already exists");
                     }
                     Console.WriteLine("Enter the consumption:");
-                    consumption = float.Parse(Console.ReadLine());
+                    consumption = double.Parse(Console.ReadLine());
                     isOk = true;
                     //string className = MethodBase.GetCurrentMethod().DeclaringType.Name;
                     //string functionName = MethodBase.GetCurrentMethod().Name;

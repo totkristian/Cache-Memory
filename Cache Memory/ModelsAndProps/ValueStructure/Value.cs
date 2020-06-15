@@ -10,17 +10,17 @@ namespace ModelsAndProps.ValueStructure
     {
         private DateTime? timestamp;
         private string geographicalLocationId;
-        private float consumption;
+        private double consumption;
 
         public DateTime? Timestamp { get => timestamp; set => timestamp = value; }
         public string GeographicalLocationId { get => geographicalLocationId; set => geographicalLocationId = value; }
-        public float Consumption { get => consumption; set => consumption = value; }
+        public double Consumption { get => consumption; set => consumption = value; }
 
         public Value()
         {
 
         }
-        public Value(DateTime? timestamp, string geoId,float usage)
+        public Value(DateTime? timestamp, string geoId,double usage)
         {
             this.timestamp = timestamp;
             this.geographicalLocationId = geoId;

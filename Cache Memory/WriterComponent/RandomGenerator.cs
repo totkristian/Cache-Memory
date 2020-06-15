@@ -18,7 +18,7 @@ namespace WriterComponent
         public Value RandomNewValueGenerator()
         {
             Value val = new Value();
-            val.Consumption = (float)random.NextDouble() * 10;
+            val.Consumption = random.NextDouble() * 10;
             val.GeographicalLocationId = Guid.NewGuid().ToString();
             val.Timestamp = DateTime.Now;
             return val;
