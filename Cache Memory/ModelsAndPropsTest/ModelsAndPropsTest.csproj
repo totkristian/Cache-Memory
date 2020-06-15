@@ -41,7 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HistoricalTest\HistoricalDescriptionTest.cs" />
+    <Compile Include="HistoricalTest\HistoricalPropertyTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueStructureTest\ValueTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DumpingBufferTest\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -128,13 +128,13 @@ namespace WriterComponent
                         Value v = generator.RandomNewValueGenerator();
                         v.GeographicalLocationId = hp.HistoricalValue.GeographicalLocationId;
                     
-                        dumpingBuffer.WriteToDumpingBuffer(op, hp.Code, v);
+                        dumpingBuffer.WriteToDumpingBuffer(op, (Codes)hp.Code, v);
                     break;
                 case Operations.REMOVE:
                     HistoricalProperty hp1 = GetRandomHistoricalProperty();
                     if (hp1 == null)
                         break;
-                    dumpingBuffer.WriteToDumpingBuffer(op,hp1.Code, hp1.HistoricalValue);
+                    dumpingBuffer.WriteToDumpingBuffer(op, (Codes)hp1.Code, hp1.HistoricalValue);
                     //search through existing properties and remove a property
                     break;
             }

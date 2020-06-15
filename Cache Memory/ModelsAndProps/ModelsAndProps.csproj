@@ -51,10 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dumping buffer\CollectionDescription.cs" />
-    <Compile Include="Dumping buffer\DeltaCD.cs" />
-    <Compile Include="Dumping buffer\DumpingProperty.cs" />
-    <Compile Include="Dumping buffer\DumpingPropertyCollection.cs" />
+    <Compile Include="DumpingBuffer\CollectionDescription.cs" />
+    <Compile Include="DumpingBuffer\DeltaCD.cs" />
+    <Compile Include="DumpingBuffer\DumpingProperty.cs" />
+    <Compile Include="DumpingBuffer\DumpingPropertyCollection.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Historical\HistoricalDescription.cs" />
     <Compile Include="Historical\HistoricalProperty.cs" />

@@ -13,7 +13,7 @@
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Dataset = c.Int(nullable: false),
-                        ListDescriptionId = c.Int(nullable: false),
+                        ListDescriptionId = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.ListDescriptions", t => t.ListDescriptionId)
@@ -24,12 +24,12 @@
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        Code = c.Int(nullable: false),
+                        Code = c.Int(),
                         HistoricalValue_Timestamp = c.DateTime(),
                         HistoricalValue_GeographicalLocationId = c.String(),
                         HistoricalValue_Consumption = c.Double(nullable: false),
                         Time = c.DateTime(nullable: false),
-                        HistoricalDescriptionId = c.Int(nullable: false),
+                        HistoricalDescriptionId = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.HistoricalDescriptions", t => t.HistoricalDescriptionId)

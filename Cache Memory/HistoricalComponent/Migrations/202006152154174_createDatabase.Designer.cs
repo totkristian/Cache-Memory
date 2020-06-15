@@ -13,7 +13,7 @@ namespace HistoricalComponent.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202006152145576_createDatabase"; }
+            get { return "202006152154174_createDatabase"; }
         }
         
         string IMigrationMetadata.Source
