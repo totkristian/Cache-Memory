@@ -134,5 +134,9 @@ namespace HistoricalComponent
             }
             return true;
         }
+        public bool CheckIfIdIsUnique(string id)
+        {
+            return databaseOperations.CheckGeoId(id);
+        }
     }
 }

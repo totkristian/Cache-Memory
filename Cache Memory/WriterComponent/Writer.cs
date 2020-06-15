@@ -74,13 +74,16 @@ namespace WriterComponent
                     Console.WriteLine("Input stared...\n");
                     Console.WriteLine("Enter the geographical location id:");
                     geographicalLocationId = Console.ReadLine();
-                    //unique
+                    if(!historical.CheckIfIdIsUnique(geographicalLocationId))
+                    {
+                        throw new Exception("Geographical location id already exists");
+                    }
                     Console.WriteLine("Enter the consumption:");
                     consumption = float.Parse(Console.ReadLine());
                     isOk = true;
                     //callLogger
                 }
-                catch
+                catch()
                 {
                     //callLogger
                     Console.WriteLine("Something went wrong with your input data. Please try again!");

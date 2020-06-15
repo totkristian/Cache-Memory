@@ -101,5 +101,13 @@ namespace HistoricalComponent
             }
             return false;
         }
+
+        public bool CheckGeoId(string id)
+        {
+            HistoricalProperty hp = database.HistoricalProperties.Where(x => x.HistoricalValue.GeographicalLocationId.Equals(id)).FirstOrDefault();
+            if (hp != null)
+                return false;
+            return true;
+        }
     }
 }
