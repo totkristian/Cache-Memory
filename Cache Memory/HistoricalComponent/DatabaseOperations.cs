@@ -1,8 +1,10 @@
 ﻿using HistoricalComponent.DatabaseConn;
+using LoggerComponent;
 using ModelsAndProps.Historical;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,10 +13,15 @@ namespace HistoricalComponent
     public class DatabaseOperations
     {
         private Database database = new Database();
+        private static readonly object syncLock = new object();
 
         public void AddHistoricalDescription(HistoricalDescription hd, int dataset)
         {
             //call logger
+            lock (syncLock)
+            {
+                Logger.WriteLog("Adding historical description", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
             ListDescription list1 = database.ListDescriptions.Where(x => x.Id == dataset).FirstOrDefault();
             list1.HistoricalDescriptions.Add(hd);
             database.SaveChanges();
@@ -26,6 +33,11 @@ namespace HistoricalComponent
             ListDescription ld = new ListDescription();
             List<HistoricalDescription> list = database.HistoricalDescriptions.Where(x => x.ListDescriptionId == dataset).ToList();
             ld.HistoricalDescriptions = list;
+
+            lock (syncLock)
+            {
+                Logger.WriteLog("Reading list description", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
 
             for (int i = 0; i < ld.HistoricalDescriptions.Count; i++)
             {
@@ -39,6 +51,10 @@ namespace HistoricalComponent
         public List<HistoricalProperty> ReadHistoricalProperties()
         {
             //call logger
+            lock (syncLock)
+            {
+                Logger.WriteLog("Reading historical properties", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
             List<HistoricalProperty> list = database.HistoricalProperties.ToList();
             return list;
         }
@@ -46,6 +62,11 @@ namespace HistoricalComponent
         public void UpdateHistoricalDescriptions(HistoricalDescription hd, int dataset)
         {
             List<HistoricalProperty> historicalProperties = ReadHistoricalProperties();
+            lock (syncLock)
+            {
+                Logger.WriteLog("Updating historical properties", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
+
             foreach (HistoricalProperty hp in historicalProperties)
             {
                 foreach (HistoricalProperty hpTemp in hd.HistoricalProperties)
@@ -67,7 +88,13 @@ namespace HistoricalComponent
         public void RemoveHistoricalProperties(HistoricalDescription hd, int dataset)
         {
             List<HistoricalProperty> historicalProperties = ReadHistoricalProperties();
-            foreach(HistoricalProperty hpTemp in hd.HistoricalProperties)
+
+            lock (syncLock)
+            {
+                Logger.WriteLog("Removing historical properties", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
+
+            foreach (HistoricalProperty hpTemp in hd.HistoricalProperties)
             {
                 foreach(HistoricalProperty hp in historicalProperties)
                 {
@@ -83,6 +110,7 @@ namespace HistoricalComponent
 
         private bool CheckDeadband(HistoricalProperty hp, HistoricalProperty hpTemp)
         {
+            
             if (hp == null || hpTemp == null)
             {
                 throw new ArgumentNullException("You need to have historical property!");
@@ -104,6 +132,7 @@ namespace HistoricalComponent
 
         public bool CheckGeoId(string id)
         {
+            
             HistoricalProperty hp = database.HistoricalProperties.Where(x => x.HistoricalValue.GeographicalLocationId.Equals(id)).FirstOrDefault();
             if (hp != null)
                 return false;

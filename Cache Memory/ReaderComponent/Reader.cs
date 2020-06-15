@@ -1,8 +1,10 @@
 ﻿using HistoricalComponent;
+using LoggerComponent;
 using ModelsAndProps.Historical;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +13,7 @@ namespace ReaderComponent
     public class Reader
     {
         private Historical historical = Historical.GetInstance();
+        private static readonly object syncLock = new object();
         public void Meni()
         {
             int number = 0;
@@ -37,6 +40,7 @@ namespace ReaderComponent
                     {
                         isOk = true;
                     }
+                   
                 }
                 catch
                 {
@@ -54,10 +58,13 @@ namespace ReaderComponent
 
         public List<HistoricalProperty> GetChangesForInterval(Codes code)
         {
-
-            //call logger
             int dataset = historical.CheckDataset(code);
             ListDescription listDescription = historical.ReadOneLDFromDB(dataset);
+
+            lock (syncLock)
+            {
+                Logger.WriteLog("Getting changes for interval", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
 
             return ReadCode(code, listDescription);
         }
@@ -65,6 +72,12 @@ namespace ReaderComponent
         private List<HistoricalProperty> ReadCode(Codes code, ListDescription listDescription)
         {
             List<HistoricalProperty> hps = new List<HistoricalProperty>();
+
+            lock (syncLock)
+            {
+                Logger.WriteLog("Reading code", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
+
             foreach (HistoricalDescription hd in listDescription.HistoricalDescriptions)
             {
                 foreach (HistoricalProperty hp in hd.HistoricalProperties)

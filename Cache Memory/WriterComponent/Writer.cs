@@ -11,7 +11,8 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
+using LoggerComponent;
+using System.Reflection;
 
 namespace WriterComponent
 {
@@ -20,6 +21,7 @@ namespace WriterComponent
         private Historical historical = Historical.GetInstance();
         private DumpingBuffer dumpingBuffer = DumpingBuffer.GetInstance();
         private RandomGenerator generator = new RandomGenerator();
+        private static readonly object syncLock = new object();
         public Writer()
         {
 
@@ -81,7 +83,12 @@ namespace WriterComponent
                     Console.WriteLine("Enter the consumption:");
                     consumption = float.Parse(Console.ReadLine());
                     isOk = true;
-                    //callLogger
+                    //string className = MethodBase.GetCurrentMethod().DeclaringType.Name;
+                    //string functionName = MethodBase.GetCurrentMethod().Name;
+                    lock (syncLock)
+                    {
+                        Logger.WriteLog("Message has beed sent to historical", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+                    }
                 }
                 catch
                 {
@@ -104,6 +111,10 @@ namespace WriterComponent
         {
             //call logger
             Operations op = generator.GenerateRandomOperation();
+            lock (syncLock)
+            {
+                Logger.WriteLog("Sending to Dumping buffer", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
             switch (op)
             {
                 case Operations.ADD:
@@ -134,7 +145,6 @@ namespace WriterComponent
         public HistoricalProperty GetRandomHistoricalProperty()
         {
            return  generator.getRandomPropertyForUpdateOrRemove(historical.GetHistoricalProperties());
-
         }
 
         

@@ -1,4 +1,5 @@
 ﻿using HistoricalComponent;
+using LoggerComponent;
 using ModelsAndProps;
 using ModelsAndProps.Dumping_buffer;
 using ModelsAndProps.ValueStructure;
@@ -6,6 +7,7 @@ using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -60,6 +62,10 @@ namespace DumpingBufferComponent
                 //something wrong with dataset
             }
             bool updated = false;
+            lock (syncLock)
+            {
+                Logger.WriteLog("Writing to dumping buffer", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
 
             updated = CheckUpdate(dataset,dp);
 
@@ -101,7 +107,8 @@ namespace DumpingBufferComponent
         }
         private void AddToOperationsAndId(int id, Operations operation)
         {
-            if(operationAndId.ContainsKey(id))
+
+            if (operationAndId.ContainsKey(id))
             {
                 operationAndId[id].Add(operation);
             }
@@ -118,8 +125,10 @@ namespace DumpingBufferComponent
             {
                 //baci exception
             }
+
            
-            foreach(DumpingProperty dp in collectionDescriptions[dataset].DumpingPropertyCollection.DumpingProperties)
+
+            foreach (DumpingProperty dp in collectionDescriptions[dataset].DumpingPropertyCollection.DumpingProperties)
             {
                 if (dp.DumpingValue.GeographicalLocationId == tempDp.DumpingValue.GeographicalLocationId)
                 {
@@ -133,7 +142,8 @@ namespace DumpingBufferComponent
 
         private bool checkDumpingPropertyCount()
         {
-            for(int i =1; i <6;i++)
+            
+            for (int i =1; i <6;i++)
             {
                 if(collectionDescriptions[i].DumpingPropertyCollection.DumpingProperties.Count >=2)
                 {
@@ -143,39 +153,10 @@ namespace DumpingBufferComponent
             return false;
         }
 
-        /*private void FillDeltaCD()
-        {
-            int cnt;
-            deltaCD.TransactionID = Guid.NewGuid().ToString();
-            for(int i = 1; i < 6; i++)
-            {
-                cnt = 0;
-                List<Operations> ops = operationAndId[i];
-                foreach (DumpingProperty dp in collectionDescriptions[i].DumpingPropertyCollection.DumpingProperties)
-                {
-                    switch(ops[cnt++])
-                    {
-                        case Operations.ADD:
-                            deltaCD.Add[i].Dataset = collectionDescriptions[i].Dataset;
-                            deltaCD.Add[i].DumpingPropertyCollection.DumpingProperties.Add(dp);
-                            deltaCD.Add[i].Id = collectionDescriptions[i].Id;
-                            break;
-                        case Operations.UPDATE:
-                            deltaCD.Update[i].Dataset = collectionDescriptions[i].Dataset;
-                            deltaCD.Update[i].DumpingPropertyCollection.DumpingProperties.Add(dp);
-                            deltaCD.Update[i].Id = collectionDescriptions[i].Id;
-                            break;
-                        case Operations.REMOVE:
-                            deltaCD.Remove[i].Dataset = collectionDescriptions[i].Dataset;
-                            deltaCD.Remove[i].DumpingPropertyCollection.DumpingProperties.Add(dp);
-                            deltaCD.Remove[i].Id = collectionDescriptions[i].Id;
-                            break;
-                    }
-                }
-            }
-        } */
+       
         private void ClearStructures()
         {
+           
             collectionDescriptions.Clear();
             operationAndId.Clear();
             InitalizeCollectionDescriptions();
@@ -185,6 +166,7 @@ namespace DumpingBufferComponent
 
         private static void InitalizeCollectionDescriptions()
         {
+            
             for (int i = 1; i < 6; i++)
             {
                 collectionDescriptions.Add(i, new CollectionDescription());
@@ -194,6 +176,10 @@ namespace DumpingBufferComponent
 
         private void SendToHistorical()
         {
+            lock (syncLock)
+            {
+                Logger.WriteLog("Sending to historical from dumbing buffer", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
             historical.ReadFromDumpingBuffer(deltaCD);
         }
     }

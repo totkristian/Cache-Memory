@@ -12,6 +12,7 @@ using ModelsAndProps.ValueStructure;
 using System.Xml;
 using ModelsAndProps.Dumping_buffer;
 using System.Runtime.CompilerServices;
+using System.Reflection;
 
 namespace HistoricalComponent
 {
@@ -49,7 +50,13 @@ namespace HistoricalComponent
         {
             if ((int)code < 0 || (int)code > 9)
                 throw new ArgumentException("Code must be in interval 0-9!");
-           switch(code)
+
+            //lock (syncLock)
+            //{
+            //    Logger.WriteLog("Checking dataset", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            //}
+
+            switch (code)
             {
                 case Codes.CODE_ANALOG:
                 case Codes.CODE_DIGITAL:
@@ -89,7 +96,11 @@ namespace HistoricalComponent
 
             hDesc.Dataset = dataset;
 
-            //call logger
+            lock (syncLock)
+            {
+                Logger.WriteLog("Writing to history", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
+
             databaseOperations.AddHistoricalDescription(hDesc, dataset);
         }
       
@@ -104,6 +115,11 @@ namespace HistoricalComponent
 
         public void ReadFromDumpingBuffer(DeltaCD deltaCD)
         {
+            lock (syncLock)
+            {
+                Logger.WriteLog("Reading from Dumping buffer", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            }
+
             for (int i = 1; i < 6; i++)
             {
                 //check if i have data in any of these
@@ -128,7 +144,7 @@ namespace HistoricalComponent
         }
         private bool checkIfTheresDataInCollectionDescription(CollectionDescription cd)
         {
-            if(cd.Dataset == 0 || cd.Id == 0 || cd.DumpingPropertyCollection.DumpingProperties.Count == 0)
+            if (cd.Dataset == 0 || cd.Id == 0 || cd.DumpingPropertyCollection.DumpingProperties.Count == 0)
             {
                 return false;
             }
