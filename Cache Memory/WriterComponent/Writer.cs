@@ -1,5 +1,7 @@
 ﻿using DumpingBufferComponent;
 using HistoricalComponent;
+using ModelsAndProps;
+using ModelsAndProps.Historical;
 using ModelsAndProps.ValueStructure;
 using System;
 using System.Collections.Generic;
@@ -13,17 +15,18 @@ using System.Threading.Tasks;
 
 namespace WriterComponent
 {
-    public class Writer
+    public class Writer : IWriter
     {
         private Historical historical = Historical.GetInstance();
         private DumpingBuffer dumpingBuffer = DumpingBuffer.GetInstance();
+        private RandomGenerator generator = new RandomGenerator();
         public Writer()
         {
-           
-        }
-       
 
-        public int Meni()
+        }
+
+
+        private int Meni()
         {
             int number = 0;
             bool isOk = false;
@@ -44,7 +47,7 @@ namespace WriterComponent
                 try
                 {
                     number = int.Parse(Console.ReadLine());
-                    if(number >= 1 && number <= 10)
+                    if (number >= 1 && number <= 10)
                     {
                         isOk = true;
                     }
@@ -71,6 +74,10 @@ namespace WriterComponent
                     Console.WriteLine("Input stared...\n");
                     Console.WriteLine("Enter the geographical location id:");
                     geographicalLocationId = Console.ReadLine();
+                    if(!historical.CheckIfIdIsUnique(geographicalLocationId))
+                    {
+                        throw new Exception("Geographical location id already exists");
+                    }
                     Console.WriteLine("Enter the consumption:");
                     consumption = float.Parse(Console.ReadLine());
                     isOk = true;
@@ -96,24 +103,41 @@ namespace WriterComponent
         public void SendToDumpingBuffer()
         {
             //call logger
-            
-            dumpingBuffer.WriteToDumpingBuffer(GenerateRandomCode(), GenerateRandomValue());
+            Operations op = generator.GenerateRandomOperation();
+            switch (op)
+            {
+                case Operations.ADD:
+                    dumpingBuffer.WriteToDumpingBuffer(op,generator.GenerateRandomCode(), generator.RandomNewValueGenerator());
+                    break;
+                case Operations.UPDATE:
+                    HistoricalProperty hp = GetRandomHistoricalProperty();
+                    if (hp == null)
+                        break;
+                        
+                        Value v = generator.RandomNewValueGenerator();
+                        v.GeographicalLocationId = hp.HistoricalValue.GeographicalLocationId;
+                    
+                        dumpingBuffer.WriteToDumpingBuffer(op, hp.Code, v);
+                    break;
+                case Operations.REMOVE:
+                    HistoricalProperty hp1 = GetRandomHistoricalProperty();
+                    if (hp1 == null)
+                        break;
+                    dumpingBuffer.WriteToDumpingBuffer(op,hp1.Code, hp1.HistoricalValue);
+                    //search through existing properties and remove a property
+                    break;
+            }
+
             Thread.Sleep(2000);
         }
 
-        public Codes GenerateRandomCode()
+        public HistoricalProperty GetRandomHistoricalProperty()
         {
-             Random random = new Random();
-             return (Codes)random.Next(0, 9);
+           return  generator.getRandomPropertyForUpdateOrRemove(historical.GetHistoricalProperties());
+
         }
-        public Value GenerateRandomValue()
-        {
-            Random random = new Random();
-            Value val = new Value();
-            val.Consumption =(float)random.NextDouble() * 10;
-            val.GeographicalLocationId = Guid.NewGuid().ToString();
-            val.Timestamp = DateTime.Now;
-            return val;
-        }
+
+        
+        
     }
 }

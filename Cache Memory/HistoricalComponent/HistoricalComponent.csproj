@@ -52,7 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConverterFromCdToHistorical.cs" />
     <Compile Include="DatabaseConn\Database.cs" />
+    <Compile Include="DatabaseOperations.cs" />
     <Compile Include="Historical.cs" />
     <Compile Include="Migrations\202006101359402_createdatabase.cs" />
     <Compile Include="Migrations\202006101359402_createdatabase.designer.cs">

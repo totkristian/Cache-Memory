@@ -52,12 +52,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dumping buffer\CollectionDescription.cs" />
+    <Compile Include="Dumping buffer\DeltaCD.cs" />
     <Compile Include="Dumping buffer\DumpingProperty.cs" />
     <Compile Include="Dumping buffer\DumpingPropertyCollection.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Historical\HistoricalDescription.cs" />
     <Compile Include="Historical\HistoricalProperty.cs" />
     <Compile Include="Historical\ListDescription.cs" />
+    <Compile Include="IWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueStructure\Value.cs" />
   </ItemGroup>
