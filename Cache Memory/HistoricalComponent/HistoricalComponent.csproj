@@ -56,9 +56,9 @@
     <Compile Include="DatabaseConn\Database.cs" />
     <Compile Include="DatabaseOperations.cs" />
     <Compile Include="Historical.cs" />
-    <Compile Include="Migrations\202006152154174_createDatabase.cs" />
-    <Compile Include="Migrations\202006152154174_createDatabase.designer.cs">
-      <DependentUpon>202006152154174_createDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\202006152335149_createDatabase.cs" />
+    <Compile Include="Migrations\202006152335149_createDatabase.designer.cs">
+      <DependentUpon>202006152335149_createDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,8 +78,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006152154174_createDatabase.resx">
-      <DependentUpon>202006152154174_createDatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006152335149_createDatabase.resx">
+      <DependentUpon>202006152335149_createDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

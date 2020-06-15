@@ -10,7 +10,7 @@ namespace Cache_Memory
         Reader r = new Reader();
         public void MenuChoise()
         {
-            Console.WriteLine("1. Write data automatically (dumpingBuffer)");
+            Console.WriteLine("\n1. Write data automatically (dumpingBuffer)");
             Console.WriteLine("2. Write data manually (direct to historical)");
             Console.WriteLine("3. Read data");
             Console.WriteLine("4. Exit app");
