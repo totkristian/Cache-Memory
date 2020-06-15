@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReaderComponent", "ReaderCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DumpingBufferComponent", "DumpingBufferComponent\DumpingBufferComponent.csproj", "{A1D34211-6DD2-464E-BD8D-22846D8B13C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerComponentTest", "LoggerComponentTest\LoggerComponentTest.csproj", "{0074D5D8-CC92-44C0-A6E4-7DC65CDB5032}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{A1D34211-6DD2-464E-BD8D-22846D8B13C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1D34211-6DD2-464E-BD8D-22846D8B13C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1D34211-6DD2-464E-BD8D-22846D8B13C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0074D5D8-CC92-44C0-A6E4-7DC65CDB5032}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0074D5D8-CC92-44C0-A6E4-7DC65CDB5032}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0074D5D8-CC92-44C0-A6E4-7DC65CDB5032}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0074D5D8-CC92-44C0-A6E4-7DC65CDB5032}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
