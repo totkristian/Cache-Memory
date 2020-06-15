@@ -77,7 +77,7 @@ namespace Cache_Memory
             do
             {
                 w.SendToHistorical();
-                Console.Write("\nPress 'Escape' to exit reader");
+                Console.Write("\nPress 'Escape' to exit writer");
                 cki = Console.ReadKey();
             } while (cki.Key != ConsoleKey.Escape);
         }
