@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class createdatabase : DbMigration
+    public partial class createDatabase : DbMigration
     {
         public override void Up()
         {
@@ -25,7 +25,7 @@
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Code = c.Int(nullable: false),
-                        HistoricalValue_Timestamp = c.DateTime(nullable: false),
+                        HistoricalValue_Timestamp = c.DateTime(),
                         HistoricalValue_GeographicalLocationId = c.String(),
                         HistoricalValue_Consumption = c.Single(nullable: false),
                         Time = c.DateTime(nullable: false),
