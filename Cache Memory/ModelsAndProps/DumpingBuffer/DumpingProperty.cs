@@ -22,6 +22,14 @@ namespace ModelsAndProps.Dumping_buffer
 
         public DumpingProperty(Codes code, Value dumpValue)
         {
+            if(dumpingValue == null)
+            {
+                throw new ArgumentNullException("Arguments cannot be null");
+            }
+            if ((int)code < 0 || (int)code > 9)
+            {
+                throw new ArgumentException("Something wrong with code");
+            }
             this.code = code;
             this.dumpingValue = dumpValue;
         }

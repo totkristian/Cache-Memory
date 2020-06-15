@@ -11,10 +11,10 @@ namespace ModelsAndProps.Historical
     public class HistoricalProperty
     {
         private string id;
-        private Codes? code;
+        private Codes code;
         private Value historicalValue;
         private DateTime time;
-        public Codes? Code { get => code; set => code = value; }
+        public Codes Code { get => code; set => code = value; }
         public Value HistoricalValue { get => historicalValue; set => historicalValue = value; }
         public DateTime Time { get => time; set => time = value; }
         public string Id { get => id; set => id = value; }
@@ -29,9 +29,9 @@ namespace ModelsAndProps.Historical
 
         }
 
-        public HistoricalProperty(Codes? code, Value value)
+        public HistoricalProperty(Codes code, Value value)
         {
-            if(code == null || value == null)
+            if(value == null)
             {
                 throw new ArgumentNullException("Parameters cannot be null");
             }
