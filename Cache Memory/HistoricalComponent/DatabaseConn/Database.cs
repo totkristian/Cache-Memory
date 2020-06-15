@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ModelsAndProps.Historical;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ModelsAndProps;
-using ModelsAndProps.Historical;
-using SqlProviderServices = System.Data.Entity.SqlServer.SqlProviderServices;
 
 namespace HistoricalComponent.DatabaseConn
 {
     public class Database : DbContext
     {
-        public Database() :base("ResConn")
+        public Database() : base("ResConn")
         {
-           
+
         }
         public DbSet<ListDescription> ListDescriptions { get; set; }
 

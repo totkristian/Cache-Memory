@@ -1,18 +1,12 @@
 ﻿using DumpingBufferComponent;
 using HistoricalComponent;
+using LoggerComponent;
 using ModelsAndProps;
 using ModelsAndProps.Historical;
 using ModelsAndProps.ValueStructure;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using LoggerComponent;
 using System.Reflection;
+using System.Threading;
 
 namespace WriterComponent
 {
@@ -76,7 +70,7 @@ namespace WriterComponent
                     Console.WriteLine("Input stared...\n");
                     Console.WriteLine("Enter the geographical location id:");
                     geographicalLocationId = Console.ReadLine();
-                    if(!historical.CheckIfIdIsUnique(geographicalLocationId))
+                    if (!historical.CheckIfIdIsUnique(geographicalLocationId))
                     {
                         throw new Exception("Geographical location id already exists");
                     }
@@ -118,17 +112,17 @@ namespace WriterComponent
             switch (op)
             {
                 case Operations.ADD:
-                    dumpingBuffer.WriteToDumpingBuffer(op,generator.GenerateRandomCode(), generator.RandomNewValueGenerator());
+                    dumpingBuffer.WriteToDumpingBuffer(op, generator.GenerateRandomCode(), generator.RandomNewValueGenerator());
                     break;
                 case Operations.UPDATE:
                     HistoricalProperty hp = GetRandomHistoricalProperty();
                     if (hp == null)
                         break;
-                        
-                        Value v = generator.RandomNewValueGenerator();
-                        v.GeographicalLocationId = hp.HistoricalValue.GeographicalLocationId;
-                    
-                        dumpingBuffer.WriteToDumpingBuffer(op, (Codes)hp.Code, v);
+
+                    Value v = generator.RandomNewValueGenerator();
+                    v.GeographicalLocationId = hp.HistoricalValue.GeographicalLocationId;
+
+                    dumpingBuffer.WriteToDumpingBuffer(op, (Codes)hp.Code, v);
                     break;
                 case Operations.REMOVE:
                     HistoricalProperty hp1 = GetRandomHistoricalProperty();
@@ -144,10 +138,10 @@ namespace WriterComponent
 
         public HistoricalProperty GetRandomHistoricalProperty()
         {
-           return  generator.getRandomPropertyForUpdateOrRemove(historical.GetHistoricalProperties());
+            return generator.getRandomPropertyForUpdateOrRemove(historical.GetHistoricalProperties());
         }
 
-        
-        
+
+
     }
 }

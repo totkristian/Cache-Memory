@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HistoricalComponent
 {
@@ -71,10 +69,10 @@ namespace HistoricalComponent
             {
                 foreach (HistoricalProperty hpTemp in hd.HistoricalProperties)
                 {
-                    if(hp.HistoricalValue.GeographicalLocationId == hpTemp.HistoricalValue.GeographicalLocationId && hp.Code.Equals(hpTemp.Code))
+                    if (hp.HistoricalValue.GeographicalLocationId == hpTemp.HistoricalValue.GeographicalLocationId && hp.Code.Equals(hpTemp.Code))
                     {
                         hpTemp.Id = hp.Id;
-                        if(CheckDeadband(hp, hpTemp))
+                        if (CheckDeadband(hp, hpTemp))
                         {
                             hp.HistoricalValue = hpTemp.HistoricalValue;
                             break;
@@ -96,9 +94,9 @@ namespace HistoricalComponent
 
             foreach (HistoricalProperty hpTemp in hd.HistoricalProperties)
             {
-                foreach(HistoricalProperty hp in historicalProperties)
+                foreach (HistoricalProperty hp in historicalProperties)
                 {
-                    if(hpTemp.HistoricalValue.GeographicalLocationId == hp.HistoricalValue.GeographicalLocationId && hp.Code.Equals(hpTemp.Code))
+                    if (hpTemp.HistoricalValue.GeographicalLocationId == hp.HistoricalValue.GeographicalLocationId && hp.Code.Equals(hpTemp.Code))
                     {
                         database.HistoricalProperties.Remove(hp);
                         break;
@@ -110,7 +108,7 @@ namespace HistoricalComponent
 
         private bool CheckDeadband(HistoricalProperty hp, HistoricalProperty hpTemp)
         {
-            
+
             if (hp == null || hpTemp == null)
             {
                 throw new ArgumentNullException("You need to have historical property!");
@@ -121,7 +119,7 @@ namespace HistoricalComponent
             {
                 return true;
             }
-            
+
             if (hpTemp.HistoricalValue.Consumption < (hp.HistoricalValue.Consumption - (hp.HistoricalValue.Consumption * 0.02)) ||
                     hpTemp.HistoricalValue.Consumption > (hp.HistoricalValue.Consumption + (hp.HistoricalValue.Consumption * 0.02)))
             {
@@ -132,7 +130,7 @@ namespace HistoricalComponent
 
         public bool CheckGeoId(string id)
         {
-            
+
             HistoricalProperty hp = database.HistoricalProperties.Where(x => x.HistoricalValue.GeographicalLocationId.Equals(id)).FirstOrDefault();
             if (hp != null)
                 return false;

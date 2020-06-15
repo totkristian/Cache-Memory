@@ -1,10 +1,6 @@
 ﻿using ModelsAndProps.ValueStructure;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModelsAndPropsTest.ValueStructureTest
 {
@@ -12,15 +8,15 @@ namespace ModelsAndPropsTest.ValueStructureTest
     public class ValueTest
     {
         [Test]
-        [TestCase("ASD",2.0)]
-        [TestCase("ADDDDDDDDD",1.0)]
-        [TestCase("D",0.00000000001)]
-        [TestCase("X",19)]
+        [TestCase("ASD", 2.0)]
+        [TestCase("ADDDDDDDDD", 1.0)]
+        [TestCase("D", 0.00000000001)]
+        [TestCase("X", 19)]
         public void ConstructorGoodParameters(string geoId, double consumption)
         {
             var timestamp = DateTime.Now;
-            Value v = new Value(timestamp,geoId, consumption);
-            
+            Value v = new Value(timestamp, geoId, consumption);
+
             Assert.AreEqual(v.Consumption, consumption);
             Assert.AreEqual(v.GeographicalLocationId, geoId);
             Assert.AreEqual(v.Timestamp, timestamp);

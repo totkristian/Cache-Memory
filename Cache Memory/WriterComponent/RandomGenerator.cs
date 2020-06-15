@@ -2,9 +2,6 @@
 using ModelsAndProps.ValueStructure;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WriterComponent
 {
@@ -36,12 +33,12 @@ namespace WriterComponent
         public HistoricalProperty getRandomPropertyForUpdateOrRemove(List<HistoricalProperty> hp)
         {
 
-                if (hp.Count > 0)
-                {
-                    return hp[random.Next(0, hp.Count)];
-                }
-                else
-                    return null;
+            if (hp.Count > 0)
+            {
+                return hp[random.Next(0, hp.Count)];
+            }
+            else
+                return null;
         }
     }
 }

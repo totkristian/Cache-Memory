@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ModelsAndProps.Historical;
+﻿using HistoricalComponent.DatabaseConn;
 using LoggerComponent;
-using System.Diagnostics;
-using HistoricalComponent.DatabaseConn;
-using ModelsAndProps.ValueStructure;
-using System.Xml;
 using ModelsAndProps.Dumping_buffer;
-using System.Runtime.CompilerServices;
+using ModelsAndProps.Historical;
+using ModelsAndProps.ValueStructure;
+using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace HistoricalComponent
@@ -28,7 +21,7 @@ namespace HistoricalComponent
         private static List<HistoricalProperty> lista;
         public Historical()
         {
-            
+
         }
 
         public static Historical GetInstance()
@@ -45,7 +38,7 @@ namespace HistoricalComponent
             return instance;
         }
 
-   
+
         public int CheckDataset(Codes code)
         {
             if ((int)code < 0 || (int)code > 9)
@@ -81,14 +74,14 @@ namespace HistoricalComponent
 
         public void ManualWriteToHistory(Codes code, Value val)
         {
-            HistoricalProperty hProp = new HistoricalProperty(code,val);
+            HistoricalProperty hProp = new HistoricalProperty(code, val);
 
             HistoricalDescription hDesc = new HistoricalDescription();
             hDesc.HistoricalProperties.Add(hProp);
             int dataset = CheckDataset(code);
-            
-            
-            if(dataset == -1)
+
+
+            if (dataset == -1)
             {
                 Console.WriteLine("Dataset parsing went wrong!");
                 return;
@@ -103,7 +96,7 @@ namespace HistoricalComponent
 
             databaseOperations.AddHistoricalDescription(hDesc, dataset);
         }
-      
+
         public ListDescription ReadOneLDFromDB(int dataset)
         {
             return databaseOperations.ReadListDescription(dataset);
@@ -123,18 +116,18 @@ namespace HistoricalComponent
             for (int i = 1; i < 6; i++)
             {
                 //check if i have data in any of these
-                if(checkIfTheresDataInCollectionDescription(deltaCD.Add[i]))
+                if (checkIfTheresDataInCollectionDescription(deltaCD.Add[i]))
                 {
                     HistoricalDescription hd = converter.ConvertCollectionDescription(deltaCD.Add[i], i);
-                    databaseOperations.AddHistoricalDescription(hd,i);
+                    databaseOperations.AddHistoricalDescription(hd, i);
                 }
-                
+
                 if (checkIfTheresDataInCollectionDescription(deltaCD.Update[i]))
                 {
                     HistoricalDescription hd = converter.ConvertCollectionDescription(deltaCD.Update[i], i);
                     databaseOperations.UpdateHistoricalDescriptions(hd, i);
                 }
-                
+
                 if (checkIfTheresDataInCollectionDescription(deltaCD.Remove[i]))
                 {
                     HistoricalDescription hd = converter.ConvertCollectionDescription(deltaCD.Remove[i], i);
