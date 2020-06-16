@@ -18,6 +18,7 @@ namespace HistoricalComponentTest
         Mock<DatabaseOperations> dataMock;
         Mock<HistoricalProperty> hpMock;
         Mock<HistoricalProperty> hpTempMock;
+        Mock<HistoricalDescription> hdMock;
         Mock<Value> valueMock;
         Mock<Value> valueMock1;
 
@@ -36,6 +37,9 @@ namespace HistoricalComponentTest
             valueMock1.Object.Consumption = 15.0;
             valueMock1.Object.GeographicalLocationId = Guid.NewGuid().ToString();
             valueMock1.Object.Timestamp = DateTime.Now;
+
+            hdMock = new Mock<HistoricalDescription>();
+            
 
         }
         #region checkGeoId
@@ -143,6 +147,50 @@ namespace HistoricalComponentTest
                 dataMock.Object.CheckDeadband(hpMock.Object, hpTempMock.Object);
             });
 
+        }
+        #endregion
+
+        #region RemoveHistoricalProperties
+        [Test]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(4)]
+        [TestCase(5)]
+        public void RemoveHistoricalPropertiesGoodParametes(int dataset)
+        {
+            hdMock.Object.Dataset = dataset;
+            hdMock.Object.HistoricalProperties.Add(hpMock.Object);
+
+            Assert.DoesNotThrow(() =>
+            {
+                dataMock.Object.RemoveHistoricalProperties(hdMock.Object, dataset);
+            });
+        }
+        [Test]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(4)]
+        [TestCase(5)]
+        public void RemoveHistoricalPropertiesBadParameters(int dataset)
+        {
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                dataMock.Object.RemoveHistoricalProperties(null, dataset);
+            });
+        }
+        [Test]
+        [TestCase(0)]
+        [TestCase(6)]
+        public void RemoveHistoricalPropertiesBadParameters1(int dataset)
+        {
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                dataMock.Object.RemoveHistoricalProperties(hdMock.Object, dataset);
+            });
         }
         #endregion
     }

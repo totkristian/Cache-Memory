@@ -87,6 +87,15 @@ namespace HistoricalComponent
         {
             List<HistoricalProperty> historicalProperties = ReadHistoricalProperties();
 
+            if(hd == null)
+            {
+                throw new ArgumentNullException("Arguments cannot be null");
+            }
+            if(dataset < 1 || dataset > 5)
+            {
+                throw new ArgumentException("Something wrong with dataset");
+            }
+
             lock (syncLock)
             {
                 Logger.WriteLog("Removing historical properties", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
