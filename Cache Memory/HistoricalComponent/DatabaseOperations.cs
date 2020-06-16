@@ -113,7 +113,10 @@ namespace HistoricalComponent
             {
                 throw new ArgumentNullException("You need to have historical property!");
             }
-
+            if (!hp.Code.Equals(hpTemp.Code))
+            {
+                throw new ArgumentException("The two codes arent a match!");
+            }
 
             if (hpTemp.Code.Equals(Codes.CODE_DIGITAL) && hp.Code.Equals(Codes.CODE_DIGITAL))
             {
