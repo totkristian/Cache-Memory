@@ -74,6 +74,10 @@ namespace HistoricalComponent
 
         public void ManualWriteToHistory(Codes code, Value val)
         {
+            if((int)code < 0 || (int)code > 9)
+            {
+                throw new ArgumentException("Something wront with code");
+            }
             HistoricalProperty hProp = new HistoricalProperty(code, val);
 
             HistoricalDescription hDesc = new HistoricalDescription();
@@ -99,6 +103,10 @@ namespace HistoricalComponent
 
         public ListDescription ReadOneLDFromDB(int dataset)
         {
+            if(dataset < 1 || dataset > 5)
+            {
+                throw new ArgumentException("Something wrong with dataset");
+            }
             return databaseOperations.ReadListDescription(dataset);
         }
         public List<HistoricalProperty> GetHistoricalProperties()
@@ -108,6 +116,10 @@ namespace HistoricalComponent
 
         public void ReadFromDumpingBuffer(DeltaCD deltaCD)
         {
+            if(deltaCD == null || deltaCD.Add == null || deltaCD.Remove == null || deltaCD.Update == null || deltaCD.TransactionID == null)
+            {
+                throw new ArgumentNullException("parameters cannot be null");
+            }
             lock (syncLock)
             {
                 Logger.WriteLog("Reading from Dumping buffer", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
@@ -135,14 +147,13 @@ namespace HistoricalComponent
                 }
             }
         }
-        private bool checkIfTheresDataInCollectionDescription(CollectionDescription cd)
+        public bool checkIfTheresDataInCollectionDescription(CollectionDescription cd)
         {
             try
             {
-                if (cd.Dataset == 0 || cd.Id == 0 || cd.DumpingPropertyCollection.DumpingProperties.Count == 0)
+                if (cd == null || cd.Dataset == 0 || cd.Id == 0 || cd.DumpingPropertyCollection.DumpingProperties.Count == 0)
                 {
                     throw new ArgumentNullException("Everything is null");
-                    
                 }
                 return true;
             }
@@ -153,7 +164,19 @@ namespace HistoricalComponent
         }
         public bool CheckIfIdIsUnique(string id)
         {
-            return databaseOperations.CheckGeoId(id);
+            try
+            {
+                if (String.IsNullOrWhiteSpace(id))
+                {
+                    throw new ArgumentNullException("ID cannot be null");
+                }
+                return databaseOperations.CheckGeoId(id);
+            }
+            catch
+            {
+                return true; //so it does not add are hProp to database
+            }
+           
         }
     }
 }
