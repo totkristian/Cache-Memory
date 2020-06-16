@@ -29,6 +29,10 @@ namespace HistoricalComponent
                 Logger.WriteLog("Adding historical description", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
             }
             ListDescription list1 = database.ListDescriptions.Where(x => x.Id == dataset).FirstOrDefault();
+            if(list1 == null)
+            {
+                throw new ArgumentNullException("Object reference not set to instance of an object(list null for db)");
+            }
             list1.HistoricalDescriptions.Add(hd);
             database.SaveChanges();
         }

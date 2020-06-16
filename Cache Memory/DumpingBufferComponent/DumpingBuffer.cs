@@ -13,15 +13,14 @@ namespace DumpingBufferComponent
         private static DumpingBuffer instance;
         private static readonly object syncLock = new object();
         private static Historical historical = Historical.GetInstance();
-        private static Dictionary<int, CollectionDescription> collectionDescriptions;
-        private static Dictionary<int, List<Operations>> operationAndId;
-        private static DeltaCD deltaCD;
+        private static Dictionary<int, CollectionDescription> collectionDescriptions = new Dictionary<int, CollectionDescription>(5);
+        private static Dictionary<int, List<Operations>> operationAndId = new Dictionary<int, List<Operations>>();
+        private static DeltaCD deltaCD = new DeltaCD();
         private ConvertToDeltaCD converter = new ConvertToDeltaCD();
-        private static int counter;
+        private static int counter = 0;
 
         public DumpingBuffer()
         {
-
         }
 
         public static DumpingBuffer GetInstance()
@@ -31,11 +30,7 @@ namespace DumpingBufferComponent
                 if (instance == null)
                 {
                     instance = new DumpingBuffer();
-                    collectionDescriptions = new Dictionary<int, CollectionDescription>(5);
-                    operationAndId = new Dictionary<int, List<Operations>>();
                     InitalizeCollectionDescriptions();
-                    counter = 0;
-                    deltaCD = new DeltaCD();
                 }
             }
 
@@ -45,9 +40,17 @@ namespace DumpingBufferComponent
         public void WriteToDumpingBuffer(Operations op, Codes code, Value val)
         {
 
-
+            if (val == null)
+            {
+                throw new ArgumentNullException("Value cannot be null");
+            }
             if ((int)code < 0 || (int)code > 9)
                 throw new ArgumentException("Code must be in interval 0-9!");
+            if((int)op < 0 || (int)op > 2)
+            {
+                throw new ArgumentException("Operation invalid");
+            }
+            
             //check Val.Consumption and the resto of the properties if they are valid
             DumpingProperty dp = new DumpingProperty(code, val);
             int dataset = historical.CheckDataset(code);
@@ -100,8 +103,16 @@ namespace DumpingBufferComponent
                 ClearStructures();
             }
         }
-        private void AddToOperationsAndId(int id, Operations operation)
+        public void AddToOperationsAndId(int id, Operations operation)
         {
+            if(id < 1 || id > 5)
+            {
+                throw new ArgumentException("Something wrong with id");
+            }
+            if ((int)operation < 0 || (int)operation > 2)
+            {
+                throw new ArgumentException("Operation invalid");
+            }
 
             if (operationAndId.ContainsKey(id))
             {
