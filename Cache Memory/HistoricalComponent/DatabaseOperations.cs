@@ -59,6 +59,14 @@ namespace HistoricalComponent
 
         public void UpdateHistoricalDescriptions(HistoricalDescription hd, int dataset)
         {
+            if (hd == null)
+            {
+                throw new ArgumentNullException("Arguments cannot be null");
+            }
+            if (dataset < 1 || dataset > 5)
+            {
+                throw new ArgumentException("Something wrong with dataset");
+            }
             List<HistoricalProperty> historicalProperties = ReadHistoricalProperties();
             lock (syncLock)
             {

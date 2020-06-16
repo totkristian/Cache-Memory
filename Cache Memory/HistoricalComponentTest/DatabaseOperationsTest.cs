@@ -157,7 +157,7 @@ namespace HistoricalComponentTest
         [TestCase(3)]
         [TestCase(4)]
         [TestCase(5)]
-        public void RemoveHistoricalPropertiesGoodParametes(int dataset)
+        public void RemoveHistoricalPropertiesGoodParameters(int dataset)
         {
             hdMock.Object.Dataset = dataset;
             hdMock.Object.HistoricalProperties.Add(hpMock.Object);
@@ -190,6 +190,50 @@ namespace HistoricalComponentTest
             Assert.Throws<ArgumentException>(() =>
             {
                 dataMock.Object.RemoveHistoricalProperties(hdMock.Object, dataset);
+            });
+        }
+        #endregion
+
+        #region UpdateHistoricalProperties
+        [Test]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(4)]
+        [TestCase(5)]
+        public void UpdateHistoricalDescriptionsGoodParameters(int dataset)
+        {
+            hdMock.Object.Dataset = dataset;
+            hdMock.Object.HistoricalProperties.Add(hpMock.Object);
+
+            Assert.DoesNotThrow(() =>
+            {
+                dataMock.Object.UpdateHistoricalDescriptions(hdMock.Object, dataset);
+            });
+        }
+        [Test]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(4)]
+        [TestCase(5)]
+        public void UpdateHistoricalDescriptionsBadParameters(int dataset)
+        {
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                dataMock.Object.UpdateHistoricalDescriptions(null, dataset);
+            });
+        }
+        [Test]
+        [TestCase(0)]
+        [TestCase(6)]
+        public void UpdateHistoricalDescriptionsBadParameters1(int dataset)
+        {
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                dataMock.Object.UpdateHistoricalDescriptions(hdMock.Object, dataset);
             });
         }
         #endregion
