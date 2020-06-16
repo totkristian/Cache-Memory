@@ -227,5 +227,57 @@ namespace HistoricalComponentTest
         }
 
         #endregion
+
+        #region checkDataset
+        [Test]
+        [TestCase(Codes.CODE_ANALOG)]
+        [TestCase(Codes.CODE_CONSUMER)]
+        [TestCase(Codes.CODE_CUSTOM)]
+        [TestCase(Codes.CODE_DIGITAL)]
+        [TestCase(Codes.CODE_LIMITSET)]
+        [TestCase(Codes.CODE_MOTION)]
+        [TestCase(Codes.CODE_MULTIPLENODE)]
+        [TestCase(Codes.CODE_SENSOR)]
+        [TestCase(Codes.CODE_SINGLENODE)]
+        [TestCase(Codes.CODE_SOURCE)]
+        public void CheckDatasetGoodParameters(Codes code)
+        {
+            Assert.DoesNotThrow(() =>
+            {
+                historyMock.Object.CheckDataset(code);
+            });
+            int dataset = historyMock.Object.CheckDataset(code);
+            if ((int)code == 0 || (int)code == 1)
+            {
+                Assert.AreEqual(dataset, 1);
+            }
+            else if ((int)code == 2 || (int)code == 3)
+            {
+                Assert.AreEqual(dataset, 2);
+            }
+            else if ((int)code == 4 || (int)code == 5)
+            {
+                Assert.AreEqual(dataset, 3);
+            }
+            else if ((int)code == 6 || (int)code == 7)
+            {
+                Assert.AreEqual(dataset, 4);
+            }
+            else
+            {
+                Assert.AreEqual(dataset, 5);
+            }
+        }
+        [Test]
+        [TestCase(-5)]
+        [TestCase(15)]
+        public void CheckDatasetBadParameters(Codes code)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+                historyMock.Object.CheckDataset(code);
+            });
+        }
+        #endregion
     }
 }
