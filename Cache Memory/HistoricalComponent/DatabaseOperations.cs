@@ -15,6 +15,14 @@ namespace HistoricalComponent
 
         public void AddHistoricalDescription(HistoricalDescription hd, int dataset)
         {
+            if (hd == null)
+            {
+                throw new ArgumentNullException("Arguments cannot be null");
+            }
+            if (dataset < 1 || dataset > 5)
+            {
+                throw new ArgumentException("Something wrong with dataset");
+            }
             //call logger
             lock (syncLock)
             {
@@ -27,6 +35,10 @@ namespace HistoricalComponent
 
         public ListDescription ReadListDescription(int dataset)
         {
+            if (dataset < 1 || dataset > 5)
+            {
+                throw new ArgumentException("Something wrong with dataset");
+            }
             //call logger
             ListDescription ld = new ListDescription();
             List<HistoricalDescription> list = database.HistoricalDescriptions.Where(x => x.ListDescriptionId == dataset).ToList();

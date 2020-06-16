@@ -237,5 +237,32 @@ namespace HistoricalComponentTest
             });
         }
         #endregion
+
+        #region ReadListDescription
+        [Test]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(4)]
+        [TestCase(5)]
+        public void ReadListDescriptionGoodParameters(int dataset)
+        {
+            Assert.DoesNotThrow(() =>
+            {
+                dataMock.Object.ReadListDescription(dataset);
+            });
+        }
+        [Test]
+        [TestCase(0)]
+        [TestCase(6)]
+        public void ReadListDescriptionBadParameters(int dataset)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+                dataMock.Object.ReadListDescription(dataset);
+            });
+        }
+
+        #endregion
     }
 }
