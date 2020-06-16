@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConverterFromCdToHistoricalTest.cs" />
+    <Compile Include="DatabaseOperationsTest.cs" />
     <Compile Include="HistoricalTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

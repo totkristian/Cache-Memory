@@ -106,7 +106,7 @@ namespace HistoricalComponent
             database.SaveChanges();
         }
 
-        private bool CheckDeadband(HistoricalProperty hp, HistoricalProperty hpTemp)
+        public bool CheckDeadband(HistoricalProperty hp, HistoricalProperty hpTemp)
         {
 
             if (hp == null || hpTemp == null)
@@ -130,7 +130,10 @@ namespace HistoricalComponent
 
         public bool CheckGeoId(string id)
         {
-
+            if(String.IsNullOrWhiteSpace(id))
+            {
+                throw new ArgumentNullException("Id cannot be null");
+            }
             HistoricalProperty hp = database.HistoricalProperties.Where(x => x.HistoricalValue.GeographicalLocationId.Equals(id)).FirstOrDefault();
             if (hp != null)
                 return false;
