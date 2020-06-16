@@ -98,6 +98,7 @@ namespace DumpingBufferComponentTest
             });
         }
         #endregion
+        
         #region AddOperationsAndId
         [Test]
         [TestCase(1,Operations.ADD)]
@@ -108,6 +109,19 @@ namespace DumpingBufferComponentTest
         public void AddOperationAndIdGoodParameters(int id, Operations operation)
         {
             Assert.DoesNotThrow(() =>
+            {
+                db.AddToOperationsAndId(id, operation);
+            });
+        }
+        [Test]
+        [TestCase(0, Operations.ADD)]
+        [TestCase(-1, -5)]
+        [TestCase(6, 6)]
+        [TestCase(8, 3)]
+        [TestCase(-5, Operations.REMOVE)]
+        public void AddOperationAndIdBadParameters(int id, Operations operation)
+        {
+            Assert.Throws<ArgumentException>(() =>
             {
                 db.AddToOperationsAndId(id, operation);
             });
