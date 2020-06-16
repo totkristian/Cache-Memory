@@ -10,8 +10,12 @@ namespace HistoricalComponent
     public class ConverterFromCdToHistorical
     {
         private static readonly object syncLock = new object();
-        public HistoricalDescription ConvertCollectionDescription(CollectionDescription cd, int dataset)
+        public HistoricalDescription ConvertCollectionDescription(CollectionDescription cd)
         {
+            if(cd == null)
+            {
+                throw new ArgumentNullException("Parameters cannot be null");
+            }
             HistoricalDescription hd = new HistoricalDescription();
             List<HistoricalProperty> histProp = new List<HistoricalProperty>();
 

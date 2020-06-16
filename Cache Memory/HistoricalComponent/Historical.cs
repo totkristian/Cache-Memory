@@ -118,30 +118,38 @@ namespace HistoricalComponent
                 //check if i have data in any of these
                 if (checkIfTheresDataInCollectionDescription(deltaCD.Add[i]))
                 {
-                    HistoricalDescription hd = converter.ConvertCollectionDescription(deltaCD.Add[i], i);
+                    HistoricalDescription hd = converter.ConvertCollectionDescription(deltaCD.Add[i]);
                     databaseOperations.AddHistoricalDescription(hd, i);
                 }
 
                 if (checkIfTheresDataInCollectionDescription(deltaCD.Update[i]))
                 {
-                    HistoricalDescription hd = converter.ConvertCollectionDescription(deltaCD.Update[i], i);
+                    HistoricalDescription hd = converter.ConvertCollectionDescription(deltaCD.Update[i]);
                     databaseOperations.UpdateHistoricalDescriptions(hd, i);
                 }
 
                 if (checkIfTheresDataInCollectionDescription(deltaCD.Remove[i]))
                 {
-                    HistoricalDescription hd = converter.ConvertCollectionDescription(deltaCD.Remove[i], i);
+                    HistoricalDescription hd = converter.ConvertCollectionDescription(deltaCD.Remove[i]);
                     databaseOperations.RemoveHistoricalProperties(hd, i);
                 }
             }
         }
         private bool checkIfTheresDataInCollectionDescription(CollectionDescription cd)
         {
-            if (cd.Dataset == 0 || cd.Id == 0 || cd.DumpingPropertyCollection.DumpingProperties.Count == 0)
+            try
             {
+                if (cd.Dataset == 0 || cd.Id == 0 || cd.DumpingPropertyCollection.DumpingProperties.Count == 0)
+                {
+                    throw new ArgumentNullException("Everything is null");
+                    
+                }
+                return true;
+            }
+            catch{
                 return false;
             }
-            return true;
+            
         }
         public bool CheckIfIdIsUnique(string id)
         {
