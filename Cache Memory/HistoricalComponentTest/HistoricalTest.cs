@@ -177,5 +177,55 @@ namespace HistoricalComponentTest
         }
 
         #endregion
+
+        #region manualWriteToHistory
+       /* [Test]
+        [TestCase(Codes.CODE_ANALOG)]
+        [TestCase(Codes.CODE_CONSUMER)]
+        [TestCase(Codes.CODE_CUSTOM)]
+        [TestCase(Codes.CODE_DIGITAL)]
+        [TestCase(Codes.CODE_LIMITSET)]
+        [TestCase(Codes.CODE_MOTION)]
+        [TestCase(Codes.CODE_MULTIPLENODE)]
+        [TestCase(Codes.CODE_SENSOR)]
+        [TestCase(Codes.CODE_SINGLENODE)]
+        [TestCase(Codes.CODE_SOURCE)]
+        public void ManualWriteToHistoryGoodParameters(Codes code)
+        {
+            Assert.DoesNotThrow(() =>
+            {
+                historyMock.Object.ManualWriteToHistory(code, valueMock.Object);
+            }); 
+        } */
+        [Test]
+        [TestCase(-1)]
+        [TestCase(-9)]
+        public void ManualWriteToHistoryBadParameters(Codes code)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+                historyMock.Object.ManualWriteToHistory(code, valueMock.Object);
+            });
+        }
+        [Test]
+        [TestCase(Codes.CODE_ANALOG)]
+        [TestCase(Codes.CODE_CONSUMER)]
+        [TestCase(Codes.CODE_CUSTOM)]
+        [TestCase(Codes.CODE_DIGITAL)]
+        [TestCase(Codes.CODE_LIMITSET)]
+        [TestCase(Codes.CODE_MOTION)]
+        [TestCase(Codes.CODE_MULTIPLENODE)]
+        [TestCase(Codes.CODE_SENSOR)]
+        [TestCase(Codes.CODE_SINGLENODE)]
+        [TestCase(Codes.CODE_SOURCE)]
+        public void ManualWriteToHistoryBadParameters1(Codes code)
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                historyMock.Object.ManualWriteToHistory(code, null);
+            });
+        }
+
+        #endregion
     }
 }

@@ -74,6 +74,10 @@ namespace HistoricalComponent
 
         public void ManualWriteToHistory(Codes code, Value val)
         {
+            if (val == null)
+            {
+                throw new ArgumentNullException("Parameters cannot be null");
+            }
             if((int)code < 0 || (int)code > 9)
             {
                 throw new ArgumentException("Something wront with code");
@@ -92,6 +96,7 @@ namespace HistoricalComponent
             }
 
             hDesc.Dataset = dataset;
+            hDesc.ListDescriptionId = dataset;
 
             lock (syncLock)
             {
