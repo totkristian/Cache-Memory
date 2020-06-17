@@ -77,7 +77,7 @@ namespace Cache_Memory
             do
             {
                 w.SendToHistorical();
-                Console.Write("\nPress 'Escape' to exit writer");
+                Console.Write("\nPress 'Escape' to exit writer\n");
                 cki = Console.ReadKey();
             } while (cki.Key != ConsoleKey.Escape);
         }
@@ -88,14 +88,14 @@ namespace Cache_Memory
             do
             {
                 r.Meni();
-                Console.Write("\nPress 'Escape' to exit reader");
+                Console.Write("\nPress 'Escape' to exit reader\n");
                 cki = Console.ReadKey();
             } while (cki.Key != ConsoleKey.Escape);
         }
 
         public void SendToDumpingBuffer()
         {
-            Console.Write("\nPress any key to exit dumping buffer");
+            Console.Write("\nPress any key to exit dumping buffer\n");
             while (!Console.KeyAvailable)
             {
                 w.SendToDumpingBuffer();
