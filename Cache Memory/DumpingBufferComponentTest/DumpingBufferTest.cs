@@ -46,24 +46,10 @@ namespace DumpingBufferComponentTest
         [TestCase(Operations.ADD, Codes.CODE_CUSTOM)]
         [TestCase(Operations.ADD, Codes.CODE_DIGITAL)]
         [TestCase(Operations.REMOVE, Codes.CODE_LIMITSET)]
-        [TestCase(Operations.ADD, Codes.CODE_MOTION)]
-        [TestCase(Operations.ADD, Codes.CODE_MULTIPLENODE)]
-        [TestCase(Operations.UPDATE, Codes.CODE_SENSOR)]
-        [TestCase(Operations.REMOVE, Codes.CODE_SINGLENODE)]
         public void WriteToDumpingBufferGoodParameters(Operations op, Codes code)
         {
-            //DumpingBuffer dmp = dumpingMock.Object;
+           
             Assert.DoesNotThrow(() =>
-            {
-                db.WriteToDumpingBuffer(op, code, valueMock.Object);
-            });
-        }
-        [Test]
-        [TestCase(Operations.REMOVE, Codes.CODE_SINGLENODE)]
-        public void WriteToDumpingBufferGoodParameters1(Operations op, Codes code)
-        {
-            //DumpingBuffer dmp = dumpingMock.Object;
-            Assert.Throws<ArgumentNullException>(() =>
             {
                 db.WriteToDumpingBuffer(op, code, valueMock.Object);
             });
@@ -77,7 +63,7 @@ namespace DumpingBufferComponentTest
 
         public void WriteToDumpingBufferBadParameters(Operations op, Codes code)
         {
-            //DumpingBuffer dmp = dumpingMock.Object;
+           
             Assert.Throws<ArgumentException>(() =>
             {
                 db.WriteToDumpingBuffer(op,code,valueMock.Object);
@@ -91,7 +77,7 @@ namespace DumpingBufferComponentTest
         [TestCase(null, null)]
         public void WriteToDumpingBufferBadParameters1(Operations op, Codes code)
         {
-            //DumpingBuffer dmp = dumpingMock.Object;
+            
             Assert.Throws<ArgumentNullException>(() =>
             {
                 db.WriteToDumpingBuffer(op, code, null);
@@ -124,6 +110,69 @@ namespace DumpingBufferComponentTest
             Assert.Throws<ArgumentException>(() =>
             {
                 db.AddToOperationsAndId(id, operation);
+            });
+        }
+
+        #endregion
+
+        #region checkUpdate
+        [Test]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(4)]
+        [TestCase(5)]
+        public void CheckUpdateGoodParameters(int dataset)
+        {
+            Mock<DumpingProperty> dp = new Mock<DumpingProperty>();
+            dp.Object.Code = Codes.CODE_ANALOG;
+            dp.Object.DumpingValue = valueMock.Object;
+            Assert.DoesNotThrow(() =>
+            {
+                db.CheckUpdate(dataset, dp.Object);
+            });
+        }
+        [Test]
+        [TestCase(0)]
+        [TestCase(6)]
+        [TestCase(-5)]
+        public void CheckUpdateBadParameters(int dataset)
+        {
+            Mock<DumpingProperty> dp = new Mock<DumpingProperty>();
+            dp.Object.Code = Codes.CODE_ANALOG;
+            dp.Object.DumpingValue = valueMock.Object;
+            Assert.Throws<ArgumentException>(() =>
+            {
+                db.CheckUpdate(dataset, dp.Object);
+            });
+        }
+        [Test]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        public void CheckUpdateBadParameters1(int dataset)
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                db.CheckUpdate(dataset, null);
+            });
+        }
+
+        #endregion
+
+        #region checkDumpingPropertyCount
+        [Test]
+        public void CheckDumpingPropertyTrueFalse()
+        {
+            db.WriteToDumpingBuffer(Operations.ADD, Codes.CODE_ANALOG, valueMock.Object);
+            Assert.IsFalse(db.CheckDumpingPropertyCount());
+            Mock<Value>valueMock1 = new Mock<Value>();
+            valueMock1.Object.Consumption = 15.0;
+            valueMock1.Object.GeographicalLocationId = Guid.NewGuid().ToString();
+            valueMock1.Object.Timestamp = DateTime.Now;
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                db.WriteToDumpingBuffer(Operations.ADD, Codes.CODE_ANALOG, valueMock1.Object);
             });
         }
 

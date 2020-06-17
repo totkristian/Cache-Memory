@@ -79,7 +79,7 @@ namespace DumpingBufferComponent
 
             }
             //data added need to check dp.COunt;
-            if (checkDumpingPropertyCount() && counter < 3)
+            if (CheckDumpingPropertyCount() && counter < 3)
             {
 
                 // FillDeltaCD(); //pack data into deltaCD component
@@ -125,14 +125,17 @@ namespace DumpingBufferComponent
             }
         }
 
-        private bool CheckUpdate(int dataset, DumpingProperty tempDp)
+        public bool CheckUpdate(int dataset, DumpingProperty tempDp)
         {
             if (dataset < 1 || dataset > 5)
             {
-                //baci exception
+                throw new ArgumentException("Something wrong with dataset");
             }
 
-
+            if(tempDp == null)
+            {
+                throw new ArgumentNullException("Arguments cannot be null");
+            }
 
             foreach (DumpingProperty dp in collectionDescriptions[dataset].DumpingPropertyCollection.DumpingProperties)
             {
@@ -146,7 +149,7 @@ namespace DumpingBufferComponent
             return false;
         }
 
-        private bool checkDumpingPropertyCount()
+        public bool CheckDumpingPropertyCount()
         {
 
             for (int i = 1; i < 6; i++)
