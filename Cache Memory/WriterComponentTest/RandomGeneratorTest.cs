@@ -45,5 +45,12 @@ namespace WriterComponentTest
             hp.Object.Add(hpp.Object);
             Assert.IsNotNull(randomGeneratorMock.Object.getRandomPropertyForUpdateOrRemove(hp.Object));
         }
+
+        [Test]
+        public void GenerateRandomOperationOk()
+        {
+            Assert.LessOrEqual((int)randomGeneratorMock.Object.GenerateRandomOperation(), 2);
+            Assert.GreaterOrEqual((int)randomGeneratorMock.Object.GenerateRandomOperation(), 0);
+        }
     }
 }
