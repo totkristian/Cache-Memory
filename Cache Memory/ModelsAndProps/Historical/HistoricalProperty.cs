@@ -1,10 +1,6 @@
 ﻿using ModelsAndProps.ValueStructure;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModelsAndProps.Historical
 {
@@ -18,20 +14,28 @@ namespace ModelsAndProps.Historical
         public Value HistoricalValue { get => historicalValue; set => historicalValue = value; }
         public DateTime Time { get => time; set => time = value; }
         public string Id { get => id; set => id = value; }
-        
-       
+
+
         public int? HistoricalDescriptionId { get; set; }
         [ForeignKey("HistoricalDescriptionId")]
         public HistoricalDescription historicalDescription { get; set; }
 
-        public HistoricalProperty ()
+        public HistoricalProperty()
         {
 
         }
 
-        public HistoricalProperty(Codes codes, Value value)
+        public HistoricalProperty(Codes code, Value value)
         {
-            this.code = codes;
+            if (value == null)
+            {
+                throw new ArgumentNullException("Parameters cannot be null");
+            }
+            if ((int)code < 0 || (int)code > 9)
+            {
+                throw new ArgumentException("Something wrong with code");
+            }
+            this.code = code;
             this.historicalValue = value;
             this.time = DateTime.Now;
             this.id = Guid.NewGuid().ToString();

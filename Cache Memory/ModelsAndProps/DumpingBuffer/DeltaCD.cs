@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModelsAndProps.Dumping_buffer
 {
     public class DeltaCD
     {
         private string transactionID;
-        private Dictionary<int,CollectionDescription> add;
+        private Dictionary<int, CollectionDescription> add;
         private Dictionary<int, CollectionDescription> update;
         private Dictionary<int, CollectionDescription> remove;
 
@@ -20,10 +17,12 @@ namespace ModelsAndProps.Dumping_buffer
 
         public DeltaCD()
         {
+            TransactionID = Guid.NewGuid().ToString();
             add = new Dictionary<int, CollectionDescription>();
             update = new Dictionary<int, CollectionDescription>();
             remove = new Dictionary<int, CollectionDescription>();
-            for (int i = 1; i < 6; i++) {
+            for (int i = 1; i < 6; i++)
+            {
                 add.Add(i, new CollectionDescription());
                 update.Add(i, new CollectionDescription());
                 remove.Add(i, new CollectionDescription());

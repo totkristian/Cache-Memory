@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class createdatabase : DbMigration
+    public partial class createDatabase : DbMigration
     {
         public override void Up()
         {
@@ -13,10 +13,10 @@
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Dataset = c.Int(nullable: false),
-                        ListDescriptionId = c.Int(),
+                        ListDescriptionId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.ListDescriptions", t => t.ListDescriptionId)
+                .ForeignKey("dbo.ListDescriptions", t => t.ListDescriptionId, cascadeDelete: true)
                 .Index(t => t.ListDescriptionId);
             
             CreateTable(
@@ -25,9 +25,9 @@
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Code = c.Int(nullable: false),
-                        HistoricalValue_Timestamp = c.DateTime(nullable: false),
+                        HistoricalValue_Timestamp = c.DateTime(),
                         HistoricalValue_GeographicalLocationId = c.String(),
-                        HistoricalValue_Consumption = c.Single(nullable: false),
+                        HistoricalValue_Consumption = c.Double(nullable: false),
                         Time = c.DateTime(nullable: false),
                         HistoricalDescriptionId = c.Int(),
                     })

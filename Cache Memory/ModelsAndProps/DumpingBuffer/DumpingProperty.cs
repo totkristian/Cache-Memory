@@ -1,9 +1,5 @@
 ﻿using ModelsAndProps.ValueStructure;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModelsAndProps.Dumping_buffer
 {
@@ -22,6 +18,14 @@ namespace ModelsAndProps.Dumping_buffer
 
         public DumpingProperty(Codes code, Value dumpValue)
         {
+            if (dumpValue == null)
+            {
+                throw new ArgumentNullException("Arguments cannot be null");
+            }
+            if ((int)code < 0 || (int)code > 9)
+            {
+                throw new ArgumentException("Something wrong with code");
+            }
             this.code = code;
             this.dumpingValue = dumpValue;
         }

@@ -3,10 +3,8 @@ using LoggerComponent;
 using ModelsAndProps.Historical;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReaderComponent
 {
@@ -40,7 +38,7 @@ namespace ReaderComponent
                     {
                         isOk = true;
                     }
-                   
+
                 }
                 catch
                 {
@@ -58,6 +56,8 @@ namespace ReaderComponent
 
         public List<HistoricalProperty> GetChangesForInterval(Codes code)
         {
+            if ((int)code < 0 || (int)code > 9)
+                throw new ArgumentException("Code must be in interval 0-9!");
             int dataset = historical.CheckDataset(code);
             ListDescription listDescription = historical.ReadOneLDFromDB(dataset);
 
@@ -69,8 +69,14 @@ namespace ReaderComponent
             return ReadCode(code, listDescription);
         }
 
-        private List<HistoricalProperty> ReadCode(Codes code, ListDescription listDescription)
+        public List<HistoricalProperty> ReadCode(Codes code, ListDescription listDescription)
         {
+            if ((int)code < 0 || (int)code > 9)
+                throw new ArgumentException("Code must be in interval 0-9!");
+            if(listDescription == null)
+            {
+                throw new ArgumentNullException("Parameters cannot be null");
+            }
             List<HistoricalProperty> hps = new List<HistoricalProperty>();
 
             lock (syncLock)

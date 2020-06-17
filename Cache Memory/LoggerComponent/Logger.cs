@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LoggerComponent
 {
@@ -12,12 +9,12 @@ namespace LoggerComponent
         public static string path = $"{System.IO.Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory)}/log.txt";
         public static void WriteLog(string msg, string className, string method)
         {
-            if(String.IsNullOrWhiteSpace(msg) || String.IsNullOrWhiteSpace(className) || String.IsNullOrWhiteSpace(method))
+            if (String.IsNullOrWhiteSpace(msg) || String.IsNullOrWhiteSpace(className) || String.IsNullOrWhiteSpace(method))
             {
                 throw new ArgumentException("Parameters cannot be empty,null or whitespace!");
             }
             //System.Diagnostics.Debug.WriteLine(path);
-            using (StreamWriter sw = new StreamWriter(path,true))
+            using (StreamWriter sw = new StreamWriter(path, true))
             {
                 sw.WriteLine("---Log Entry:");
                 sw.WriteLine($"---{DateTime.Now.ToString()}");
@@ -43,7 +40,8 @@ namespace LoggerComponent
                     throw new ArgumentNullException("Log reader failed to open file!");
 
                 string line = "";
-                while ((line = sr.ReadLine()) != null) {    
+                while ((line = sr.ReadLine()) != null)
+                {
                     log.Add(sr.ReadLine());
                 }
             }

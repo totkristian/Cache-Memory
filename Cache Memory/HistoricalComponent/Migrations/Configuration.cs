@@ -1,12 +1,8 @@
 ﻿namespace HistoricalComponent.Migrations
 {
     using ModelsAndProps.Historical;
-    using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<HistoricalComponent.DatabaseConn.Database>
     {

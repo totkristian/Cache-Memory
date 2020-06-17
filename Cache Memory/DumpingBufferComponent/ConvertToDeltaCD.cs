@@ -2,10 +2,7 @@
 using ModelsAndProps.Dumping_buffer;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DumpingBufferComponent
 {
@@ -14,9 +11,12 @@ namespace DumpingBufferComponent
         private static readonly object syncLock = new object();
         public DeltaCD FillDeltaCD(Dictionary<int, List<Operations>> operationAndId, Dictionary<int, CollectionDescription> collectionDescriptions)
         {
+            if(operationAndId == null || collectionDescriptions == null)
+            {
+                throw new ArgumentNullException("Parameters cannot be null");
+            }
             int cnt;
             DeltaCD deltaCD = new DeltaCD();
-            deltaCD.TransactionID = Guid.NewGuid().ToString();
             lock (syncLock)
             {
                 Logger.WriteLog("Converting to Delta CD", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
