@@ -52,5 +52,12 @@ namespace WriterComponentTest
             Assert.LessOrEqual((int)randomGeneratorMock.Object.GenerateRandomOperation(), 2);
             Assert.GreaterOrEqual((int)randomGeneratorMock.Object.GenerateRandomOperation(), 0);
         }
+
+        [Test]
+        public void GenerateRandomCodeOk()
+        {
+            Assert.LessOrEqual((int)randomGeneratorMock.Object.GenerateRandomCode(), 9);
+            Assert.GreaterOrEqual((int)randomGeneratorMock.Object.GenerateRandomCode(), 0);
+        }
     }
 }
