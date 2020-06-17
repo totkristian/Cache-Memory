@@ -1,12 +1,36 @@
-﻿using System;
+﻿using ModelsAndProps.Historical;
+using ModelsAndProps.ValueStructure;
+using Moq;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WriterComponent;
 
 namespace WriterComponentTest
 {
-    public class Class1
+    [TestFixture]
+    public class RandomGeneratorTest
     {
+        Mock<RandomGenerator> randomGeneratorMock;
+        Mock<List<HistoricalProperty>> hp;
+        Mock<HistoricalProperty> hpp;
+        Mock<Value> valueMock;
+
+        [SetUp]
+        public void SetUp()
+        {
+            randomGeneratorMock = new Mock<RandomGenerator>();
+            hp = new Mock<List<HistoricalProperty>>();
+            hpp = new Mock<HistoricalProperty>();
+            hpp.Object.Code = Codes.CODE_ANALOG;
+            valueMock = new Mock<Value>();
+            valueMock.Object.Consumption = 10.0;
+            valueMock.Object.GeographicalLocationId = Guid.NewGuid().ToString();
+            valueMock.Object.Timestamp = DateTime.Now;
+            hpp.Object.HistoricalValue = valueMock.Object;
+        }
     }
 }
