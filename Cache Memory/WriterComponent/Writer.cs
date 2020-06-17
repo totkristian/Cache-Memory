@@ -77,8 +77,6 @@ namespace WriterComponent
                     Console.WriteLine("Enter the consumption:");
                     consumption = double.Parse(Console.ReadLine());
                     isOk = true;
-                    //string className = MethodBase.GetCurrentMethod().DeclaringType.Name;
-                    //string functionName = MethodBase.GetCurrentMethod().Name;
                     lock (syncLock)
                     {
                         Logger.WriteLog("Message has beed sent to historical", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
@@ -118,7 +116,6 @@ namespace WriterComponent
                     HistoricalProperty hp = GetRandomHistoricalProperty();
                     if (hp == null)
                         break;
-
                     Value v = generator.RandomNewValueGenerator();
                     v.GeographicalLocationId = hp.HistoricalValue.GeographicalLocationId;
 
