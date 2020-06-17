@@ -32,5 +32,18 @@ namespace WriterComponentTest
             valueMock.Object.Timestamp = DateTime.Now;
             hpp.Object.HistoricalValue = valueMock.Object;
         }
+
+        [Test]
+        public void GetRandomHistoricalPropertyForUpdateOrRemoveNull()
+        {
+            Assert.IsNull(randomGeneratorMock.Object.getRandomPropertyForUpdateOrRemove(hp.Object));
+        }
+
+        [Test]
+        public void GetRandomHistoricalPropertyForUpdateOrRemoveNotNull()
+        {
+            hp.Object.Add(hpp.Object);
+            Assert.IsNotNull(randomGeneratorMock.Object.getRandomPropertyForUpdateOrRemove(hp.Object));
+        }
     }
 }
