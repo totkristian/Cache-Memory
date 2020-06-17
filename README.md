@@ -22,5 +22,7 @@ Data sent by the Writer component are Code, Value.
 
 In this project we used components: Historical component, Writer component, Reader component, Dumping Buffer component, Logger component and Database. Each component was made in separate branches and they have their own function. We used Microsoft SQL Server Management Studio 18 for communication with SQL database.
 
+# Diagram
 
+Diagram.png
 
