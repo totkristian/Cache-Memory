@@ -4,19 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{66521BC7-49C6-4A7F-9C26-B968CFF50815}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Cache_Memory</RootNamespace>
-    <AssemblyName>Cache Memory</AssemblyName>
+    <ProjectGuid>{0C742330-6EA8-4B6C-B3E2-C0DBB3F56B07}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ReaderComponent</RootNamespace>
+    <AssemblyName>ReaderComponent</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -26,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -36,7 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,21 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementation.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Reader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ReaderComponent\ReaderComponent.csproj">
-      <Project>{0c742330-6ea8-4b6c-b3e2-c0dbb3f56b07}</Project>
-      <Name>ReaderComponent</Name>
+    <ProjectReference Include="..\HistoricalComponent\HistoricalComponent.csproj">
+      <Project>{1283DDFD-96D6-4B9C-96EC-186B4A4965FD}</Project>
+      <Name>HistoricalComponent</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WriterComponent\WriterComponent.csproj">
-      <Project>{7158b2ff-3839-4401-b11e-c5601e6f4d00}</Project>
-      <Name>WriterComponent</Name>
+    <ProjectReference Include="..\LoggerComponent\LoggerComponent.csproj">
+      <Project>{54CDF8DE-F715-44DB-A40F-F89BB2CA3E32}</Project>
+      <Name>LoggerComponent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModelsAndProps\ModelsAndProps.csproj">
+      <Project>{6d4f6e0b-682f-4150-9a4c-86ee6cfd2e11}</Project>
+      <Name>ModelsAndProps</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
